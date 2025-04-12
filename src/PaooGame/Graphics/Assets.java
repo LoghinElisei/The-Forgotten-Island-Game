@@ -10,8 +10,8 @@ import java.awt.image.BufferedImage;
 public class Assets
 {
         /// Referinte catre elementele grafice (dale) utilizate in joc.
-    public static BufferedImage playerLeft;
-    public static BufferedImage playerRight;
+    public static BufferedImage heroLeft;
+    public static BufferedImage heroRight;
     public static BufferedImage soil;
     public static BufferedImage grass;
     public static BufferedImage mountain;
@@ -45,8 +45,8 @@ public class Assets
         townGrassDestroyed = sheet.crop(1, 1);
         townSoil = sheet.crop(2, 1);
         tree = sheet.crop(3, 1);
-        playerLeft = sheet.crop(0, 2);
-        playerRight = sheet.crop(1, 2);
+        heroLeft = sheet.crop(0, 2);
+        heroRight = sheet.crop(1, 2);
         rockUp = sheet.crop(2, 2);
         rockDown = sheet.crop(3, 2);
         rockLeft = sheet.crop(0, 3);
