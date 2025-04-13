@@ -10,16 +10,16 @@ import java.util.ArrayList;
 /*! \class public class MenuState extends State
     \brief Implementeaza notiunea de meniu pentru joc.
  */
-public class MenuState extends State
+public class PauseState extends State
 {
-    private ArrayList<Button> buttons;
+    private final ArrayList<Button> buttons;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public MenuState(RefLinks refLink)
+    public PauseState(RefLinks refLink)
     {
         ///Apel al constructorului clasei de baza.
         super(refLink);
@@ -32,15 +32,15 @@ public class MenuState extends State
         int screenWidth = refLink.GetWidth();
         int screenHeight = refLink.GetHeight();
 
-        int totalMenuHeight = 4 * height + 2 * gap;
+        int totalMenuHeight = 3 * height + 2 * gap;
 
         int centerX = (screenWidth - width) / 2;
         int startY = (screenHeight - totalMenuHeight) / 2 + 60; // Am lasat un pic de spatiu pentru titlu
 
-        buttons.add(new Button("Load Game", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
-        buttons.add(new Button("New Game", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
-        buttons.add(new Button("ScoreBoard", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
-        buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
+
+        buttons.add(new Button("Continue", new Rectangle(centerX, startY, width, height)));
+        buttons.add(new Button("Save", new Rectangle(centerX, startY + height + gap, width, height)));
+        buttons.add(new Button("Exit", new Rectangle(centerX, startY + 2 * (height + gap), width, height)));
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -64,12 +64,13 @@ public class MenuState extends State
 
         g.setColor(Color.RED);
         g.setFont(new Font("Arial", Font.BOLD, 48));
-        String text = "MAIN MENU";
-
+        String text = "PAUSE";
         int x = getXForCenteredText(text, g);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
         g.drawString(text, x, y);
+
+
         for (Button b: buttons)
         {
             b.draw(g);
@@ -85,9 +86,7 @@ public class MenuState extends State
     }
 
     private void handleMouseInput() {
-        MouseManager m;
-        m = refLink.GetMouseManager();
-
+        MouseManager m = refLink.GetMouseManager();
         if (m.isMouseClicked())
         {
             Point mousePos = m.getMousePosition();
@@ -104,17 +103,15 @@ public class MenuState extends State
     private void handleClick(String label)
     {
         switch (label) {
-            case "Load Game":
-                System.out.println("Load Game");
-                break;
-            case "New Game":
+            case "Continue":
                 State.SetState(refLink.GetGame().playState);
                 break;
-            case "ScoreBoard":
-                System.out.println("Loading ScoreBoard...");
+            case "Save":
+                System.out.println("Game Saved!");
                 break;
-            case "Leave":
-                System.exit(0);
+            case "Exit":
+                State.SetState(refLink.GetGame().menuState);
+                break;
         }
     }
 

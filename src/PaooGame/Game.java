@@ -3,6 +3,7 @@ package PaooGame;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
+import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
 import PaooGame.Tiles.Tile;
 
@@ -64,11 +65,12 @@ public class Game implements Runnable
     private Graphics        g;          /*!< Referinta catre un context grafic.*/
 
         ///Available states
-    private State playState;            /*!< Referinta catre joc.*/
-    private State menuState;            /*!< Referinta catre menu.*/
-    private State settingsState;        /*!< Referinta catre setari.*/
+    public State playState;            /*!< Referinta catre joc.*/
+    public State menuState;        /*!< Referinta catre setari.*/
+    public State pauseState;            /*!< Referinta catre menu.*/
     private State aboutState;           /*!< Referinta catre about.*/
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
+    private MouseManager mouseManager;  // ME
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
 
     private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
@@ -93,6 +95,7 @@ public class Game implements Runnable
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
         keyManager = new KeyManager();
+        mouseManager = new MouseManager();
     }
 
     public static Game getGame(String title, int width, int height)
@@ -117,15 +120,17 @@ public class Game implements Runnable
             /// Este construita fereastra grafica.
         wnd.BuildGameWindow();
             ///Sa ataseaza ferestrei managerul de tastatura pentru a primi evenimentele furnizate de fereastra.
-        wnd.GetWndFrame().addKeyListener(keyManager);
+        wnd.GetCanvas().addKeyListener(keyManager);
+        wnd.GetCanvas().addMouseListener(mouseManager);
+        wnd.GetCanvas().addMouseMotionListener(mouseManager);
             ///Se incarca toate elementele grafice (dale)
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         refLink = new RefLinks(this);
             ///Definirea starilor programului
         playState       = new PlayState(refLink);
+        pauseState      = new PauseState(refLink);
         menuState       = new MenuState(refLink);
-        settingsState   = new SettingsState(refLink);
         aboutState      = new AboutState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(playState);
@@ -229,12 +234,23 @@ public class Game implements Runnable
      */
     private void Update()
     {
-            ///Determina starea tastelor
+        ///Determina starea tastelor
         keyManager.Update();
+        ///Schimbam alternativ starea de playstate cu starea de pauza
+        if (keyManager.IsEscJustPressed())
+        {
+            if (State.GetState() == playState) {
+                State.SetState(pauseState);
+            } else if (State.GetState() == pauseState) {
+                State.SetState(playState);
+            }
+            return;
+        }
+
         ///Trebuie obtinuta starea curenta pentru care urmeaza a se actualiza starea, atentie trebuie sa fie diferita de null.
         if(State.GetState() != null)
         {
-                ///Actualizez starea curenta a jocului daca exista.
+        ///Actualizez starea curenta a jocului daca exista.
             State.GetState().Update();
         }
     }
@@ -248,6 +264,7 @@ public class Game implements Runnable
     {
             /// Returnez bufferStrategy pentru canvasul existent
         bs = wnd.GetCanvas().getBufferStrategy();
+
             /// Verific daca buffer strategy a fost construit sau nu
         if(bs == null)
         {
@@ -309,5 +326,11 @@ public class Game implements Runnable
     {
         return keyManager;
     }
+
+    public MouseManager GetMouseManager()
+    {
+        return mouseManager;
+    }
+
 }
 

@@ -1,5 +1,6 @@
 package PaooGame;
 
+import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 
 import PaooGame.Input.KeyManager;
@@ -31,6 +32,8 @@ public class RefLinks
     {
         return game.GetKeyManager();
     }
+    public MouseManager GetMouseManager() { return game.GetMouseManager(); }
+
 
     /*! \fn public int GetWidth()
         \brief Returneaza latimea ferestrei jocului.
