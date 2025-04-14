@@ -1,10 +1,16 @@
 package PaooGame.States;
 
+import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.MouseManager;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
+
+import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -13,6 +19,7 @@ import java.util.ArrayList;
 public class MenuState extends State
 {
     private ArrayList<Button> buttons;
+    private BufferedImage backgroundImage;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -35,12 +42,14 @@ public class MenuState extends State
         int totalMenuHeight = 4 * height + 2 * gap;
 
         int centerX = (screenWidth - width) / 2;
-        int startY = (screenHeight - totalMenuHeight) / 2 + 60; // Am lasat un pic de spatiu pentru titlu
+        int startY = (screenHeight - totalMenuHeight) / 2 + 20; // Am lasat un pic de spatiu pentru titlu
 
         buttons.add(new Button("Load Game", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
         buttons.add(new Button("New Game", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
         buttons.add(new Button("ScoreBoard", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
         buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
+
+        backgroundImage = ImageLoader.LoadImage("/images/island_animated.gif");
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -48,6 +57,7 @@ public class MenuState extends State
     @Override
     public void Update()
     {
+        handleMouseHover();
         handleMouseInput();
     }
 
@@ -59,11 +69,21 @@ public class MenuState extends State
     @Override
     public void Draw(Graphics g)
     {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
+        if (backgroundImage != null) {
+            int imageWidth = backgroundImage.getWidth();
+            int imageHeight = backgroundImage.getHeight();
 
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 48));
+            int centerX = (refLink.GetWidth() - imageWidth) / 2;
+            int centerY = (refLink.GetHeight() - imageHeight) / 2;
+
+            g.drawImage(backgroundImage, centerX, centerY, null);
+        } else {
+            g.setColor(Color.BLACK);
+            g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
+        }
+
+        g.setColor(Color.decode("#00697d"));
+        g.setFont(new Font("Roboto", Font.BOLD, 48));
         String text = "MAIN MENU";
 
         int x = getXForCenteredText(text, g);
@@ -72,7 +92,7 @@ public class MenuState extends State
         g.drawString(text, x, y);
         for (Button b: buttons)
         {
-            b.draw(g);
+            b.draw(g, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
         }
     }
 
@@ -100,6 +120,14 @@ public class MenuState extends State
         }
 
         refLink.GetMouseManager().clearMouseClick();
+    }
+
+    private void handleMouseHover() {
+        Point mousePos = refLink.GetMouseManager().getMousePosition();
+
+        for (Button b: buttons) {
+            b.setHovered(b.getBounds().contains(mousePos));
+        }
     }
     private void handleClick(String label)
     {

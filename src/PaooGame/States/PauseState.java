@@ -5,6 +5,9 @@ import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -13,17 +16,19 @@ import java.util.ArrayList;
 public class PauseState extends State
 {
     private final ArrayList<Button> buttons;
+    private BufferedImage blurredBackground;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public PauseState(RefLinks refLink)
+    public PauseState(RefLinks refLink, BufferedImage screenshot)
     {
         ///Apel al constructorului clasei de baza.
         super(refLink);
         buttons = new ArrayList<>();
+        blurredBackground = applyBlur(screenshot);
 
         int width = 200;
         int height = 50;
@@ -35,7 +40,7 @@ public class PauseState extends State
         int totalMenuHeight = 3 * height + 2 * gap;
 
         int centerX = (screenWidth - width) / 2;
-        int startY = (screenHeight - totalMenuHeight) / 2 + 60; // Am lasat un pic de spatiu pentru titlu
+        int startY = (screenHeight - totalMenuHeight) / 2 + 40; // Am lasat un pic de spatiu pentru titlu
 
 
         buttons.add(new Button("Continue", new Rectangle(centerX, startY, width, height)));
@@ -48,6 +53,7 @@ public class PauseState extends State
     @Override
     public void Update()
     {
+        handleMouseHover();
         handleMouseInput();
     }
 
@@ -59,21 +65,19 @@ public class PauseState extends State
     @Override
     public void Draw(Graphics g)
     {
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
+        g.drawImage(blurredBackground, 0, 0, null);
 
-        g.setColor(Color.RED);
-        g.setFont(new Font("Arial", Font.BOLD, 48));
+        g.setColor(new Color(255,255,255,200));
+        g.setFont(new Font("Merriweather", Font.BOLD, 50));
         String text = "PAUSE";
         int x = getXForCenteredText(text, g);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
         g.drawString(text, x, y);
 
-
         for (Button b: buttons)
         {
-            b.draw(g);
+            b.draw(g, Color.decode("#FFFFFF"), Color.decode("#FFFFFF"), Color.decode("#324700"));
         }
     }
 
@@ -83,6 +87,34 @@ public class PauseState extends State
         int x = refLink.GetWidth() / 2  - length / 2;
 
         return x;
+    }
+
+    private BufferedImage applyBlur(BufferedImage src)
+    {
+        float[] kernel = {
+                1f/9f, 1f/9f, 1f/9f,
+                1f/9f, 1f/9f, 1f/9f,
+                1f/9f, 1f/9f, 1f/9f
+        };
+
+        ConvolveOp op = new ConvolveOp(
+                new Kernel(3, 3, kernel),
+                ConvolveOp.EDGE_NO_OP,
+                null
+        );
+        for (int i = 0; i < 7; ++i)
+        {
+            src = op.filter(src, null);
+        }
+        return src;
+    }
+
+    private void handleMouseHover() {
+        Point mousePos = refLink.GetMouseManager().getMousePosition();
+
+        for (Button b: buttons) {
+            b.setHovered(b.getBounds().contains(mousePos));
+        }
     }
 
     private void handleMouseInput() {

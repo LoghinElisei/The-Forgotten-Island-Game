@@ -9,6 +9,7 @@ import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
 
 /*! \class Game
     \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
@@ -129,11 +130,11 @@ public class Game implements Runnable
         refLink = new RefLinks(this);
             ///Definirea starilor programului
         playState       = new PlayState(refLink);
-        pauseState      = new PauseState(refLink);
+        pauseState      = null;
         menuState       = new MenuState(refLink);
         aboutState      = new AboutState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(playState);
+        State.SetState(menuState);
     }
 
     /*! \fn public void run()
@@ -240,7 +241,12 @@ public class Game implements Runnable
         if (keyManager.IsEscJustPressed())
         {
             if (State.GetState() == playState) {
-                State.SetState(pauseState);
+                BufferedImage screenshot = new BufferedImage(refLink.GetWidth(),
+                        refLink.GetHeight(), BufferedImage.TYPE_INT_ARGB);
+                Graphics g = screenshot.createGraphics();
+                refLink.GetGame().playState.Draw(g);
+                g.dispose();
+                State.SetState(new PauseState(refLink, screenshot));
             } else if (State.GetState() == pauseState) {
                 State.SetState(playState);
             }

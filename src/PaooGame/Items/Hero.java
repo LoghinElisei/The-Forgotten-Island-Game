@@ -77,17 +77,17 @@ public class Hero extends Character
         if(refLink.GetKeyManager().up)
         {
             yMove = -speed;
-        }
+        } else
             ///Verificare apasare tasta "jos"
         if(refLink.GetKeyManager().down)
         {
             yMove = speed;
-        }
+        } else
             ///Verificare apasare tasta "left"
         if(refLink.GetKeyManager().left)
         {
             xMove = -speed;
-        }
+        } else
             ///Verificare apasare tasta "dreapta"
         if(refLink.GetKeyManager().right)
         {
