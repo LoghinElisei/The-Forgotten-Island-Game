@@ -8,19 +8,24 @@ import java.awt.image.BufferedImage;
  */
 public class Tile
 {
-    private static final int NO_TILES   = 32;
+    private static final int NO_TILES   = 10000;
     public static Tile[] tiles          = new Tile[NO_TILES];       /*!< Vector de referinte de tipuri de dale.*/
 
-        /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
-        /// o singura data in memorie
-    public static Tile grassTile        = new GrassTile(0);     /*!< Dala de tip iarba*/
-    public static Tile mountainTile     = new MountainTile(1);  /*!< Dala de tip munte/piatra*/
-    public static Tile waterTile        = new WaterTile(2);     /*!< Dala de tip apa*/
-    public static Tile treeTile         = new TreeTile(3);      /*!< Dala de tip copac*/
-    public static Tile soilTile         = new SoilTile(4);      /*!< Dala de tip sol/pamant*/
+    /// De remarcat ca urmatoarele dale sunt statice si publice. Acest lucru imi permite sa le am incarcate
+    /// o singura data in memorie
+    public static Tile grassTile        = new GrassTile(600);     /*!< Dala de tip iarba*/
+    public static Tile waterTile        = new WaterTile(6090);     /*!< Dala de tip apa*/
+    public static Tile greenTreeTile         = new GreenTreeTile(847);      /*!< Dala de tip copac*/
+    public static Tile yellowTreeTile = new YellowTreeTile(853);
+    public static Tile soilTile         = new SoilTile(258);      /*!< Dala de tip sol/pamant*/
+    public static Tile bridgeTile = new BridgeTile(1163);
+    public static Tile coinTile = new CoinTile(2602);
+    public static Tile keyTile = new KeyTile(2616);
+    public static Tile stoneTile = new StoneTile(765);
 
-    public static final int TILE_WIDTH  = 48;                       /*!< Latimea unei dale.*/
-    public static final int TILE_HEIGHT = 48;                       /*!< Inaltimea unei dale.*/
+
+    public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
+    public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/
 
     protected BufferedImage img;                                    /*!< Imaginea aferenta tipului de dala.*/
     protected final int id;                                         /*!< Id-ul unic aferent tipului de dala.*/
@@ -56,7 +61,7 @@ public class Tile
      */
     public void Draw(Graphics g, int x, int y)
     {
-            /// Desenare dala
+        /// Desenare dala
         g.drawImage(img, x, y, TILE_WIDTH, TILE_HEIGHT, null);
     }
 

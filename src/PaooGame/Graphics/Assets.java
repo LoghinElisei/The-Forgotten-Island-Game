@@ -10,20 +10,17 @@ import java.awt.image.BufferedImage;
 public class Assets
 {
         /// Referinte catre elementele grafice (dale) utilizate in joc.
-    public static BufferedImage playerLeft;
-    public static BufferedImage playerRight;
+    public static BufferedImage heroLeft;
+    public static BufferedImage heroRight;
     public static BufferedImage soil;
     public static BufferedImage grass;
-    public static BufferedImage mountain;
-    public static BufferedImage townGrass;
-    public static BufferedImage townGrassDestroyed;
-    public static BufferedImage townSoil;
     public static BufferedImage water;
-    public static BufferedImage rockUp;
-    public static BufferedImage rockDown;
-    public static BufferedImage rockLeft;
-    public static BufferedImage rockRight;
-    public static BufferedImage tree;
+    public static BufferedImage greenTree;
+    public static BufferedImage yellowTree;
+    public static BufferedImage stone;
+    public static BufferedImage bridge;
+    public static BufferedImage coin ;
+    public static BufferedImage key;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -34,22 +31,33 @@ public class Assets
     public static void Init()
     {
             /// Se creaza temporar un obiect SpriteSheet initializat prin intermediul clasei ImageLoader
-        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/PaooGameSpriteSheet.png"));
+        SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet.png"));
+        SpriteSheet sheet2 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet2.png"));
+        SpriteSheet sheet3 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet3.png"));
+        SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
 
             /// Se obtin subimaginile corespunzatoare elementelor necesare.
-        grass = sheet.crop(0, 0);
-        soil = sheet.crop(1, 0);
-        water = sheet.crop(2, 0);
-        mountain = sheet.crop(3, 0);
-        townGrass = sheet.crop(0, 1);
-        townGrassDestroyed = sheet.crop(1, 1);
-        townSoil = sheet.crop(2, 1);
-        tree = sheet.crop(3, 1);
-        playerLeft = sheet.crop(0, 2);
-        playerRight = sheet.crop(1, 2);
-        rockUp = sheet.crop(2, 2);
-        rockDown = sheet.crop(3, 2);
-        rockLeft = sheet.crop(0, 3);
-        rockRight = sheet.crop(1, 3);
+//        grass = sheet.crop(50, 95);
+////        soil = sheet.crop(4, 2);
+////        water = sheet3.crop(10, 95);
+////        greenTree = sheet.crop(25, 13);
+////        yellowTree = sheet.crop(21,13);
+////        stone = sheet.crop(61,11);
+////        bridge = sheet.crop(11,18);
+////        coin = sheet.crop(42,40);
+////        key = sheet.crop(56,40);
+
+        grass = sheet.crop(25, 9);
+        water = sheet3.crop(1, 1);
+        greenTree = sheet.crop(14, 13);
+        yellowTree = sheet.crop(16,13);
+        soil = sheet.crop(2, 4);
+        bridge = sheet.crop(11,18);
+        coin = sheet.crop(41,40);
+        key = sheet.crop(55,40);
+        stone = sheet.crop(60,11);
+
+        heroLeft = mcSheet.crop(1, 1);
+        heroRight = mcSheet.crop(1, 2);
     }
 }

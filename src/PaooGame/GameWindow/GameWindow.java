@@ -116,7 +116,16 @@ public class GameWindow
     /*! \fn public int GetCanvas()
         \brief Returneaza referinta catre canvas-ul din fereastra pe care se poate desena.
      */
-    public Canvas GetCanvas() {
+    public Canvas GetCanvas()
+    {
         return canvas;
+    }
+
+    /*! \fn public int GetCanvas()
+        \brief Returneaza referinta catre canvas-ul din fereastra pe care se poate desena.
+     */
+    public JFrame GetWndFrame()
+    {
+        return wndFrame;
     }
 }
