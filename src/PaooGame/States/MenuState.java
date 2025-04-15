@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 package PaooGame.States;
 
 import PaooGame.Graphics.ImageLoader;
@@ -6,12 +5,9 @@ import PaooGame.Input.MouseManager;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -71,13 +67,20 @@ public class MenuState extends State
     public void Draw(Graphics g)
     {
         if (backgroundImage != null) {
-            int imageWidth = backgroundImage.getWidth();
-            int imageHeight = backgroundImage.getHeight();
+            int imgW = backgroundImage.getWidth();
+            int imgH = backgroundImage.getHeight();
 
-            int centerX = (refLink.GetWidth() - imageWidth) / 2;
-            int centerY = (refLink.GetHeight() - imageHeight) / 2;
+            float scaleW = (float) refLink.GetWidth() / imgW;
+            float scaleH = (float) refLink.GetHeight() / imgH;
+            float scale = Math.max(scaleW, scaleH); // Or use Math.min to avoid cropping
 
-            g.drawImage(backgroundImage, centerX, centerY, null);
+            int drawW = (int)(imgW * scale);
+            int drawH = (int)(imgH * scale);
+
+            int x = (refLink.GetWidth() - drawW) / 2;
+            int y = (refLink.GetHeight() - drawH) / 2;
+
+            g.drawImage(backgroundImage, x, y, drawW, drawH, null);
         } else {
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
@@ -148,46 +151,3 @@ public class MenuState extends State
     }
 
 }
-=======
-package PaooGame.States;
-
-import PaooGame.RefLinks;
-
-import java.awt.*;
-
-/*! \class public class MenuState extends State
-    \brief Implementeaza notiunea de menu pentru joc.
- */
-public class MenuState extends State
-{
-    /*! \fn public MenuState(RefLinks refLink)
-        \brief Constructorul de initializare al clasei.
-
-        \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
-     */
-    public MenuState(RefLinks refLink)
-    {
-            ///Apel al constructorului clasei de baza.
-        super(refLink);
-    }
-    /*! \fn public void Update()
-        \brief Actualizeaza starea curenta a meniului.
-     */
-    @Override
-    public void Update()
-    {
-
-    }
-
-    /*! \fn public void Draw(Graphics g)
-        \brief Deseneaza (randeaza) pe ecran starea curenta a meniului.
-
-        \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
-     */
-    @Override
-    public void Draw(Graphics g)
-    {
-
-    }
-}
->>>>>>> elisei
