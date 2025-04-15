@@ -5,9 +5,11 @@ import PaooGame.Input.MouseManager;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -16,7 +18,7 @@ import java.util.ArrayList;
 public class MenuState extends State
 {
     private ArrayList<Button> buttons;
-    private BufferedImage backgroundImage;
+    private Image backgroundImage;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -46,7 +48,7 @@ public class MenuState extends State
         buttons.add(new Button("ScoreBoard", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
         buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
 
-        backgroundImage = ImageLoader.LoadImage("/images/island_animated.gif");
+        backgroundImage = new ImageIcon("/home/laurentiu/An2/Game/master/paoo-proiect-1210b_hutanu_loghin/res/images/island_animated.gif").getImage();
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -67,20 +69,20 @@ public class MenuState extends State
     public void Draw(Graphics g)
     {
         if (backgroundImage != null) {
-            int imgW = backgroundImage.getWidth();
-            int imgH = backgroundImage.getHeight();
+//            int imgW = backgroundImage.getWidth();
+//            int imgH = backgroundImage.getHeight();
+//
+//            float scaleW = (float) refLink.GetWidth() / imgW;
+//            float scaleH = (float) refLink.GetHeight() / imgH;
+//            float scale = Math.max(scaleW, scaleH); // Or use Math.min to avoid cropping
+//
+//            int drawW = (int)(imgW * scale);
+//            int drawH = (int)(imgH * scale);
+//
+//            int x = (refLink.GetWidth() - drawW) / 2;
+//            int y = (refLink.GetHeight() - drawH) / 2;
 
-            float scaleW = (float) refLink.GetWidth() / imgW;
-            float scaleH = (float) refLink.GetHeight() / imgH;
-            float scale = Math.max(scaleW, scaleH); // Or use Math.min to avoid cropping
-
-            int drawW = (int)(imgW * scale);
-            int drawH = (int)(imgH * scale);
-
-            int x = (refLink.GetWidth() - drawW) / 2;
-            int y = (refLink.GetHeight() - drawH) / 2;
-
-            g.drawImage(backgroundImage, x, y, drawW, drawH, null);
+            g.drawImage(backgroundImage, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
         } else {
             g.setColor(Color.BLACK);
             g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());

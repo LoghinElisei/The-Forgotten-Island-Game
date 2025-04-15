@@ -9,9 +9,24 @@ import java.awt.image.BufferedImage;
  */
 public class Assets
 {
-        /// Referinte catre elementele grafice (dale) utilizate in joc.
-    public static BufferedImage heroLeft;
-    public static BufferedImage heroRight;
+    /// Referinte catre elementele grafice (dale) utilizate in joc.
+    public static BufferedImage heroUp1;
+    public static BufferedImage heroUp2;
+    public static BufferedImage heroUp3;
+
+    public static BufferedImage heroDown1;
+    public static BufferedImage heroDown2;
+    public static BufferedImage heroDown3;
+
+    public static BufferedImage heroLeft1;
+    public static BufferedImage heroLeft2;
+    public static BufferedImage heroLeft3;
+
+    public static BufferedImage heroRight1;
+    public static BufferedImage heroRight2;
+    public static BufferedImage heroRight3;
+
+
     public static BufferedImage soil;
     public static BufferedImage grass;
     public static BufferedImage water;
@@ -57,7 +72,21 @@ public class Assets
         key = sheet.crop(55,40);
         stone = sheet.crop(60,11);
 
-        heroLeft = mcSheet.crop(1, 1);
-        heroRight = mcSheet.crop(1, 2);
+        heroUp1 = mcSheet.crop(0,1);
+        heroUp2 = mcSheet.crop(1,1);
+        heroUp3 = mcSheet.crop(2,1);
+
+        heroDown1 = mcSheet.crop(0,3);
+        heroDown2 = mcSheet.crop(1,3);
+        heroDown3 = mcSheet.crop(2,3);
+
+        heroLeft1 = mcSheet.crop(0, 1);
+        heroLeft2 = mcSheet.crop(1, 1);
+        heroLeft3 = mcSheet.crop(2, 1);
+
+        heroRight1 = mcSheet.crop(0, 2);
+        heroRight2 = mcSheet.crop(1, 2);
+        heroRight3 = mcSheet.crop(2, 2);
+
     }
 }
