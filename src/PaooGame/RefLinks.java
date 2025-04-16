@@ -12,10 +12,10 @@ import PaooGame.Input.KeyManager;
  */
 public class RefLinks
 {
-    private Game game;          /*!< Referinta catre obiectul Game.*/
+    private Game game;          /*!< Referinta catre obiectul PaooGame.Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
 
-    /*! \fn public RefLinks(Game game)
+    /*! \fn public RefLinks(PaooGame.Game game)
         \brief Constructorul de initializare al clasei.
 
         \param game Referinta catre obiectul game.
@@ -51,18 +51,18 @@ public class RefLinks
         return game.GetHeight();
     }
 
-    /*! \fn public Game GetGame()
-        \brief Intoarce referinta catre obiectul Game.
+    /*! \fn public PaooGame.Game GetGame()
+        \brief Intoarce referinta catre obiectul PaooGame.Game.
      */
     public Game GetGame()
     {
         return game;
     }
 
-    /*! \fn public void SetGame(Game game)
-        \brief Seteaza referinta catre un obiect Game.
+    /*! \fn public void SetGame(PaooGame.Game game)
+        \brief Seteaza referinta catre un obiect PaooGame.Game.
 
-        \param game Referinta obiectului Game.
+        \param game Referinta obiectului PaooGame.Game.
      */
     public void SetGame(Game game)
     {

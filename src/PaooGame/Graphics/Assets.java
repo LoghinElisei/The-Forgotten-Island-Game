@@ -5,7 +5,7 @@ import java.awt.image.BufferedImage;
 /*! \class public class Assets
     \brief Clasa incarca fiecare element grafic necesar jocului.
 
-    Game assets include tot ce este folosit intr-un joc: imagini, sunete, harti etc.
+    PaooGame.Game assets include tot ce este folosit intr-un joc: imagini, sunete, harti etc.
  */
 public class Assets
 {

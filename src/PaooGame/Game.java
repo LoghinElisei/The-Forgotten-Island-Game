@@ -11,8 +11,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
-/*! \class Game
-    \brief Clasa principala a intregului proiect. Implementeaza Game - Loop (Update -> Draw)
+/*! \class PaooGame.Game
+    \brief Clasa principala a intregului proiect. Implementeaza PaooGame.Game - Loop (Update -> Draw)
 
                 ------------
                 |           |
@@ -31,12 +31,12 @@ import java.awt.image.BufferedImage;
             public void run();
         }
 
-    Interfata este utilizata pentru a crea un nou fir de executie avand ca argument clasa Game.
-    Clasa Game trebuie sa aiba definita metoda "public void run()", metoda ce va fi apelata
+    Interfata este utilizata pentru a crea un nou fir de executie avand ca argument clasa PaooGame.Game.
+    Clasa PaooGame.Game trebuie sa aiba definita metoda "public void run()", metoda ce va fi apelata
     in noul thread(fir de executie). Mai multe explicatii veti primi la curs.
 
     In mod obisnuit aceasta clasa trebuie sa contina urmatoarele:
-        - public Game();            //constructor
+        - public PaooGame.Game();            //constructor
         - private void init();      //metoda privata de initializare
         - private void update();    //metoda privata de actualizare a elementelor jocului
         - private void draw();      //metoda privata de desenare a tablei de joc
@@ -76,11 +76,11 @@ public class Game implements Runnable
 
     private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
 
-    /*! \fn public Game(String title, int width, int height)
-        \brief Constructor de initializare al clasei Game.
+    /*! \fn public PaooGame.Game(String title, int width, int height)
+        \brief Constructor de initializare al clasei PaooGame.Game.
 
         Acest constructor primeste ca parametri titlul ferestrei, latimea si inaltimea
-        acesteia avand in vedere ca fereastra va fi construita/creata in cadrul clasei Game.
+        acesteia avand in vedere ca fereastra va fi construita/creata in cadrul clasei PaooGame.Game.
 
         \param title Titlul ferestrei.
         \param width Latimea ferestrei in pixeli.
@@ -129,7 +129,7 @@ public class Game implements Runnable
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         refLink = new RefLinks(this);
             ///Definirea starilor programului
-        playState       = new PlayState(refLink);
+        playState       = null;
         pauseState      = null;
         menuState       = new MenuState(refLink);
         aboutState      = new AboutState(refLink);
@@ -184,8 +184,8 @@ public class Game implements Runnable
         {
                 /// Se actualizeaza flagul de stare a threadului
             runState = true;
-                /// Se construieste threadul avand ca parametru obiectul Game. De retinut faptul ca Game class
-                /// implementeaza interfata Runnable. Threadul creat va executa functia run() suprascrisa in clasa Game.
+                /// Se construieste threadul avand ca parametru obiectul PaooGame.Game. De retinut faptul ca PaooGame.Game class
+                /// implementeaza interfata Runnable. Threadul creat va executa functia run() suprascrisa in clasa PaooGame.Game.
             gameThread = new Thread(this);
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();
@@ -241,8 +241,7 @@ public class Game implements Runnable
         if (keyManager.IsEscJustPressed())
         {
             if (State.GetState() == playState) {
-                BufferedImage screenshot = new BufferedImage(refLink.GetWidth(),
-                        refLink.GetHeight(), BufferedImage.TYPE_INT_ARGB);
+                BufferedImage screenshot = new BufferedImage(refLink.GetWidth(), refLink.GetHeight(), BufferedImage.TYPE_INT_ARGB);
                 Graphics g = screenshot.createGraphics();
                 refLink.GetGame().playState.Draw(g);
                 g.dispose();

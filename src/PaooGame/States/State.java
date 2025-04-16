@@ -7,7 +7,7 @@ import PaooGame.RefLinks;
     \brief Implementeaza notiunea abstracta de stare a jocului/programului.
 
     Un joc odata ce este lansat in executie nu trebuie "sa arunce jucatorul direct in lupta", este nevoie de
-    un meniu care sa contine optiuni: New Game, Load Game, Settings, About etc. Toate aceste optiuni nu sunt altceva
+    un meniu care sa contine optiuni: New PaooGame.Game, Load PaooGame.Game, Settings, About etc. Toate aceste optiuni nu sunt altceva
     decat stari ale programului (jocului) ce trebuiesc incarcate si afisate functie de starea curenta.
  */
 public abstract class State

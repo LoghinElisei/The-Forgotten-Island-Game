@@ -48,7 +48,7 @@ public class MenuState extends State
         buttons.add(new Button("ScoreBoard", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
         buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
 
-        backgroundImage = new ImageIcon("/home/laurentiu/An2/Game/master/paoo-proiect-1210b_hutanu_loghin/res/images/island_animated.gif").getImage();
+        backgroundImage = new ImageIcon("/home/laurentiu/An2/Game/paoo-proiect-1210b_hutanu_loghin/res/images/island_animated.gif").getImage();
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -142,7 +142,7 @@ public class MenuState extends State
                 System.out.println("Load Game");
                 break;
             case "New Game":
-                State.SetState(refLink.GetGame().playState);
+                State.SetState(new PlayState(refLink));
                 break;
             case "ScoreBoard":
                 System.out.println("Loading ScoreBoard...");
