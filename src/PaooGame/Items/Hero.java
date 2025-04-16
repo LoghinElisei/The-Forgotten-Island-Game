@@ -3,6 +3,7 @@ package PaooGame.Items;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
 
@@ -41,6 +42,9 @@ public class Hero extends Character
         attackBounds.y = 10;
         attackBounds.width = 38;
         attackBounds.height = 38;
+
+        screenX = refLink.GetGame().GetWidth()/2 - this.DEFAULT_CREATURE_WIDTH/2;
+        screenY = refLink.GetGame().GetHeight()/2 - this.DEFAULT_CREATURE_HEIGHT/2;
     }
 
     /*! \fn public void Update()
@@ -50,7 +54,10 @@ public class Hero extends Character
     public void Update()
     {
         ///Verifica daca a fost apasata o tasta
+        Map.camera.updateCamera(this);
         if (refLink.GetKeyManager().keyHasBeenPressed()) {
+
+
             GetInput();
             ///Actualizeaza pozitia
             Move();
@@ -137,8 +144,8 @@ public class Hero extends Character
                     case 3: image = Assets.heroRight3;
                 }
         }
-        g.drawImage(image, (int)x, (int)y, width, height, null);
-
+//        g.drawImage(image, (int)x, (int)y, width, height, null);
+          g.drawImage(image,screenX,screenY,width,height,null);
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
         //g.setColor(Color.blue);
         //g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);

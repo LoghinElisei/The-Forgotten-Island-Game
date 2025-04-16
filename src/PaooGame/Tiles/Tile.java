@@ -22,7 +22,7 @@ public class Tile
     public static Tile coinTile = new CoinTile(2602);
     public static Tile keyTile = new KeyTile(2616);
     public static Tile stoneTile = new StoneTile(765);
-
+    public static Tile guardian = new GuardianTile(3);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

@@ -11,9 +11,9 @@ import PaooGame.RefLinks;
 public abstract class Character extends Item
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
-    public static final float DEFAULT_SPEED         = 3.0f; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 48;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 48;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final float DEFAULT_SPEED         = 5.0f; /*!< Viteza implicita a unu caracter.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 130;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 130;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
     protected int life;     /*!< Retine viata caracterului.*/
@@ -21,7 +21,8 @@ public abstract class Character extends Item
     protected String direction;
     protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected float yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
-
+    public int screenX;
+    public  int screenY;
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
 
@@ -41,6 +42,8 @@ public abstract class Character extends Item
         direction = DEFAULT_DIRECTION;
         xMove   = 0;
         yMove   = 0;
+        screenX=  250;
+        screenY = 500;
     }
 
     /*! \fn public void Move()

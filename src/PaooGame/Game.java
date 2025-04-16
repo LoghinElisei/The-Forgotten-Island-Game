@@ -1,5 +1,6 @@
 package PaooGame;
 
+import Music.Music;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
@@ -97,6 +98,10 @@ public class Game implements Runnable
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
+
+        Music bgMusic = new Music();
+        bgMusic.playMusic("res/sounds/music.wav");
+
     }
 
     public static Game getGame(String title, int width, int height)

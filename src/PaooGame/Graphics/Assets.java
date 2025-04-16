@@ -36,6 +36,7 @@ public class Assets
     public static BufferedImage bridge;
     public static BufferedImage coin ;
     public static BufferedImage key;
+    public static BufferedImage guardian;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -50,8 +51,10 @@ public class Assets
         SpriteSheet sheet2 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet2.png"));
         SpriteSheet sheet3 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet3.png"));
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
+        SpriteSheet grassSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/grass1.png"));
 
-            /// Se obtin subimaginile corespunzatoare elementelor necesare.
+
+        /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);
 ////        soil = sheet.crop(4, 2);
 ////        water = sheet3.crop(10, 95);
@@ -62,11 +65,12 @@ public class Assets
 ////        coin = sheet.crop(42,40);
 ////        key = sheet.crop(56,40);
 
-        grass = sheet.crop(25, 9);
+        grass=grassSheet.crop(0,0);
         water = sheet3.crop(1, 1);
         greenTree = sheet.crop(14, 13);
-        yellowTree = sheet.crop(16,13);
+        yellowTree = sheet.crop(15,13);
         soil = sheet.crop(2, 4);
+        guardian=sheet.crop(6,62);
         bridge = sheet.crop(11,18);
         coin = sheet.crop(41,40);
         key = sheet.crop(55,40);

@@ -28,7 +28,7 @@ public class PlayState extends State
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
-        hero = new Hero(refLink,250, 500);
+        hero = new Hero(refLink,1050, 2050);
     }
 
     /*! \fn public void Update()

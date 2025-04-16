@@ -1,0 +1,58 @@
+package PaooGame;
+import PaooGame.Items.Character;
+
+import java.awt.*;
+import java.awt.geom.AffineTransform;
+
+public class Camera {
+    private Rectangle bounds; // limitele vizibile ale camerei
+    private double x; //coordonata x a camerei
+    private double y; //coordonata y a camerei
+    private double scale; // factorul de scalare al camerei
+
+    // starea camerei; poziție și dimensiune
+    public Camera(double x, double y, double width, double height) {
+        this.bounds = new Rectangle((int) x, (int) y, (int) width, (int) height);
+        this.x = x;
+        this.y = y;
+        this.scale = 4.0;
+    }
+    // metoda prin care se setează poziția camerei
+    public void setPosition(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+    // metoda prin care se setează factorul de scalare, daca este nevoie de el
+    public void setScale(double scale) {
+        this.scale = scale;
+    }
+    public double getScale()
+    {
+        return scale;
+    }
+    public double getX()
+    {
+        return x;
+    }
+    public double getY()
+    {
+        return y;
+    }
+    // metoda de aplicare a matricei de vizualizare a camerei
+    public void apply(Graphics2D g2d) {
+        AffineTransform transform = new AffineTransform();
+        transform.translate(-x, -y); // translarea poziției camerei
+        transform.scale(scale, scale); // aplicarea factorului de scală
+        g2d.setTransform(transform);
+    }
+    // metoda returnează limitele vizibile ale camerei
+    public Rectangle getBounds() {
+        return bounds;
+    }
+    public void updateCamera(Character target)
+    {
+        this.x = target.GetX() - bounds.width / 2.0 + target.GetWidth() / 2.0;
+        this.y = target.GetY() - bounds.height / 2.0 + target.GetHeight() / 2.0;
+        bounds.setLocation((int)x ,(int)y);
+    }
+}
