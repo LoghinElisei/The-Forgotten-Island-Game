@@ -19,6 +19,7 @@ public abstract class Item
     protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
     protected Rectangle normalBounds;   /*!< Dreptunghiul de coliziune aferent starii obisnuite(spatiul ocupat de entitate in mod normal), poate fi mai mic sau mai mare decat dimensiunea imaginii sale.*/
     protected Rectangle attackBounds;   /*!< Dreptunghiul de coliziune aferent starii de atac.*/
+    protected int spriteNum = 1, spriteCounter = 0;
     protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
 
     /*! \fn public Item(RefLinks refLink, float x, float y, int width, int height)
@@ -129,5 +130,13 @@ public abstract class Item
     public void SetAttackMode()
     {
         bounds = attackBounds;
+    }
+
+    public void changeSpriteNum(){
+        if (spriteNum == 3) {
+            spriteNum = 1;
+        } else {
+            spriteNum++;
+        }
     }
 }

@@ -72,13 +72,13 @@ public class Assets
         key = sheet.crop(55,40);
         stone = sheet.crop(60,11);
 
-        heroUp1 = mcSheet.crop(0,1);
-        heroUp2 = mcSheet.crop(1,1);
-        heroUp3 = mcSheet.crop(2,1);
+        heroUp1 = mcSheet.crop(0,3);
+        heroUp2 = mcSheet.crop(1,3);
+        heroUp3 = mcSheet.crop(2,3);
 
-        heroDown1 = mcSheet.crop(0,3);
-        heroDown2 = mcSheet.crop(1,3);
-        heroDown3 = mcSheet.crop(2,3);
+        heroDown1 = mcSheet.crop(0,0);
+        heroDown2 = mcSheet.crop(1,0);
+        heroDown3 = mcSheet.crop(2,0);
 
         heroLeft1 = mcSheet.crop(0, 1);
         heroLeft2 = mcSheet.crop(1, 1);

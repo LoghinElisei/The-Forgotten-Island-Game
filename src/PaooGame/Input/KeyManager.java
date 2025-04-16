@@ -73,7 +73,12 @@ public class KeyManager implements KeyListener
     {
 
     }
-
+    public boolean keyHasBeenPressed(){
+        if (up || down || left || right){
+            return true;
+        }
+        return false;
+    }
     public boolean IsEscJustPressed() {
         return esc && !lastEscState;
     }

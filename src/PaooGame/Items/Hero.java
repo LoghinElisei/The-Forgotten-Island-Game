@@ -18,7 +18,6 @@ import PaooGame.Graphics.Assets;
 public class Hero extends Character
 {
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
-    private int spriteNum, spriteCounter;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
 
@@ -31,7 +30,6 @@ public class Hero extends Character
             ///Apel al constructorului clasei de baza
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
             ///Seteaza imaginea de start a eroului
-        image = Assets.heroRight1;
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
         normalBounds.x = 16;
         normalBounds.y = 16;
@@ -51,40 +49,21 @@ public class Hero extends Character
     @Override
     public void Update()
     {
-            ///Verifica daca a fost apasata o tasta
-        GetInput();
+        ///Verifica daca a fost apasata o tasta
+        if (refLink.GetKeyManager().keyHasBeenPressed()) {
+            GetInput();
             ///Actualizeaza pozitia
-        Move();
+            Move();
             ///Actualizeaza imaginea
-        if(refLink.GetKeyManager().left == true)
-        {
-            switch (spriteNum) {
-                case 1: image = Assets.heroLeft1; break;
-                case 2: image = Assets.heroLeft2; break;
-                case 3: image = Assets.heroLeft3;
-            }
-        } else
-        if(refLink.GetKeyManager().right == true) {
-            switch (spriteNum) {
-                case 1: image = Assets.heroRight1; break;
-                case 2: image = Assets.heroRight2; break;
-                case 3: image = Assets.heroRight3;
-            }
-        } else
-        if(refLink.GetKeyManager().up == true) {
-            switch (spriteNum) {
-                case 1: image = Assets.heroUp1; break;
-                case 2: image = Assets.heroUp2; break;
-                case 3: image = Assets.heroUp3;
-            }
-        } else
-        if(refLink.GetKeyManager().down == true) {
-            switch (spriteNum) {
-                case 1: image = Assets.heroDown1; break;
-                case 2: image = Assets.heroDown2; break;
-                case 3: image = Assets.heroDown3;
+
+            spriteCounter++;
+            if (spriteCounter > 10)
+            {
+                changeSpriteNum();
+                spriteCounter = 0;
             }
         }
+
     }
 
     /*! \fn private void GetInput()
@@ -98,36 +77,26 @@ public class Hero extends Character
             ///Verificare apasare tasta "sus"
         if(refLink.GetKeyManager().up)
         {
+            direction = "up";
             yMove = -speed;
         } else
             ///Verificare apasare tasta "jos"
         if(refLink.GetKeyManager().down)
         {
+            direction = "down";
             yMove = speed;
         } else
             ///Verificare apasare tasta "left"
         if(refLink.GetKeyManager().left)
         {
+            direction = "left";
             xMove = -speed;
         } else
             ///Verificare apasare tasta "dreapta"
         if(refLink.GetKeyManager().right)
         {
+            direction = "right";
             xMove = speed;
-        }
-        spriteCounter++;
-        if (spriteCounter > 10)
-        {
-            if (spriteNum == 1) {
-                spriteNum = 2;
-            } else if (spriteNum == 2)
-            {
-                spriteNum = 3;
-            } else if (spriteNum == 1)
-            {
-                spriteNum = 1;
-            }
-            spriteCounter = 0;
         }
     }
 
@@ -139,6 +108,35 @@ public class Hero extends Character
     @Override
     public void Draw(Graphics g)
     {
+        switch (direction) {
+            case "up":
+                switch (spriteNum) {
+                    case 1: image = Assets.heroUp1; break;
+                    case 2: image = Assets.heroUp2; break;
+                    case 3: image = Assets.heroUp3;
+                }
+                break;
+            case "down":
+                switch (spriteNum) {
+                    case 1: image = Assets.heroDown1; break;
+                    case 2: image = Assets.heroDown2; break;
+                    case 3: image = Assets.heroDown3;
+                }
+                break;
+            case "left":
+                switch (spriteNum) {
+                    case 1: image = Assets.heroLeft1; break;
+                    case 2: image = Assets.heroLeft2; break;
+                    case 3: image = Assets.heroLeft3;
+                }
+                break;
+            case "right":
+                switch (spriteNum) {
+                    case 1: image = Assets.heroRight1; break;
+                    case 2: image = Assets.heroRight2; break;
+                    case 3: image = Assets.heroRight3;
+                }
+        }
         g.drawImage(image, (int)x, (int)y, width, height, null);
 
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
