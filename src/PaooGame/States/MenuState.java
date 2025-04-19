@@ -127,7 +127,6 @@ public class MenuState extends State
 
     private void handleMouseHover() {
         Point mousePos = refLink.GetMouseManager().getMousePosition();
-
         for (Button b: buttons) {
             b.setHovered(b.getBounds().contains(mousePos));
         }
