@@ -64,7 +64,7 @@ public class Game implements Runnable
     ///                 *              *          *               *        *             *
     ///                 ****************          *****************        ***************
 
-    private Graphics        g;          /*!< Referinta catre un context grafic.*/
+    private Graphics2D        g;          /*!< Referinta catre un context grafic.*/
 
         ///Available states
     public State playState;            /*!< Referinta catre joc.*/
@@ -247,9 +247,9 @@ public class Game implements Runnable
         {
             if (State.GetState() == playState) {
                 BufferedImage screenshot = new BufferedImage(refLink.GetWidth(), refLink.GetHeight(), BufferedImage.TYPE_INT_ARGB);
-                Graphics g = screenshot.createGraphics();
-                refLink.GetGame().playState.Draw(g);
-                g.dispose();
+                Graphics2D g2d = screenshot.createGraphics();
+                refLink.GetGame().playState.Draw(g2d);
+                g2d.dispose();
                 State.SetState(new PauseState(refLink, screenshot));
             } else if (State.GetState() == pauseState) {
                 State.SetState(new PlayState(refLink));
@@ -292,7 +292,7 @@ public class Game implements Runnable
             }
         }
             /// Se obtine contextul grafic curent in care se poate desena.
-        g = bs.getDrawGraphics();
+        g = (Graphics2D) bs.getDrawGraphics();
             /// Se sterge ce era
         g.clearRect(0, 0, wnd.GetWndWidth(), wnd.GetWndHeight());
 

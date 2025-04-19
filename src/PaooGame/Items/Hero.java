@@ -113,7 +113,7 @@ public class Hero extends Character
         \brief g Contextul grafi in care trebuie efectuata desenarea eroului.
      */
     @Override
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g2d)
     {
         switch (direction) {
             case "up":
@@ -144,8 +144,7 @@ public class Hero extends Character
                     case 3: image = Assets.heroRight3;
                 }
         }
-//        g.drawImage(image, (int)x, (int)y, width, height, null);
-          g.drawImage(image,screenX,screenY,width,height,null);
+          g2d.drawImage(image,screenX,screenY,width,height,null);
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
         //g.setColor(Color.blue);
         //g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);

@@ -47,7 +47,7 @@ public class PlayState extends State
         \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
      */
     @Override
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g)
     {
         map.Draw(g);
         hero.Draw(g);

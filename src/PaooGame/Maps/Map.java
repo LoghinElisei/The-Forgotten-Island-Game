@@ -18,7 +18,6 @@ public class Map
     private int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     private int [][] collision;
     public static Camera camera = new Camera(300,300,1408,1056);
-    public Graphics2D graphics2D ;
     /*! \fn public Map(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
 
@@ -45,9 +44,8 @@ public class Map
 
         \param g Contextl grafi in care se realizeaza desenarea.
      */
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g2d)
     {
-        Graphics2D g2d = (Graphics2D) g;
         camera.apply(g2d);
         //Determină limitele vizibile pe baza poziției camerei și dimensiunii dalelor
         int startX = 0;

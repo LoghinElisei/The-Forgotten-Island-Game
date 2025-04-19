@@ -1,6 +1,5 @@
 package PaooGame.States;
 
-import PaooGame.Graphics.ImageLoader;
 import PaooGame.Input.MouseManager;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
@@ -8,8 +7,6 @@ import PaooGame.Graphics.Button;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -66,7 +63,7 @@ public class MenuState extends State
         \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
      */
     @Override
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g2d)
     {
         if (backgroundImage != null) {
 //            int imgW = backgroundImage.getWidth();
@@ -82,29 +79,29 @@ public class MenuState extends State
 //            int x = (refLink.GetWidth() - drawW) / 2;
 //            int y = (refLink.GetHeight() - drawH) / 2;
 
-            g.drawImage(backgroundImage, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
+            g2d.drawImage(backgroundImage, 0, 0, refLink.GetWidth(), refLink.GetHeight(), null);
         } else {
-            g.setColor(Color.BLACK);
-            g.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
+            g2d.setColor(Color.BLACK);
+            g2d.fillRect(0, 0, refLink.GetWidth(), refLink.GetHeight());
         }
 
-        g.setColor(Color.decode("#00697d"));
-        g.setFont(new Font("Roboto", Font.BOLD, 48));
+        g2d.setColor(Color.decode("#00697d"));
+        g2d.setFont(new Font("Roboto", Font.BOLD, 48));
         String text = "MAIN MENU";
 
-        int x = getXForCenteredText(text, g);
+        int x = getXForCenteredText(text, g2d);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
-        g.drawString(text, x, y);
+        g2d.drawString(text, x, y);
         for (Button b: buttons)
         {
-            b.draw(g, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
+            b.draw(g2d, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
         }
     }
 
-    private int getXForCenteredText(String text, Graphics g)
+    private int getXForCenteredText(String text, Graphics2D g2d)
     {
-        int length = (int)g.getFontMetrics().getStringBounds(text, g).getWidth();
+        int length = (int)g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         int x = refLink.GetWidth() / 2  - length / 2;
 
         return x;

@@ -63,7 +63,7 @@ public class PauseState extends State
         \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
      */
     @Override
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g)
     {
         g.drawImage(blurredBackground, 0, 0, null);
 
@@ -81,7 +81,7 @@ public class PauseState extends State
         }
     }
 
-    private int getXForCenteredText(String text, Graphics g)
+    private int getXForCenteredText(String text, Graphics2D g)
     {
         int length = (int)g.getFontMetrics().getStringBounds(text, g).getWidth();
         int x = refLink.GetWidth() / 2  - length / 2;

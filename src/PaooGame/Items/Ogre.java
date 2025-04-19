@@ -16,7 +16,7 @@ public class Ogre extends Character {
     }
 
     @Override
-    public void Draw(Graphics g) {
+    public void Draw(Graphics2D g2d) {
 
     }
 }

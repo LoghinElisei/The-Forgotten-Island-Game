@@ -37,7 +37,7 @@ public class SettingsState extends State
         \param g Contextul grafic in care trebuie sa deseneze starea setarilor pe ecran.
      */
     @Override
-    public void Draw(Graphics g)
+    public void Draw(Graphics2D g)
     {
 
     }
