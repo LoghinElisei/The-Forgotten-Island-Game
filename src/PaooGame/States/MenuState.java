@@ -139,7 +139,8 @@ public class MenuState extends State
                 System.out.println("Load Game");
                 break;
             case "New Game":
-                State.SetState(new PlayState(refLink));
+                refLink.GetGame().playState = new PlayState(refLink);
+                State.SetState(refLink.GetGame().playState);
                 break;
             case "ScoreBoard":
                 System.out.println("Loading ScoreBoard...");

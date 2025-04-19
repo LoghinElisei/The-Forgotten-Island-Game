@@ -246,13 +246,17 @@ public class Game implements Runnable
         if (keyManager.IsEscJustPressed())
         {
             if (State.GetState() == playState) {
+
                 BufferedImage screenshot = new BufferedImage(refLink.GetWidth(), refLink.GetHeight(), BufferedImage.TYPE_INT_ARGB);
                 Graphics2D g2d = screenshot.createGraphics();
                 refLink.GetGame().playState.Draw(g2d);
                 g2d.dispose();
-                State.SetState(new PauseState(refLink, screenshot));
+
+                refLink.GetGame().pauseState = new PauseState(refLink, screenshot);
+                State.SetState(refLink.GetGame().pauseState);
+
             } else if (State.GetState() == pauseState) {
-                State.SetState(new PlayState(refLink));
+                State.SetState(playState);
             }
             return;
         }

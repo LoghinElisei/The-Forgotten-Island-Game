@@ -10,6 +10,7 @@ import java.awt.geom.AffineTransform;
 /*! \class public class Map
     \brief Implementeaza notiunea de harta a jocului.
  */
+
 public class Map
 {
     private RefLinks refLink;   /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
