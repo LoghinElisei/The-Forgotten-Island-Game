@@ -252,7 +252,7 @@ public class Game implements Runnable
                 g.dispose();
                 State.SetState(new PauseState(refLink, screenshot));
             } else if (State.GetState() == pauseState) {
-                State.SetState(playState);
+                State.SetState(new PlayState(refLink));
             }
             return;
         }

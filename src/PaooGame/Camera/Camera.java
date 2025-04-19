@@ -1,4 +1,4 @@
-package PaooGame;
+package PaooGame.Camera;
 import PaooGame.Items.Character;
 
 import java.awt.*;

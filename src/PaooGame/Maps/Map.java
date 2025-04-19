@@ -1,6 +1,6 @@
 package PaooGame.Maps;
 
-import PaooGame.Camera;
+import PaooGame.Camera.Camera;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
