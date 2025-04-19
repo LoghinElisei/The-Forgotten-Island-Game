@@ -1,5 +1,8 @@
 package PaooGame.States;
 
+import PaooGame.Creator.HeroCreator.HeroItemCreator;
+import PaooGame.Creator.ItemCreator;
+import PaooGame.Creator.ItemType;
 import PaooGame.Items.Hero;
 import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
@@ -19,8 +22,7 @@ public class PlayState extends State
 
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public PlayState(RefLinks refLink)
-    {
+    public PlayState(RefLinks refLink) {
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
@@ -28,7 +30,8 @@ public class PlayState extends State
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
-        hero = new Hero(refLink,1050, 2050);
+        ItemCreator heroCreator = new HeroItemCreator();
+        hero = (Hero) heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
     }
 
     /*! \fn public void Update()

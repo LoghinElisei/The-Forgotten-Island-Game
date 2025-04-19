@@ -6,8 +6,9 @@ import java.awt.*;
 
 public class Ogre extends Character {
 
-    public Ogre(RefLinks refLink, float x, float y, int width, int height) {
-        super(refLink, x, y, width, height);
+    public Ogre(RefLinks refLink, float x, float y)
+    {
+        super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
     }
 
     @Override
