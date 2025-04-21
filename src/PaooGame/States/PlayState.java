@@ -3,7 +3,7 @@ package PaooGame.States;
 import PaooGame.Creator.HeroCreator.HeroItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
-import PaooGame.Items.Hero;
+import PaooGame.Items.Item;
 import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
 
@@ -14,7 +14,7 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
-    private Hero hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
+    private Item hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
 
     /*! \fn public PlayState(RefLinks refLink)
@@ -31,7 +31,7 @@ public class PlayState extends State
         refLink.SetMap(map);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
-        hero = (Hero) heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+        hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
     }
 
     /*! \fn public void Update()

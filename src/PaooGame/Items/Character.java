@@ -1,6 +1,10 @@
 package PaooGame.Items;
 
+import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
+
+import static java.lang.Math.round;
 
 /*! \class public abstract class Character extends Item
     \brief Defineste notiunea abstracta de caracter/individ/fiinta din joc.
@@ -42,8 +46,8 @@ public abstract class Character extends Item
         direction = DEFAULT_DIRECTION;
         xMove   = 0;
         yMove   = 0;
-        screenX=  250;
-        screenY = 500;
+        screenX=  refLink.GetGame().GetWidth()/2 - 8;
+        screenY = refLink.GetGame().GetHeight()/2 - 8;
     }
 
     /*! \fn public void Move()
@@ -53,8 +57,8 @@ public abstract class Character extends Item
     {
             ///Modifica pozitia caracterului pe axa X.
             ///Modifica pozitia caracterului pe axa Y.
-        MoveX();
-        MoveY();
+            MoveX();
+            MoveY();
     }
 
     /*! \fn public void MoveX()
@@ -74,6 +78,8 @@ public abstract class Character extends Item
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
         y += yMove;
     }
+
+
 
     /*! \fn public int GetLife()
         \brief Returneaza viata caracterului.

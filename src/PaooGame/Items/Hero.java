@@ -2,6 +2,7 @@ package PaooGame.Items;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.lang.reflect.MalformedParameterizedTypeException;
 
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
@@ -144,9 +145,12 @@ public class Hero extends Character
                     case 3: image = Assets.heroRight3;
                 }
         }
-          g2d.drawImage(image,screenX,screenY,width,height,null);
+        g2d.drawImage(image,screenX,screenY,width,height,null);
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
-        //g.setColor(Color.blue);
-        //g.fillRect((int)(x + bounds.x), (int)(y + bounds.y), bounds.width, bounds.height);
+        g2d.setColor(new Color(255, 0, 0, 150)); // semi-transparent red
+//        int leftCorner = x  - bounds.width / 2;
+
+        // Draw the collision box centered on the character
+//        g2d.drawRect(, , bounds.width, bounds.height);
     }
 }

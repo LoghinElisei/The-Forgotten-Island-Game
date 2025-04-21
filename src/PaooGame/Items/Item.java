@@ -39,9 +39,9 @@ public abstract class Item
         this.height = height;   /*!< Retine inaltimea imaginii.*/
         this.refLink = refLink; /*!< Retine the "shortcut".*/
 
-            ///Creaza dreptunghi de coliziune pentru modul normal, aici a fost stabilit la dimensiunea imaginii dar poate fi orice alta dimensiune
-        normalBounds = new Rectangle(0, 0, width, height);
-            ///Creaza dreptunghi de coliziune pentru modul de atack, aici a fost stabilit la dimensiunea imaginii dar poate fi orice alta dimensiune
+            ///Creeaza dreptunghi de coliziune pentru modul normal
+        normalBounds = new Rectangle(8, 16, 32, 32);
+            ///Creeaza dreptunghi de coliziune pentru modul de attack, aici a fost stabilit la dimensiunea imaginii dar poate fi orice alta dimensiune
         attackBounds = new Rectangle(0, 0, width, height);
             ///Dreptunghiul de coliziune implicit este setat ca fiind cel normal
         bounds = normalBounds;
