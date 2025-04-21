@@ -15,16 +15,16 @@ import static java.lang.Math.round;
 public abstract class Character extends Item
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
-    public static final float DEFAULT_SPEED         = 5.0f; /*!< Viteza implicita a unu caracter.*/
+    public static final int DEFAULT_SPEED         = 5; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_CREATURE_WIDTH  = 130;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_CREATURE_HEIGHT = 130;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
     protected int life;     /*!< Retine viata caracterului.*/
-    protected float speed;  /*!< Retine viteza de deplasare caracterului.*/
+    protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected String direction;
-    protected float xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
-    protected float yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
+    protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
+    protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
     public int screenX;
     public  int screenY;
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
@@ -36,7 +36,7 @@ public abstract class Character extends Item
         \param width Latimea imaginii caracterului.
         \param height Inaltimea imaginii caracterului.
      */
-    public Character(RefLinks refLink, float x, float y, int width, int height)
+    public Character(RefLinks refLink, int x, int y, int width, int height)
     {
             ///Apel constructor la clasei de baza
         super(refLink, x,y, width, height);
@@ -92,7 +92,7 @@ public abstract class Character extends Item
     /*! \fn public int GetSpeed()
         \brief Returneaza viteza caracterului.
      */
-    public float GetSpeed()
+    public int GetSpeed()
     {
         return speed;
     }
@@ -108,14 +108,14 @@ public abstract class Character extends Item
     /*! \fn public void SetSpeed(float speed)
         \brief
      */
-    public void SetSpeed(float speed) {
+    public void SetSpeed(int speed) {
         this.speed = speed;
     }
 
     /*! \fn public float GetXMove()
         \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
      */
-    public float GetXMove()
+    public int GetXMove()
     {
         return xMove;
     }
@@ -123,7 +123,7 @@ public abstract class Character extends Item
     /*! \fn public float GetYMove()
         \brief Returneaza distanta in pixeli pe axa Y cu care este actualizata pozitia caracterului.
      */
-    public float GetYMove()
+    public int GetYMove()
     {
         return yMove;
     }
@@ -131,7 +131,7 @@ public abstract class Character extends Item
     /*! \fn public void SetXMove(float xMove)
         \brief Seteaza distanta in pixeli pe axa X cu care va fi actualizata pozitia caracterului.
      */
-    public void SetXMove(float xMove)
+    public void SetXMove(int xMove)
     {
         this.xMove = xMove;
     }
@@ -139,7 +139,7 @@ public abstract class Character extends Item
     /*! \fn public void SetYMove(float yMove)
         \brief Seteaza distanta in pixeli pe axa Y cu care va fi actualizata pozitia caracterului.
      */
-    public void SetYMove(float yMove)
+    public void SetYMove(int yMove)
     {
         this.yMove = yMove;
     }

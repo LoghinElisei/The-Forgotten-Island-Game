@@ -12,8 +12,8 @@ public abstract class Item
 {
         ///asa cum s-a mai precizat, coordonatele x si y sunt de tip float pentru a se elimina erorile de rotunjire
         ///ce pot sa apara in urma calculelor, urmand a se converti la intreg doar in momentul desenarii.
-    protected float x;                  /*!< Pozitia pe axa X a "tablei" de joc a imaginii entitatii.*/
-    protected float y;                  /*!< Pozitia pe axa Y a "tablei" de joc a imaginii entitatii.*/
+    protected int x;                  /*!< Pozitia pe axa X a "tablei" de joc a imaginii entitatii.*/
+    protected int y;                  /*!< Pozitia pe axa Y a "tablei" de joc a imaginii entitatii.*/
     protected int width;                /*!< Latimea imaginii entitatii.*/
     protected int height;               /*!< Inaltimea imaginii entitatii.*/
     protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
@@ -31,7 +31,7 @@ public abstract class Item
         \param  width   Latimea imaginii entitatii.
         \param  height  Inaltimea imaginii entitatii.
      */
-    public Item(RefLinks refLink, float x, float y, int width, int height)
+    public Item(RefLinks refLink, int x, int y, int width, int height)
     {
         this.x = x;             /*!< Retine coordonata pe axa X.*/
         this.y = y;             /*!< Retine coordonata pe axa X.*/
@@ -55,7 +55,7 @@ public abstract class Item
     /*! \fn public float GetX()
         \brief Returneaza coordonata pe axa X.
      */
-    public float GetX()
+    public int GetX()
     {
         return x;
     }
@@ -63,7 +63,7 @@ public abstract class Item
     /*! \fn public float GetY()
         \brief Returneaza coordonata pe axa Y.
      */
-    public float GetY()
+    public int GetY()
     {
         return y;
     }
@@ -87,7 +87,7 @@ public abstract class Item
     /*! \fn public float SetX()
         \brief Seteaza coordonata pe axa X.
      */
-    public void SetX(float x)
+    public void SetX(int x)
     {
         this.x = x;
     }
@@ -95,7 +95,7 @@ public abstract class Item
     /*! \fn public float SetY()
         \brief Seteaza coordonata pe axa Y.
      */
-    public void SetY(float y)
+    public void SetY(int y)
     {
         this.y = y;
     }

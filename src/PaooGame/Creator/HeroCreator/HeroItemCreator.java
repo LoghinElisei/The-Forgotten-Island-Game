@@ -8,7 +8,7 @@ import PaooGame.RefLinks;
 
 public class HeroItemCreator extends ItemCreator {
     @Override
-    protected Item createItem(ItemType type, RefLinks refLink, float x, float y) {
+    protected Item createItem(ItemType type, RefLinks refLink, int x, int y) {
         return new Hero(refLink, x, y);
     }
 }

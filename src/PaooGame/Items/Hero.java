@@ -27,7 +27,7 @@ public class Hero extends Character
         \param x Pozitia initiala pe axa X a eroului.
         \param y Pozitia initiala pe axa Y a eroului.
      */
-    public Hero(RefLinks refLink, float x, float y)
+    public Hero(RefLinks refLink, int x, int y)
     {
             ///Apel al constructorului clasei de baza
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
