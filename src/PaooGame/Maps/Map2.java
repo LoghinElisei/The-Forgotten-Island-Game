@@ -22,7 +22,7 @@ public class Map2 extends Map
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.
-        width = 44;
+        width = 54;
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
         ///Se construieste matricea de coduri de dale
@@ -44,7 +44,7 @@ public class Map2 extends Map
      */
     @Override
     protected void ThematicMap() {
-        String path = "res/maps/thematic/map1.txt";
+        String path = "res/maps/thematic/map2.txt";
 
         int [][] map = new int[height][width];
         tiles=new int[width][height];
@@ -86,7 +86,7 @@ public class Map2 extends Map
     protected void CollisionMap()
     {
 
-        String path = "res/maps/collision/map1.txt";
+        String path = "res/maps/collision/map2.txt";
 
         int [][] map = new int[height][width];
         collision=new int[width][height];

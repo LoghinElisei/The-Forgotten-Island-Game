@@ -99,8 +99,10 @@ public class Game implements Runnable
         keyManager = new KeyManager();
         mouseManager = new MouseManager();
 
-        Music bgMusic = new Music();
+        Music bgMusic = Music.getInstance();
+        bgMusic.setVolume(0.6f);
         bgMusic.playMusic("res/sounds/music.wav");
+        bgMusic.setVolume(0.6f);
 
     }
 

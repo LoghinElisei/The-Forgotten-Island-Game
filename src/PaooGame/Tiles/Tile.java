@@ -24,6 +24,9 @@ public class Tile
     public static Tile stoneTile = new StoneTile(765);
     public static Tile guardian = new GuardianTile(3);
     public static Tile portal = new PortalTile(1);
+    public static Tile obsidian = new ObsidianTile(193);
+    public static Tile lava = new LavaTile(409);
+    public static Tile flame = new FlameTile(72);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

@@ -38,6 +38,9 @@ public class Assets
     public static BufferedImage key;
     public static BufferedImage guardian;
     public static BufferedImage portal;
+    public static BufferedImage obsidian;
+    public static BufferedImage lava;
+    public static BufferedImage flame;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -71,12 +74,15 @@ public class Assets
         tree1 = sheet.crop(14, 13);
         tree2 = sheet.crop(15,13);
         soil = sheet.crop(2, 4);
+        obsidian = sheet.crop(40, 2);
         guardian=sheet.crop(6,62);
         bridge = sheet.crop(11,18);
         coin = sheet.crop(41,40);
         key = sheet.crop(55,40);
         stone = sheet.crop(60,11);
         portal = sheet.crop(50,68);
+        lava = sheet.crop(0,6);
+        flame = sheet.crop(47,0);
 
         heroUp1 = mcSheet.crop(0,3);
         heroUp2 = mcSheet.crop(1,3);

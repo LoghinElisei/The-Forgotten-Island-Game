@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import PaooGame.Input.MouseManager;
+import PaooGame.Music.Music;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 import java.awt.*;
@@ -17,6 +18,8 @@ public class PauseState extends State
 {
     private final ArrayList<Button> buttons;
     private BufferedImage blurredBackground;
+    private final Rectangle volumeSlider;
+    private int volumeLevel = 50;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -46,6 +49,14 @@ public class PauseState extends State
         buttons.add(new Button("Continue", new Rectangle(centerX, startY, width, height)));
         buttons.add(new Button("Save", new Rectangle(centerX, startY + height + gap, width, height)));
         buttons.add(new Button("Exit", new Rectangle(centerX, startY + 2 * (height + gap), width, height)));
+
+        //slider volum
+        int sliderWidth = 300;
+        int sliderHeight = 50;
+        int sliderX = (screenWidth - sliderWidth) / 2;
+        int sliderY = startY + 3 * (height + gap) + 40; // Sub butoane
+        volumeSlider = new Rectangle(sliderX, sliderY, sliderWidth, sliderHeight);
+
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -55,6 +66,7 @@ public class PauseState extends State
     {
         handleMouseHover();
         handleMouseInput();
+        handleMouseDrag();
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -79,6 +91,48 @@ public class PauseState extends State
         {
             b.draw(g, Color.decode("#FFFFFF"), Color.decode("#FFFFFF"), Color.decode("#324700"));
         }
+
+        drawVolumeSlider(g);
+    }
+
+    private void handleMouseDrag() {
+        MouseManager m = refLink.GetMouseManager();
+
+        // Verificăm dacă mouse-ul este apăsat
+        if (m.isMousePressed()) {
+            Point mousePos = m.getMousePosition();
+
+            // Dacă mouse-ul este deasupra slider-ului
+            if (volumeSlider.contains(mousePos)) {
+                int sliderX = mousePos.x - volumeSlider.x;
+                volumeLevel = Math.max(0, Math.min(100, (int) (sliderX / (float) volumeSlider.width * 100)));
+                Music.getInstance().setVolume(volumeLevel / 100.0f); // Actualizează volumul în timp real
+            }
+        }
+    }
+
+    private void drawVolumeSlider(Graphics2D g) {
+        // Fundalul slider-ului
+        g.setColor(Color.LIGHT_GRAY);
+        g.fillRect(volumeSlider.x, volumeSlider.y, volumeSlider.width, volumeSlider.height);
+
+        // Nivelul volumului (bară umplută)
+        g.setColor(Color.GREEN);
+        int filledWidth = (int) (volumeSlider.width * (volumeLevel / 100.0));
+        g.fillRect(volumeSlider.x, volumeSlider.y, filledWidth, volumeSlider.height);
+
+        // Textul volumului în interiorul slider-ului
+        String volumeText = volumeLevel + "%";
+        g.setFont(new Font("Arial", Font.BOLD, 27));
+        g.setColor(Color.BLACK); // Culoare text (asigură contrast cu fundalul verde)
+
+        // Calculăm poziția textului pentru a fi centrat
+        int textWidth = g.getFontMetrics().stringWidth(volumeText);
+        int textX = volumeSlider.x + (volumeSlider.width - textWidth) / 2;
+        int textY = volumeSlider.y + ((volumeSlider.height - g.getFontMetrics().getHeight()) / 2)
+                + g.getFontMetrics().getAscent();
+
+        g.drawString(volumeText, textX, textY);
     }
 
     private int getXForCenteredText(String text, Graphics2D g)
@@ -122,6 +176,14 @@ public class PauseState extends State
         if (m.isMouseClicked())
         {
             Point mousePos = m.getMousePosition();
+
+            // Verifică dacă slider-ul este clicat
+            if (volumeSlider.contains(mousePos)) {
+                int sliderX = mousePos.x - volumeSlider.x;
+                volumeLevel = Math.max(0, Math.min(100, (int) (sliderX / (float) volumeSlider.width * 100)));
+                Music.getInstance().setVolume(volumeLevel / 100.0f); // Actualizează volumul
+            }
+
             for (Button b: buttons)
             {
                 if (b.getBounds().contains(mousePos)) {

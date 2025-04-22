@@ -13,7 +13,6 @@ public class Ogre extends Character {
 
     @Override
     public void Update() {
-
     }
 
     @Override
