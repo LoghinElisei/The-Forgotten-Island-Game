@@ -15,14 +15,15 @@ public class Tile
     /// o singura data in memorie
     public static Tile grassTile        = new GrassTile(600);     /*!< Dala de tip iarba*/
     public static Tile waterTile        = new WaterTile(6090);     /*!< Dala de tip apa*/
-    public static Tile greenTreeTile         = new GreenTreeTile(847);      /*!< Dala de tip copac*/
-    public static Tile yellowTreeTile = new YellowTreeTile(853);
+    public static Tile tree1Tile         = new Tree1Tile(847);      /*!< Dala de tip copac*/
+    public static Tile tree2Tile = new Tree2Tile(853);
     public static Tile soilTile         = new SoilTile(258);      /*!< Dala de tip sol/pamant*/
     public static Tile bridgeTile = new BridgeTile(1163);
     public static Tile coinTile = new CoinTile(2602);
     public static Tile keyTile = new KeyTile(2616);
     public static Tile stoneTile = new StoneTile(765);
     public static Tile guardian = new GuardianTile(3);
+    public static Tile portal = new PortalTile(1);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

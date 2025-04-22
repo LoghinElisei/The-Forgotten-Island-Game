@@ -7,5 +7,4 @@ public class Main
         Game paooGame = Game.getGame("PaooGame", 1408, 1000);
         paooGame.StartGame();
     }
-
 }

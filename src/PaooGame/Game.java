@@ -1,6 +1,6 @@
 package PaooGame;
 
-import Music.Music;
+import PaooGame.Music.Music;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
@@ -60,7 +60,7 @@ public class Game implements Runnable
     ///                         |                                                 |
     ///                 ****************          *****************        ***************
     ///                 *              *   Show   *               *        *             *
-    /// [ Ecran ] <---- * Front Buffer *  <------ * Middle Buffer * <----- * Back Buffer * <---- Draw()
+    /// [ //Ecran ] <---- * Front Buffer *  <------ * Middle Buffer * <----- * Back Buffer * <---- Draw()
     ///                 *              *          *               *        *             *
     ///                 ****************          *****************        ***************
 

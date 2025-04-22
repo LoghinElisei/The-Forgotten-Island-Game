@@ -1,4 +1,4 @@
-package Music;
+package PaooGame.Music;
 
 import javax.sound.sampled.*;
 import java.io.File;

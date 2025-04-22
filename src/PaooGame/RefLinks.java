@@ -2,6 +2,7 @@ package PaooGame;
 
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
+import PaooGame.Maps.Map1;
 
 import PaooGame.Input.KeyManager;
 

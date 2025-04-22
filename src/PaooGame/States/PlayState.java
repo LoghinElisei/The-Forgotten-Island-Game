@@ -4,8 +4,10 @@ import PaooGame.Creator.HeroCreator.HeroItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
 import PaooGame.Items.Item;
-import PaooGame.RefLinks;
 import PaooGame.Maps.Map;
+import PaooGame.Maps.Map2;
+import PaooGame.RefLinks;
+import PaooGame.Maps.Map1;
 
 import java.awt.*;
 
@@ -26,7 +28,7 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map(refLink);
+        map = new Map1(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul

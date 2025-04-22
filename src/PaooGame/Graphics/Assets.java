@@ -30,13 +30,14 @@ public class Assets
     public static BufferedImage soil;
     public static BufferedImage grass;
     public static BufferedImage water;
-    public static BufferedImage greenTree;
-    public static BufferedImage yellowTree;
+    public static BufferedImage tree1;
+    public static BufferedImage tree2;
     public static BufferedImage stone;
     public static BufferedImage bridge;
     public static BufferedImage coin ;
     public static BufferedImage key;
     public static BufferedImage guardian;
+    public static BufferedImage portal;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -67,14 +68,15 @@ public class Assets
 
         grass=grassSheet.crop(0,0);
         water = sheet3.crop(1, 1);
-        greenTree = sheet.crop(14, 13);
-        yellowTree = sheet.crop(15,13);
+        tree1 = sheet.crop(14, 13);
+        tree2 = sheet.crop(15,13);
         soil = sheet.crop(2, 4);
         guardian=sheet.crop(6,62);
         bridge = sheet.crop(11,18);
         coin = sheet.crop(41,40);
         key = sheet.crop(55,40);
         stone = sheet.crop(60,11);
+        portal = sheet.crop(50,68);
 
         heroUp1 = mcSheet.crop(0,3);
         heroUp2 = mcSheet.crop(1,3);

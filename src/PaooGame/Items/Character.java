@@ -1,6 +1,5 @@
 package PaooGame.Items;
 
-import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 

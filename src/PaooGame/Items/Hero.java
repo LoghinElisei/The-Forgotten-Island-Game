@@ -2,12 +2,10 @@ package PaooGame.Items;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.lang.reflect.MalformedParameterizedTypeException;
 
-import PaooGame.Maps.Map;
+import PaooGame.Maps.Map1;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
-import PaooGame.Tiles.Tile;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -56,7 +54,7 @@ public class Hero extends Character
     public void Update()
     {
         ///Verifica daca a fost apasata o tasta
-        Map.camera.updateCamera(this);
+        Map1.camera.updateCamera(this);
         if (refLink.GetKeyManager().keyHasBeenPressed()) {
 
 
@@ -154,6 +152,6 @@ public class Hero extends Character
 
         // Draw the collision box centered on the character
         g2d.setColor(Color.blue);
-        g2d.fillOval((x + bounds.x - Map.camera.getX()), (y + bounds.y - Map.camera.getY()), bounds.width, bounds.height);
+        g2d.fillOval((x + bounds.x - Map1.camera.getX()), (y + bounds.y - Map1.camera.getY()), bounds.width, bounds.height);
     }
 }
