@@ -46,8 +46,9 @@ public abstract class Character extends Item
         direction = DEFAULT_DIRECTION;
         xMove   = 0;
         yMove   = 0;
-        screenX=  refLink.GetGame().GetWidth()/2 - 8;
-        screenY = refLink.GetGame().GetHeight()/2 - 8;
+        screenX = refLink.GetGame().GetWidth()/2 - this.DEFAULT_CREATURE_WIDTH/2;
+        screenY = refLink.GetGame().GetHeight()/2 - this.DEFAULT_CREATURE_HEIGHT/2;
+
     }
 
     /*! \fn public void Move()
@@ -55,10 +56,54 @@ public abstract class Character extends Item
      */
     public void Move()
     {
+        if (!hasCollided())
+        {
+
             ///Modifica pozitia caracterului pe axa X.
             ///Modifica pozitia caracterului pe axa Y.
             MoveX();
             MoveY();
+        }
+    }
+
+    private boolean hasCollided(){
+        int characterLeftX = x/4;
+        int characterRightX = x/4;
+        int characterTopY = y/4;
+        int characterBottomY = y/4;
+
+        int tileSize = Tile.TILE_WIDTH;
+        int characterLeftCol = characterLeftX / tileSize;
+        int characterRightCol = characterRightX / tileSize;
+        int characterTopRow = characterTopY / tileSize;
+        int characterBottomRow = characterBottomY / tileSize;
+
+        int tileNum1, tileNum2;
+
+        switch (direction)
+        {
+            case "up":
+                characterTopRow = (characterTopY + speed) / tileSize;
+                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
+                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterTopRow).GetId();
+                return (tileNum1 != 600 && tileNum2 != 600);
+            case "down":
+                characterBottomRow = (characterBottomY + speed) / tileSize;
+                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterBottomRow).GetId();
+                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
+                return (tileNum1 != 600 && tileNum2 != 600);
+            case "left":
+                characterLeftCol = (characterLeftX + speed) / tileSize;
+                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
+                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
+                return (tileNum1 != 600 && tileNum2 != 600);
+            case "right":
+                characterRightCol = (characterRightX + speed) / tileSize;
+                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
+                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
+                return (tileNum1 != 600 && tileNum2 != 600);
+        }
+        return false;
     }
 
     /*! \fn public void MoveX()

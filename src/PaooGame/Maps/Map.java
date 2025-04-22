@@ -66,11 +66,13 @@ public class Map
                     g2d.setColor(new Color(255, 0, 0, 50)); // transparent red
                     g2d.fillRect(x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
 
+                    g2d.setColor(Color.LIGHT_GRAY);
+                    g2d.drawRect(x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+
                 }
 
                 // OPTIONAL: draw tile borders
-                g2d.setColor(Color.LIGHT_GRAY);
-                g2d.drawRect(x * Tile.TILE_WIDTH, y * Tile.TILE_HEIGHT, Tile.TILE_WIDTH, Tile.TILE_HEIGHT);
+
             }
         }
         g2d.setTransform(new AffineTransform());

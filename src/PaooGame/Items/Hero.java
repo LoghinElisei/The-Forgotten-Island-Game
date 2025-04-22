@@ -7,6 +7,7 @@ import java.lang.reflect.MalformedParameterizedTypeException;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
+import PaooGame.Tiles.Tile;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -148,9 +149,11 @@ public class Hero extends Character
         g2d.drawImage(image,screenX,screenY,width,height,null);
             ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
         g2d.setColor(new Color(255, 0, 0, 150)); // semi-transparent red
-//        int leftCorner = x  - bounds.width / 2;
+
+
 
         // Draw the collision box centered on the character
-//        g2d.drawRect(, , bounds.width, bounds.height);
+        g2d.setColor(Color.blue);
+        g2d.fillOval((x + bounds.x - Map.camera.getX()), (y + bounds.y - Map.camera.getY()), bounds.width, bounds.height);
     }
 }
