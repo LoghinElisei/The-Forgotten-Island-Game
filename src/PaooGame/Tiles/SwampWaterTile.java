@@ -1,17 +1,13 @@
 package PaooGame.Tiles;
-
 import PaooGame.Graphics.Assets;
-
-public class FlameTile extends Tile
-{
-    public FlameTile(int id)
+public class SwampWaterTile extends  Tile{
+    public SwampWaterTile(int id)
     {
-        super(Assets.flame, id);
+        super(Assets.swampWater, id);
     }
     @Override
     public boolean IsSolid()
     {
         return true;
     }
-
 }

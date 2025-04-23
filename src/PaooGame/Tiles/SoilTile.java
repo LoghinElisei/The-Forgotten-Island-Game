@@ -16,5 +16,10 @@ public class SoilTile extends Tile
     {
         super(Assets.soil, id);
     }
+    @Override
+    public boolean IsSolid()
+    {
+        return false;
+    }
 
 }

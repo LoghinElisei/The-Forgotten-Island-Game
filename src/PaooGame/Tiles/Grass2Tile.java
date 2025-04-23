@@ -1,17 +1,13 @@
 package PaooGame.Tiles;
-
 import PaooGame.Graphics.Assets;
-
-public class FlameTile extends Tile
-{
-    public FlameTile(int id)
+public class Grass2Tile extends  Tile{
+    public Grass2Tile(int id)
     {
-        super(Assets.flame, id);
+        super(Assets.grass2, id);
     }
     @Override
     public boolean IsSolid()
     {
-        return true;
+        return false;
     }
-
 }

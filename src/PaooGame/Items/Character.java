@@ -55,7 +55,7 @@ public abstract class Character extends Item
      */
     public void Move()
     {
-        if (!hasCollided())
+        if (true) //(!hasCollided())
         {
 
             ///Modifica pozitia caracterului pe axa X.

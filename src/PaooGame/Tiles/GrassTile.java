@@ -17,4 +17,9 @@ public class GrassTile extends Tile
             /// Apel al constructorului clasei de baza
         super(Assets.grass, id);
     }
+    @Override
+    public boolean IsSolid()
+    {
+        return false;
+    }
 }

@@ -27,6 +27,10 @@ public class Tile
     public static Tile obsidian = new ObsidianTile(193);
     public static Tile lava = new LavaTile(409);
     public static Tile flame = new FlameTile(72);
+    public static Tile boat = new BoatTile(6107);
+    public static Tile swampWater = new SwampWaterTile(1442);
+    public static Tile weed = new WeedTile(6405);
+    public static Tile grass2 = new Grass2Tile(592);
 
     public static final int TILE_WIDTH  = 32;                       /*!< Latimea unei dale.*/
     public static final int TILE_HEIGHT = 32;                       /*!< Inaltimea unei dale.*/

@@ -19,7 +19,7 @@ public class PauseState extends State
     private final ArrayList<Button> buttons;
     private BufferedImage blurredBackground;
     private final Rectangle volumeSlider;
-    private int volumeLevel = 50;
+    private int volumeLevel = 40;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.

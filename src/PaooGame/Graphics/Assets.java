@@ -41,6 +41,10 @@ public class Assets
     public static BufferedImage obsidian;
     public static BufferedImage lava;
     public static BufferedImage flame;
+    public static BufferedImage boat;
+    public static BufferedImage weed;
+    public static BufferedImage swampWater;
+    public static BufferedImage grass2;
 
     /*! \fn public static void Init()
         \brief Functia initializaza referintele catre elementele grafice utilizate.
@@ -56,7 +60,8 @@ public class Assets
         SpriteSheet sheet3 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet3.png"));
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
         SpriteSheet grassSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/grass1.png"));
-
+        SpriteSheet boatSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/boat1.png"));
+        SpriteSheet grass2Sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/Grass3.png"));
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);
@@ -72,7 +77,7 @@ public class Assets
         grass=grassSheet.crop(0,0);
         water = sheet3.crop(1, 1);
         tree1 = sheet.crop(14, 13);
-        tree2 = sheet.crop(15,13);
+        tree2 = sheet.crop(20,13);
         soil = sheet.crop(2, 4);
         obsidian = sheet.crop(40, 2);
         guardian=sheet.crop(6,62);
@@ -82,7 +87,12 @@ public class Assets
         stone = sheet.crop(60,11);
         portal = sheet.crop(50,68);
         lava = sheet.crop(0,6);
+        boat = boatSheet.crop(0,0);
         flame = sheet.crop(47,0);
+        swampWater = sheet.crop(33,22);
+//        grass2 = grass2Sheet.crop(4,0);
+        grass2 = sheet.crop(33,9);
+        weed = grass2Sheet.crop(21,11);
 
         heroUp1 = mcSheet.crop(0,3);
         heroUp2 = mcSheet.crop(1,3);

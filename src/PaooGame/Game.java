@@ -100,9 +100,8 @@ public class Game implements Runnable
         mouseManager = new MouseManager();
 
         Music bgMusic = Music.getInstance();
-        bgMusic.setVolume(0.6f);
         bgMusic.playMusic("res/sounds/music.wav");
-        bgMusic.setVolume(0.6f);
+        bgMusic.setVolume(0.2f);
 
     }
 
