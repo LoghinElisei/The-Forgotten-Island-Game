@@ -15,17 +15,16 @@ public abstract class Character extends Item
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final int DEFAULT_SPEED         = 5; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 130;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 130;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 32 * 4;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 32 * 4;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
     protected int life;     /*!< Retine viata caracterului.*/
     protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
-    protected String direction;
     protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
-    public int screenX;
-    public  int screenY;
+    protected String direction;
+
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
 
@@ -45,8 +44,6 @@ public abstract class Character extends Item
         direction = DEFAULT_DIRECTION;
         xMove   = 0;
         yMove   = 0;
-        screenX = refLink.GetGame().GetWidth()/2 - this.DEFAULT_CREATURE_WIDTH/2;
-        screenY = refLink.GetGame().GetHeight()/2 - this.DEFAULT_CREATURE_HEIGHT/2;
 
     }
 
@@ -55,54 +52,14 @@ public abstract class Character extends Item
      */
     public void Move()
     {
-        if (!hasCollided())
-        {
+//        if (!hasCollided())
+//        {
 
             ///Modifica pozitia caracterului pe axa X.
             ///Modifica pozitia caracterului pe axa Y.
             MoveX();
             MoveY();
-        }
-    }
-
-    private boolean hasCollided(){
-        int characterLeftX = x/4;
-        int characterRightX = x/4;
-        int characterTopY = y/4;
-        int characterBottomY = y/4;
-
-        int tileSize = Tile.TILE_WIDTH;
-        int characterLeftCol = characterLeftX / tileSize;
-        int characterRightCol = characterRightX / tileSize;
-        int characterTopRow = characterTopY / tileSize;
-        int characterBottomRow = characterBottomY / tileSize;
-
-        int tileNum1, tileNum2;
-
-        switch (direction)
-        {
-            case "up":
-                characterTopRow = (characterTopY + speed) / tileSize;
-                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
-                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterTopRow).GetId();
-                return (tileNum1 != 600 && tileNum2 != 600);
-            case "down":
-                characterBottomRow = (characterBottomY + speed) / tileSize;
-                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterBottomRow).GetId();
-                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
-                return (tileNum1 != 600 && tileNum2 != 600);
-            case "left":
-                characterLeftCol = (characterLeftX + speed) / tileSize;
-                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
-                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
-                return (tileNum1 != 600 && tileNum2 != 600);
-            case "right":
-                characterRightCol = (characterRightX + speed) / tileSize;
-                tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow).GetId();
-                tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow).GetId();
-                return (tileNum1 != 600 && tileNum2 != 600);
-        }
-        return false;
+//        }
     }
 
     /*! \fn public void MoveX()
@@ -123,8 +80,6 @@ public abstract class Character extends Item
         y += yMove;
     }
 
-
-
     /*! \fn public int GetLife()
         \brief Returneaza viata caracterului.
      */
@@ -133,9 +88,13 @@ public abstract class Character extends Item
         return life;
     }
 
+    public String getDirection() {
+        return direction;
+    }
     /*! \fn public int GetSpeed()
         \brief Returneaza viteza caracterului.
      */
+
     public int GetSpeed()
     {
         return speed;

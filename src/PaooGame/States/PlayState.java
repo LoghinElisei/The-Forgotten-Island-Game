@@ -34,6 +34,7 @@ public class PlayState extends State
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+//        hero = heroCreator.getItem(ItemType.HERO, refLink,0, 0);
     }
 
     /*! \fn public void Update()

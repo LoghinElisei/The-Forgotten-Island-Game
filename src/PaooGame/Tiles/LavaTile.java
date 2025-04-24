@@ -17,4 +17,8 @@ public class LavaTile extends Tile
         super(Assets.lava, id);
     }
 
+    @Override
+    public boolean IsSolid() {
+        return true;
+    }
 }

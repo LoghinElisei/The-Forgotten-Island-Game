@@ -16,10 +16,13 @@ public abstract class Item
     protected int y;                  /*!< Pozitia pe axa Y a "tablei" de joc a imaginii entitatii.*/
     protected int width;                /*!< Latimea imaginii entitatii.*/
     protected int height;               /*!< Inaltimea imaginii entitatii.*/
-    protected Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
+    public Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
     protected Rectangle normalBounds;   /*!< Dreptunghiul de coliziune aferent starii obisnuite(spatiul ocupat de entitate in mod normal), poate fi mai mic sau mai mare decat dimensiunea imaginii sale.*/
     protected Rectangle attackBounds;   /*!< Dreptunghiul de coliziune aferent starii de atac.*/
     protected int spriteNum = 1, spriteCounter = 0;
+
+    protected boolean collisionOn = false;
+
     protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
 
     /*! \fn public Item(RefLinks refLink, float x, float y, int width, int height)
@@ -47,30 +50,38 @@ public abstract class Item
         bounds = normalBounds;
     }
 
-        ///Metoda abstracta destinata actualizarii starii curente
+    ///Metoda abstracta destinata actualizarii starii curente
     public abstract void Update();
-        ///Metoda abstracta destinata desenarii starii curente
+    ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics2D g2d);
 
+    public boolean getCollisionOn() {
+        return collisionOn;
+    }
+
+    public void setCollisionOn(boolean collisionOn) {
+        this.collisionOn = collisionOn;
+    }
     /*! \fn public float GetX()
         \brief Returneaza coordonata pe axa X.
      */
+
     public int GetX()
     {
         return x;
     }
-
     /*! \fn public float GetY()
         \brief Returneaza coordonata pe axa Y.
      */
+
     public int GetY()
     {
         return y;
     }
-
     /*! \fn public float GetWidth()
         \brief Returneaza latimea entitatii.
      */
+
     public int GetWidth()
     {
         return width;

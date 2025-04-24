@@ -52,10 +52,11 @@ public class Game implements Runnable
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
+
+    private Collision collisionChecker;
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
     /// Modul in care va fi implementata aceasta strategie in cadrul proiectului curent va fi triplu buffer-at
-
     ///                         |------------------------------------------------>|
     ///                         |                                                 |
     ///                 ****************          *****************        ***************
@@ -68,15 +69,13 @@ public class Game implements Runnable
 
         ///Available states
     public State playState;            /*!< Referinta catre joc.*/
+
     public State menuState;        /*!< Referinta catre setari.*/
     public State pauseState;            /*!< Referinta catre menu.*/
     private State aboutState;           /*!< Referinta catre about.*/
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private MouseManager mouseManager;  // ME
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
-
-    private Tile tile; /*!< variabila membra temporara. Este folosita in aceasta etapa doar pentru a desena ceva pe ecran.*/
-
     /*! \fn public PaooGame.Game(String title, int width, int height)
         \brief Constructor de initializare al clasei PaooGame.Game.
 
@@ -87,6 +86,7 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
+
     private Game(String title, int width, int height)
     {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
@@ -105,7 +105,6 @@ public class Game implements Runnable
         bgMusic.setVolume(0.6f);
 
     }
-
     public static Game getGame(String title, int width, int height)
     {
         if (gameInstance == null)
@@ -123,6 +122,7 @@ public class Game implements Runnable
         Sunt construite elementele grafice (assets): dale, player, elemente active si pasive.
 
      */
+
     private void InitGame()
     {
             /// Este construita fereastra grafica.
@@ -135,7 +135,8 @@ public class Game implements Runnable
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         refLink = new RefLinks(this);
-            ///Definirea starilor programului
+        collisionChecker = new Collision(refLink, wnd);
+        ///Definirea starilor programului
         playState       = null;
         pauseState      = null;
         menuState       = new MenuState(refLink);
@@ -143,12 +144,12 @@ public class Game implements Runnable
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(menuState);
     }
-
     /*! \fn public void run()
         \brief Functia ce va rula in thread-ul creat.
 
         Aceasta functie va actualiza starea jocului si va redesena tabla de joc (va actualiza fereastra grafica)
      */
+
     public void run()
     {
             /// Initializeaza obiectul game
@@ -179,12 +180,12 @@ public class Game implements Runnable
         }
 
     }
-
     /*! \fn public synchronized void start()
         \brief Creaza si starteaza firul separat de executie (thread).
 
         Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
      */
+
     public synchronized void StartGame()
     {
         if(runState == false)
@@ -203,12 +204,12 @@ public class Game implements Runnable
             return;
         }
     }
-
     /*! \fn public synchronized void stop()
         \brief Opreste executie thread-ului.
 
         Metoda trebuie sa fie declarata synchronized pentru ca apelul acesteia sa fie semaforizat.
      */
+
     public synchronized void StopGame()
     {
         if(runState == true)
@@ -234,12 +235,12 @@ public class Game implements Runnable
             return;
         }
     }
-
     /*! \fn private void Update()
         \brief Actualizeaza starea elementelor din joc.
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
+
     private void Update()
     {
         ///Determina starea tastelor
@@ -270,12 +271,12 @@ public class Game implements Runnable
             State.GetState().Update();
         }
     }
-
     /*! \fn private void Draw()
         \brief Deseneaza elementele grafice in fereastra coresponzator starilor actualizate ale elementelor.
 
         Metoda este declarata privat deoarece trebuie apelata doar in metoda run()
      */
+
     private void Draw()
     {
             /// Returnez bufferStrategy pentru canvasul existent
@@ -318,35 +319,35 @@ public class Game implements Runnable
             /// elementele grafice ce au fost desenate pe canvas).
         g.dispose();
     }
-
     /*! \fn public int GetWidth()
         \brief Returneaza latimea ferestrei
      */
+
     public int GetWidth()
     {
         return wnd.GetWndWidth();
     }
-
     /*! \fn public int GetHeight()
         \brief Returneaza inaltimea ferestrei
      */
+
     public int GetHeight()
     {
         return wnd.GetWndHeight();
     }
-
     /*! \fn public KeyManager GetKeyManager()
         \brief Returneaza obiectul care gestioneaza tastatura.
      */
+
     public KeyManager GetKeyManager()
     {
         return keyManager;
     }
-
     public MouseManager GetMouseManager()
     {
         return mouseManager;
     }
+    public Collision getCollisionChecker() { return collisionChecker; }
 
 }
 

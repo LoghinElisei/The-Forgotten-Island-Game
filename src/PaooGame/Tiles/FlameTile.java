@@ -17,4 +17,8 @@ public class FlameTile extends Tile
         super(Assets.flame, id);
     }
 
+    @Override
+    public boolean IsSolid() {
+        return true;
+    }
 }
