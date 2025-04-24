@@ -67,7 +67,7 @@ public abstract class Map {
     {
         if(x < 0 || y < 0 || x >= width || y >= height)
         {
-            return Tile.grassTile;
+            return Tile.waterTile;
         }
         Tile t = Tile.tiles[collision[x][y]];
 

@@ -89,9 +89,10 @@ public class Assets
         lava = sheet.crop(0,6);
         boat = boatSheet.crop(0,0);
         flame = sheet.crop(47,0);
-        swampWater = sheet.crop(33,22);
+//        swampWater = sheet.crop(33,22);
+        swampWater = sheet.crop(53,22);
 //        grass2 = grass2Sheet.crop(4,0);
-        grass2 = sheet.crop(33,9);
+        grass2 = sheet.crop(27,9);
         weed = grass2Sheet.crop(21,11);
 
         heroUp1 = mcSheet.crop(0,3);

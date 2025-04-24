@@ -39,20 +39,6 @@ public class PlayState extends State
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
 //        hero = heroCreator.getItem(ItemType.HERO, refLink,0, 0);
     }
-    public void CheckCurrentTile(Item player, Map map) {
-        // Coordonatele absolute ale jucătorului
-        float playerX = player.GetX()/4;
-        float playerY = player.GetY()/4;
-
-        // Calcularea coordonatelor tile-ului
-        int tileX = (int)(playerX / Tile.TILE_WIDTH);
-        int tileY = (int)(playerY / Tile.TILE_HEIGHT);
-        System.out.println("Player position in pixels: (" + playerX + ", " + playerY + ")");
-        System.out.println("Tile coordinates: (" + tileX + ", " + tileY + ")");
-
-        map.GetCollisionTile(tileX,tileY).IsSolid();
-        System.out.println(map.GetCollisionTile(tileX,tileY).toString());
-    }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a jocului.
      */
@@ -61,7 +47,7 @@ public class PlayState extends State
     {
         map.Update();
         hero.Update();
-        CheckCurrentTile(hero,map);
+
     }
 
     /*! \fn public void Draw(Graphics g)
