@@ -8,14 +8,12 @@ public class Camera {
     private Rectangle bounds; // limitele vizibile ale camerei
     private int x; //coordonata x a camerei
     private int y; //coordonata y a camerei
-    private int scale; // factorul de scalare al camerei
 
     // starea camerei; poziție și dimensiune
     public Camera(int x, int y, int width, int height) {
         this.bounds = new Rectangle(x, y, width, height);
         this.x = x;
         this.y = y;
-        this.scale = 4;
     }
     // metoda prin care se setează poziția camerei
     public void setPosition(int x, int y) {
@@ -23,13 +21,6 @@ public class Camera {
         this.y = y;
     }
     // metoda prin care se setează factorul de scalare, daca este nevoie de el
-    public void setScale(int scale) {
-        this.scale = scale;
-    }
-    public int getScale()
-    {
-        return scale;
-    }
     public int getX()
     {
         return x;
@@ -42,7 +33,6 @@ public class Camera {
     public void apply(Graphics2D g2d) {
         AffineTransform transform = new AffineTransform();
         transform.translate(-x, -y); // translarea poziției camerei
-        transform.scale(scale, scale); // aplicarea factorului de scală
         g2d.setTransform(transform);
     }
     // metoda returnează limitele vizibile ale camerei

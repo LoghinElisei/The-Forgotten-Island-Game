@@ -14,4 +14,8 @@ public class FlameTile extends Tile
         return true;
     }
 
+    @Override
+    public boolean IsSolid() {
+        return true;
+    }
 }

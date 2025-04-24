@@ -3,9 +3,12 @@ package PaooGame.Items;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import PaooGame.Game;
+import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
+import PaooGame.Tiles.Tile;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -19,6 +22,8 @@ import PaooGame.Graphics.Assets;
 public class Hero extends Character
 {
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
+    public final int screenX; // x coordinates relative to the camera
+    public final int screenY;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
 
@@ -32,19 +37,18 @@ public class Hero extends Character
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
             ///Seteaza imaginea de start a eroului
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
-        normalBounds.x = 16;
-        normalBounds.y = 16;
-        normalBounds.width = 16;
+        normalBounds.x = 50;
+        normalBounds.y = 80;
+        normalBounds.width = 32;
         normalBounds.height = 32;
-
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         attackBounds.x = 10;
         attackBounds.y = 10;
         attackBounds.width = 38;
         attackBounds.height = 38;
 
-        screenX = refLink.GetGame().GetWidth()/2 - this.DEFAULT_CREATURE_WIDTH/2;
-        screenY = refLink.GetGame().GetHeight()/2 - this.DEFAULT_CREATURE_HEIGHT/2;
+        screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
+        screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
     }
 
     /*! \fn public void Update()
@@ -54,7 +58,7 @@ public class Hero extends Character
     public void Update()
     {
         ///Verifica daca a fost apasata o tasta
-        Map1.camera.updateCamera(this);
+        Map.camera.updateCamera(this);
         if (refLink.GetKeyManager().keyHasBeenPressed()) {
 
 
@@ -78,32 +82,32 @@ public class Hero extends Character
      */
     private void GetInput()
     {
-            ///Implicit eroul nu trebuie sa se deplaseze daca nu este apasata o tasta
+        ///Implicit eroul nu trebuie sa se deplaseze daca nu este apasata o tasta
         xMove = 0;
         yMove = 0;
-            ///Verificare apasare tasta "sus"
-        if(refLink.GetKeyManager().up)
-        {
+
+        if(refLink.GetKeyManager().up) {
             direction = "up";
-            yMove = -speed;
-        } else
-            ///Verificare apasare tasta "jos"
-        if(refLink.GetKeyManager().down)
-        {
+        } else if(refLink.GetKeyManager().down) {
             direction = "down";
-            yMove = speed;
-        } else
-            ///Verificare apasare tasta "left"
-        if(refLink.GetKeyManager().left)
-        {
+        } else if(refLink.GetKeyManager().left) {
             direction = "left";
-            xMove = -speed;
-        } else
-            ///Verificare apasare tasta "dreapta"
-        if(refLink.GetKeyManager().right)
-        {
+        } else if(refLink.GetKeyManager().right) {
             direction = "right";
-            xMove = speed;
+        }
+
+        collisionOn = false;
+        refLink.GetGame().getCollisionChecker().checkTile(this);
+
+        if (collisionOn == false)
+        {
+            switch (direction)
+            {
+                case "up": yMove = -speed; break;
+                case "down": yMove = speed; break;
+                case "left": xMove = -speed; break;
+                case "right": xMove = speed;
+            }
         }
     }
 
@@ -145,13 +149,23 @@ public class Hero extends Character
                 }
         }
         g2d.drawImage(image,screenX,screenY,width,height,null);
-            ///doar pentru debug daca se doreste vizualizarea dreptunghiului de coliziune altfel se vor comenta urmatoarele doua linii
-        g2d.setColor(new Color(255, 0, 0, 150)); // semi-transparent red
 
+//        int characterLeftX = x + bounds.x;
+//        int characterRightX = x  + bounds.x + bounds.width;
+//        int characterTopY = y + bounds.y ;
+//        int characterBottomY = y  + bounds.y + bounds.height;
+//
+//
+//        int[] xPoints = {characterLeftX, characterLeftX,characterRightX, characterRightX};
+//        int[] yPoints = {characterTopY, characterBottomY,characterBottomY, characterTopY};
+//
+//        Polygon shape = new Polygon(xPoints, yPoints, 4);
+//        // Draw the collision box centered on the character
+//        g2d.setColor(Color.blue);
+//        g2d.fillPolygon(shape);
 
+        g2d.setColor(Color.BLUE);
+        g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
 
-        // Draw the collision box centered on the character
-        g2d.setColor(Color.blue);
-        g2d.fillOval((x + bounds.x - Map1.camera.getX()), (y + bounds.y - Map1.camera.getY()), bounds.width, bounds.height);
     }
 }
