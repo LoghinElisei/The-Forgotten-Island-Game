@@ -27,6 +27,23 @@ public class Assets
     public static BufferedImage heroRight3;
 
 
+    public static BufferedImage orcUp1;
+    public static BufferedImage orcUp2;
+    public static BufferedImage orcUp3;
+
+    public static BufferedImage orcDown1;
+    public static BufferedImage orcDown2;
+    public static BufferedImage orcDown3;
+
+    public static BufferedImage orcLeft1;
+    public static BufferedImage orcLeft2;
+    public static BufferedImage orcLeft3;
+
+    public static BufferedImage orcRight1;
+    public static BufferedImage orcRight2;
+    public static BufferedImage orcRight3;
+
+
     public static BufferedImage soil;
     public static BufferedImage grass;
     public static BufferedImage water;
@@ -58,10 +75,13 @@ public class Assets
         SpriteSheet sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet.png"));
         SpriteSheet sheet2 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet2.png"));
         SpriteSheet sheet3 = new SpriteSheet(ImageLoader.LoadImage("/textures/SpriteSheet3.png"));
-        SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
+
         SpriteSheet grassSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/grass1.png"));
         SpriteSheet boatSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/boat1.png"));
         SpriteSheet grass2Sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/Grass3.png"));
+
+        SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
+        SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcsheet.png"));
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);
@@ -109,6 +129,22 @@ public class Assets
         heroRight1 = mcSheet.crop(0, 2);
         heroRight2 = mcSheet.crop(1, 2);
         heroRight3 = mcSheet.crop(2, 2);
+
+        orcUp1 = orcSheet.crop(0, 3);
+        orcUp2 = orcSheet.crop(1, 3);
+        orcUp3 = orcSheet.crop(2, 3);
+
+        orcDown1 = orcSheet.crop(0, 0);
+        orcDown2 = orcSheet.crop(1,0);
+        orcDown3 = orcSheet.crop(2,0);
+
+        orcLeft1 = orcSheet.crop(0, 1);
+        orcLeft2 = orcSheet.crop(1,1);
+        orcLeft3 = orcSheet.crop(2,1);
+
+        orcRight1 = orcSheet.crop(0, 2);
+        orcRight2 = orcSheet.crop(1,2);
+        orcRight3 = orcSheet.crop(2,2);
 
     }
 }

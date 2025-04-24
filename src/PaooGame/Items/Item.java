@@ -46,6 +46,11 @@ public abstract class Item
         normalBounds = new Rectangle(8, 16, 32, 32);
             ///Creeaza dreptunghi de coliziune pentru modul de attack, aici a fost stabilit la dimensiunea imaginii dar poate fi orice alta dimensiune
         attackBounds = new Rectangle(0, 0, width, height);
+
+        normalBounds.x = 50;
+        normalBounds.y = 80;
+        normalBounds.width = 32;
+        normalBounds.height = 32;
             ///Dreptunghiul de coliziune implicit este setat ca fiind cel normal
         bounds = normalBounds;
     }

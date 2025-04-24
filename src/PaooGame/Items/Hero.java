@@ -150,20 +150,7 @@ public class Hero extends Character
         }
         g2d.drawImage(image,screenX,screenY,width,height,null);
 
-//        int characterLeftX = x + bounds.x;
-//        int characterRightX = x  + bounds.x + bounds.width;
-//        int characterTopY = y + bounds.y ;
-//        int characterBottomY = y  + bounds.y + bounds.height;
-//
-//
-//        int[] xPoints = {characterLeftX, characterLeftX,characterRightX, characterRightX};
-//        int[] yPoints = {characterTopY, characterBottomY,characterBottomY, characterTopY};
-//
-//        Polygon shape = new Polygon(xPoints, yPoints, 4);
-//        // Draw the collision box centered on the character
-//        g2d.setColor(Color.blue);
-//        g2d.fillPolygon(shape);
-
+        // CollisionBox
         g2d.setColor(Color.BLUE);
         g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
 

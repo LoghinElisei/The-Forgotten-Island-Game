@@ -1,5 +1,5 @@
 package PaooGame.Creator;
 
 public enum ItemType {
-    HERO, OGRE, BLAZE
+    HERO, ORC, BLAZE
 }
