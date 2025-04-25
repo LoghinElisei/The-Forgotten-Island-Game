@@ -1,6 +1,8 @@
 package PaooGame.Maps;
 
 import PaooGame.Camera.Camera;
+import PaooGame.Items.ItemPlacer;
+import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -14,11 +16,16 @@ public abstract class Map {
     protected int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     protected int [][] collision;
     public static Camera camera = new Camera(300,300,1408,1056);
+    public static ItemPlacer itemPlacer;
+    public SuperObject items[];
+
+
 
     public Map(RefLinks refLink)
     {
         /// Retine referinta "shortcut".
         this.refLink = refLink;
+        itemPlacer = new ItemPlacer(refLink);
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
 
     }
@@ -81,6 +88,14 @@ public abstract class Map {
     protected abstract void CollisionMap();
     protected abstract void  ThematicMap();
 
+    public Map nextMap(int lvl){
+        if (lvl == 2)
+        {
+            return new Map2(refLink);
+        }
+        return new Map3(refLink);
+    }
+
     public int getWidth() {
         return width;
     }
@@ -88,4 +103,5 @@ public abstract class Map {
     public int getHeight() {
         return height;
     }
+
 }

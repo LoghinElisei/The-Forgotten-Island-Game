@@ -3,14 +3,11 @@ package PaooGame.States;
 import PaooGame.Creator.HeroCreator.HeroItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
-import PaooGame.Items.Hero;
-import PaooGame.Items.Item;
+import PaooGame.Entity.Entity;
 import PaooGame.Maps.Map;
-import PaooGame.Maps.Map2;
-import PaooGame.Maps.Map3;
-import PaooGame.RefLinks;
 import PaooGame.Maps.Map1;
-import PaooGame.Tiles.Tile;
+import PaooGame.Maps.Map2;
+import PaooGame.RefLinks;
 
 import java.awt.*;
 
@@ -19,8 +16,9 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
-    private Item hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
+    private Entity hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
+
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -31,13 +29,13 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map3(refLink);
+        map = new Map2(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
+        Map.itemPlacer.addObject(2);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
-//        hero = heroCreator.getItem(ItemType.HERO, refLink,0, 0);
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a jocului.
@@ -47,7 +45,6 @@ public class PlayState extends State
     {
         map.Update();
         hero.Update();
-
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -59,6 +56,13 @@ public class PlayState extends State
     public void Draw(Graphics2D g)
     {
         map.Draw(g);
+        for (int i = 0; i < map.items.length; ++i)
+        {
+            if (map.items[i] != null)
+            {
+                map.items[i].draw(g, hero);
+            }
+        }
         hero.Draw(g);
     }
 }

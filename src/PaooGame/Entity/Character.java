@@ -1,7 +1,6 @@
-package PaooGame.Items;
+package PaooGame.Entity;
 
 import PaooGame.RefLinks;
-import PaooGame.Tiles.Tile;
 
 import static java.lang.Math.round;
 
@@ -11,7 +10,7 @@ import static java.lang.Math.round;
     Notiunea este definita doar de viata, viteza de deplasare si distanta cu care trebuie sa se
     miste/deplaseze in urma calculelor.
  */
-public abstract class Character extends Item
+public abstract class Character extends Entity
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final int DEFAULT_SPEED         = 10; /*!< Viteza implicita a unu caracter.*/

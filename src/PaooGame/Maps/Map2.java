@@ -1,5 +1,6 @@
 package PaooGame.Maps;
 
+import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -25,6 +26,8 @@ public class Map2 extends Map
         width = 54;
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
+
+        items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY + 3];
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();

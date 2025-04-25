@@ -1,4 +1,4 @@
-package PaooGame.Items;
+package PaooGame.Entity;
 
 import PaooGame.RefLinks;
 
@@ -8,7 +8,7 @@ import java.awt.*;
 /*! \class Item
     \brief. Implementeaza notiunea abstracta de entitate activa din joc, "element cu care se poate interactiona: monstru, turn etc.".
  */
-public abstract class Item
+public abstract class Entity
 {
         ///asa cum s-a mai precizat, coordonatele x si y sunt de tip float pentru a se elimina erorile de rotunjire
         ///ce pot sa apara in urma calculelor, urmand a se converti la intreg doar in momentul desenarii.
@@ -18,9 +18,11 @@ public abstract class Item
     protected int height;               /*!< Inaltimea imaginii entitatii.*/
     public Rectangle bounds;         /*!< Dreptunghiul curent de coliziune.*/
     protected Rectangle normalBounds;   /*!< Dreptunghiul de coliziune aferent starii obisnuite(spatiul ocupat de entitate in mod normal), poate fi mai mic sau mai mare decat dimensiunea imaginii sale.*/
-    protected Rectangle attackBounds;   /*!< Dreptunghiul de coliziune aferent starii de atac.*/
+    protected int defaultBoundsX;
+    protected int defaultBoundsY;
     protected int spriteNum = 1, spriteCounter = 0;
-
+    public int screenX; // x coordinates relative to the camera
+    public int screenY;
     protected boolean collisionOn = false;
 
     protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
@@ -34,10 +36,11 @@ public abstract class Item
         \param  width   Latimea imaginii entitatii.
         \param  height  Inaltimea imaginii entitatii.
      */
-    public Item(RefLinks refLink, int x, int y, int width, int height)
+    public Entity(RefLinks refLink, int x, int y, int width, int height)
     {
         this.x = x;             /*!< Retine coordonata pe axa X.*/
         this.y = y;             /*!< Retine coordonata pe axa X.*/
+
         this.width = width;     /*!< Retine latimea imaginii.*/
         this.height = height;   /*!< Retine inaltimea imaginii.*/
         this.refLink = refLink; /*!< Retine the "shortcut".*/
@@ -45,7 +48,11 @@ public abstract class Item
             ///Creeaza dreptunghi de coliziune pentru modul normal
         normalBounds = new Rectangle(8, 16, 32, 32);
             ///Creeaza dreptunghi de coliziune pentru modul de attack, aici a fost stabilit la dimensiunea imaginii dar poate fi orice alta dimensiune
-        attackBounds = new Rectangle(0, 0, width, height);
+
+        normalBounds.x = 50;
+        normalBounds.y = 80;
+        normalBounds.width = 32;
+        normalBounds.height = 32;
             ///Dreptunghiul de coliziune implicit este setat ca fiind cel normal
         bounds = normalBounds;
     }
@@ -138,9 +145,10 @@ public abstract class Item
     /*! \fn public void SetAttackMode()
         \brief Seteaza modul de atac de interactiune
      */
-    public void SetAttackMode()
+    public void SetDefaultMode()
     {
-        bounds = attackBounds;
+        bounds.x = defaultBoundsX;
+        bounds.y = defaultBoundsY;
     }
 
     public void changeSpriteNum(){
