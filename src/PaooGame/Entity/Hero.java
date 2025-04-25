@@ -1,11 +1,11 @@
-package PaooGame.Items;
+package PaooGame.Entity;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import PaooGame.Game;
+import PaooGame.Items.SuperObject;
 import PaooGame.Maps.Map;
-import PaooGame.Maps.Map1;
+import PaooGame.Maps.Map2;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
 import PaooGame.Tiles.Tile;
@@ -22,8 +22,9 @@ import PaooGame.Tiles.Tile;
 public class Hero extends Character
 {
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
-    public final int screenX; // x coordinates relative to the camera
-    public final int screenY;
+    private int keys = 0;
+    private int coins = 0;
+    private int lvl = 1;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
 
@@ -42,13 +43,13 @@ public class Hero extends Character
         normalBounds.width = 32;
         normalBounds.height = 32;
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
-        attackBounds.x = 10;
-        attackBounds.y = 10;
-        attackBounds.width = 38;
-        attackBounds.height = 38;
+        defaultBoundsX = normalBounds.x;
+        defaultBoundsY = normalBounds.y;
 
         screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
         screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
+
+        speed = 10;
     }
 
     /*! \fn public void Update()
@@ -98,6 +99,9 @@ public class Hero extends Character
 
         collisionOn = false;
         refLink.GetGame().getCollisionChecker().checkTile(this);
+        int objIndex = refLink.GetGame().getCollisionChecker().checkItem(this);
+        pickItem(objIndex);
+
 
         if (collisionOn == false)
         {
@@ -155,4 +159,29 @@ public class Hero extends Character
         g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
 
     }
+
+
+    private void pickItem(int i){
+        if (i != 999) {
+            String itemName = refLink.GetMap().items[i].getName();
+            switch (itemName) {
+                case "key":
+                    keys++;
+                    refLink.GetMap().items[i] = null;
+                    System.out.println("Keys: " + keys);
+                    break;
+                case "coin":
+                    coins++;
+                    refLink.GetMap().items[i] = null;
+                    System.out.println("Coins: " + coins);
+                    break;
+                case "bridge":
+                    lvl++;
+                    refLink.SetMap(refLink.GetMap().nextMap(lvl));
+                    break;
+            }
+        }
+    }
+
+
 }

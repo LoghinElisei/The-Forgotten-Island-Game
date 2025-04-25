@@ -1,12 +1,12 @@
 package PaooGame;
 
+import PaooGame.CollisionChecker.Collision;
 import PaooGame.Music.Music;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
-import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -52,7 +52,6 @@ public class Game implements Runnable
     private boolean         runState;   /*!< Flag ce starea firului de executie.*/
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
-
     private Collision collisionChecker;
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
@@ -142,6 +141,7 @@ public class Game implements Runnable
         aboutState      = new AboutState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(menuState);
+
     }
     /*! \fn public void run()
         \brief Functia ce va rula in thread-ul creat.
@@ -193,6 +193,7 @@ public class Game implements Runnable
             runState = true;
                 /// Se construieste threadul avand ca parametru obiectul PaooGame.Game. De retinut faptul ca PaooGame.Game class
                 /// implementeaza interfata Runnable. Threadul creat va executa functia run() suprascrisa in clasa PaooGame.Game.
+
             gameThread = new Thread(this);
                 /// Threadul creat este lansat in executie (va executa metoda run())
             gameThread.start();

@@ -1,4 +1,4 @@
-package PaooGame.Items;
+package PaooGame.Entity;
 
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;

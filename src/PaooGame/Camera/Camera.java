@@ -1,5 +1,5 @@
 package PaooGame.Camera;
-import PaooGame.Items.Character;
+import PaooGame.Entity.Character;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
