@@ -5,6 +5,7 @@ import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
+import PaooGame.Timer.Timer;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
@@ -16,6 +17,7 @@ public abstract class Map {
     protected int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     protected int [][] collision;
     public static Camera camera = new Camera(300,300,1408,1056);
+    public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
     public SuperObject items[];
 
@@ -53,6 +55,13 @@ public abstract class Map {
 
             }
         }
+
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
+        String timeTxt = String.format("%.2f", timer.getElapsedTime());
+        g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
+
+        //resetare transformari
         g2d.setTransform(new AffineTransform());
     }
 

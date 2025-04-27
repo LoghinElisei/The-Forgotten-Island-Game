@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import PaooGame.Input.MouseManager;
+import PaooGame.Maps.Map;
 import PaooGame.Music.Music;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
@@ -56,6 +57,8 @@ public class PauseState extends State
         int sliderX = (screenWidth - sliderWidth) / 2;
         int sliderY = startY + 3 * (height + gap) + 40; // Sub butoane
         volumeSlider = new Rectangle(sliderX, sliderY, sliderWidth, sliderHeight);
+
+        Map.timer.stop();
 
     }
     /*! \fn public void Update()

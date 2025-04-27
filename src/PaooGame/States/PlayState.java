@@ -36,6 +36,9 @@ public class PlayState extends State
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+
+
+
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a jocului.
@@ -45,6 +48,7 @@ public class PlayState extends State
     {
         map.Update();
         hero.Update();
+        Map.timer.start();
     }
 
     /*! \fn public void Draw(Graphics g)
