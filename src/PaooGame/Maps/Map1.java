@@ -1,5 +1,6 @@
 package PaooGame.Maps;
 
+import PaooGame.Entity.Entity;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 
@@ -13,6 +14,7 @@ import java.io.IOException;
 
 public class Map1 extends Map
 {
+    private final int ENEMIES_TO_DISPLAY = 10;
     public Map1(RefLinks refLink)
     {
         /// Retine referinta "shortcut".
@@ -24,7 +26,7 @@ public class Map1 extends Map
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY];
-//        monsters = new Character[];
+        monsters = new Entity[ENEMIES_TO_DISPLAY];
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();

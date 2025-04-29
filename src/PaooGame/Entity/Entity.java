@@ -1,8 +1,12 @@
 package PaooGame.Entity;
 
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
+import PaooGame.States.PlayState;
+import PaooGame.Tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 /*! \class Item
@@ -24,6 +28,7 @@ public abstract class Entity
     public int screenX; // x coordinates relative to the camera
     public int screenY;
     protected boolean collisionOn = false;
+    protected String direction;
 
     protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
 
@@ -102,6 +107,11 @@ public abstract class Entity
         return height;
     }
 
+
+    public String getDirection() {
+        return direction;
+    }
+
     /*! \fn public float SetX()
         \brief Seteaza coordonata pe axa X.
      */
@@ -156,6 +166,53 @@ public abstract class Entity
             spriteNum = 1;
         } else {
             spriteNum++;
+        }
+    }
+
+    public void draw(Graphics2D g, PlayState playState) {
+
+        BufferedImage image = null;
+        int screenX = x - playState.getHero().GetX() + playState.getHero().screenX;
+        int screenY = y - playState.getHero().GetY() + playState.getHero().screenY;
+
+        if (x + Tile.TILE_WIDTH > playState.getHero().GetX() - playState.getHero().screenX &&
+                x - Tile.TILE_WIDTH < playState.getHero().GetX() + playState.getHero().screenX &&
+                y + Tile.TILE_WIDTH > playState.getHero().GetY() - playState.getHero().screenY &&
+                y - Tile.TILE_WIDTH < playState.getHero().GetY() + playState.getHero().screenY) {
+
+            switch (direction) {
+                case "up":
+                    switch (spriteNum) {
+                        case 1: image = Assets.orcUp1; break;
+                        case 2: image = Assets.orcUp2; break;
+                        case 3: image = Assets.orcUp3;
+                    }
+                    break;
+                case "down":
+                    switch (spriteNum) {
+                        case 1: image = Assets.orcDown1; break;
+                        case 2: image = Assets.orcDown2; break;
+                        case 3: image = Assets.orcDown3;
+                    }
+                    break;
+                case "left":
+                    switch (spriteNum) {
+                        case 1: image = Assets.orcLeft1; break;
+                        case 2: image = Assets.orcLeft2; break;
+                        case 3: image = Assets.orcLeft3;
+                    }
+                    break;
+                case "right":
+                    switch (spriteNum) {
+                        case 1: image = Assets.orcRight1; break;
+                        case 2: image = Assets.orcRight2; break;
+                        case 3: image = Assets.orcRight3;
+                    }
+            }
+
+            g.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
+//            g2.setColor(Color.RED);
+//            g2.fillRect(screenX, screenY, boundsDefaultX, boundsDefaultY);
         }
     }
 }

@@ -1,5 +1,6 @@
 package PaooGame.Items;
 
+import PaooGame.Entity.Orc;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -150,6 +151,13 @@ public class ItemPlacer {
 
                 break;
         }
+    }
 
+    public void setEnemies(int mapNumber){
+        switch (mapNumber){
+            case 1:
+                refLink.GetMap().monsters[0] = new Orc(refLink, 21 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                break;
+        }
     }
 }

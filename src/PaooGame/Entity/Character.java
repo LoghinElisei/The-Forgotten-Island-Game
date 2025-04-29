@@ -22,7 +22,6 @@ public abstract class Character extends Entity
     protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
-    protected String direction;
 
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
@@ -87,9 +86,6 @@ public abstract class Character extends Entity
         return life;
     }
 
-    public String getDirection() {
-        return direction;
-    }
     /*! \fn public int GetSpeed()
         \brief Returneaza viteza caracterului.
      */

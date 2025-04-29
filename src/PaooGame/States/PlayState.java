@@ -16,6 +16,7 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
+
     private Entity hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
 
@@ -33,6 +34,7 @@ public class PlayState extends State
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
         Map.itemPlacer.addObject(1);
+        Map.itemPlacer.setEnemies(1);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
@@ -60,6 +62,7 @@ public class PlayState extends State
     public void Draw(Graphics2D g)
     {
         map.Draw(g);
+        // OBJECTS
         for (int i = 0; i < map.items.length; ++i)
         {
             if (map.items[i] != null)
@@ -67,6 +70,19 @@ public class PlayState extends State
                 map.items[i].draw(g, hero);
             }
         }
+
+        // ENEMIES
+        for (int i = 0; i < map.monsters.length; ++i)
+        {
+            if (map.monsters[i] != null)
+            {
+                map.monsters[i].draw(g, this);
+            }
+        }
         hero.Draw(g);
+    }
+
+    public Entity getHero() {
+        return hero;
     }
 }

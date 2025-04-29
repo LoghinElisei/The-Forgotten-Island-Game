@@ -1,6 +1,7 @@
 package PaooGame.Maps;
 
 import PaooGame.Camera.Camera;
+import PaooGame.Entity.Entity;
 import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
@@ -19,8 +20,8 @@ public abstract class Map {
     public static Camera camera = new Camera(300,300,1408,1056);
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
-    protected SuperObject items[];
-    protected Character monsters[];
+    public SuperObject items[];
+    public Entity monsters[];
 
 
 
@@ -99,7 +100,7 @@ public abstract class Map {
     protected abstract void  ThematicMap();
 
     public Map nextMap(int lvl){
-        if (lvl == 2)
+        if (lvl == 1)
         {
             return new Map2(refLink);
         }
