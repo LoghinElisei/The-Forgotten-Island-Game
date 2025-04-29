@@ -1,6 +1,8 @@
 package PaooGame.States;
 
 import java.awt.*;
+
+import PaooGame.Database.DatabaseManager;
 import PaooGame.RefLinks;
 
 /*! \class State
@@ -20,6 +22,8 @@ public abstract class State
     {
         this.refLink = refLink;
     }
+    DatabaseManager database = DatabaseManager.getInstance();
+
 
     /*! \fn public static void SetState(State state)
         \brief Seteaza starea curenta a jocului.

@@ -47,6 +47,21 @@ public class MenuState extends State
 
         backgroundImage = new ImageIcon("res/images/island_animated.gif").getImage();
     }
+
+    public void DatabaseConnect(Graphics2D g2d){
+        int c;
+        if ( (c = database.connect()) == -1){
+
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
+            String timeTxt = "No internet Connection";
+            g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
+        };
+
+    }
+
+
+
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
      */
