@@ -12,6 +12,12 @@ public class Orc extends Character {
     {
         super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
 
+        normalBounds.x = 50;
+        normalBounds.y = 80;
+        normalBounds.width = 32;
+        normalBounds.height = 32;
+        speed = 2;
+
     }
 
     @Override

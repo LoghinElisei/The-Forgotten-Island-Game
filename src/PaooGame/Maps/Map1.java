@@ -1,12 +1,8 @@
 package PaooGame.Maps;
 
-import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
-import PaooGame.Tiles.Tile;
 
-import java.awt.*;
-import java.awt.geom.AffineTransform;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -28,6 +24,7 @@ public class Map1 extends Map
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY];
+//        monsters = new Character[];
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();

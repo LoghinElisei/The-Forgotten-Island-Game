@@ -19,7 +19,8 @@ public abstract class Map {
     public static Camera camera = new Camera(300,300,1408,1056);
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
-    public SuperObject items[];
+    protected SuperObject items[];
+    protected Character monsters[];
 
 
 

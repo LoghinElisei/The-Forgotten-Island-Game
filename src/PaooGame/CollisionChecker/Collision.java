@@ -116,35 +116,18 @@ public class Collision {
                 entity.bounds.y = entity.GetY() + entity.bounds.y;
 
                 refLink.GetMap().items[i].bounds.x = refLink.GetMap().items[i].worldX
-                        + refLink.GetMap().items[i].bounds.x;
+                                                    + refLink.GetMap().items[i].bounds.x;
                 refLink.GetMap().items[i].bounds.y = refLink.GetMap().items[i].worldY
-                        + refLink.GetMap().items[i].bounds.y;
+                                                    + refLink.GetMap().items[i].bounds.y;
 
                 switch (entity.getDirection()){
-                    case "up":
-                        entity.bounds.y -= entity.GetSpeed();
-                        if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
-                            index = i;
-                        }
-                        break;
-                    case "down":
-                        entity.bounds.y += entity.GetSpeed();
-                        if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
-                            index = i;
-                        }
-                        break;
-                    case "left":
-                        entity.bounds.x -= entity.GetSpeed();
-                        if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
-                            index = i;
-                        }
-                        break;
-                    case "right":
-                        entity.bounds.x += entity.GetSpeed();
-                        if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
-                            index = i;
-                        }
-                        break;
+                    case "up": entity.bounds.y -= entity.GetSpeed(); break;
+                    case "down": entity.bounds.y += entity.GetSpeed(); break;
+                    case "left": entity.bounds.x -= entity.GetSpeed(); break;
+                    case "right": entity.bounds.x += entity.GetSpeed(); break;
+                }
+                if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
+                    index = i;
                 }
                 entity.SetDefaultMode();
                 refLink.GetMap().items[i].setDefaultMode();
