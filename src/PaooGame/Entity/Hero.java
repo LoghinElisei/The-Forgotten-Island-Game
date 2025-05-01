@@ -46,9 +46,6 @@ public class Hero extends Character
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
 
-        screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
-        screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
-
         speed = 10;
     }
 

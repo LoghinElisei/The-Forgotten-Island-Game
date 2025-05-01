@@ -1,6 +1,12 @@
 package PaooGame.Entity;
 
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
+import PaooGame.States.PlayState;
+import PaooGame.Tiles.Tile;
+
+import java.awt.*;
+import java.awt.image.BufferedImage;
 
 import static java.lang.Math.round;
 
@@ -43,6 +49,8 @@ public abstract class Character extends Entity
         xMove   = 0;
         yMove   = 0;
 
+        screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
+        screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
     }
 
     /*! \fn public void Move()
@@ -50,14 +58,10 @@ public abstract class Character extends Entity
      */
     public void Move()
     {
-//        if (!hasCollided())
-//        {
-
             ///Modifica pozitia caracterului pe axa X.
             ///Modifica pozitia caracterului pe axa Y.
             MoveX();
             MoveY();
-//        }
     }
 
     /*! \fn public void MoveX()
@@ -77,6 +81,9 @@ public abstract class Character extends Entity
             ///Aduna la pozitia curenta numarul de pixeli cu care trebuie sa se deplaseze pe axa Y.
         y += yMove;
     }
+
+    public void Draw(Graphics2D g, PlayState playState){};
+
 
     /*! \fn public int GetLife()
         \brief Returneaza viata caracterului.

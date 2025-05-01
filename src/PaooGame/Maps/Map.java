@@ -1,6 +1,7 @@
 package PaooGame.Maps;
 
 import PaooGame.Camera.Camera;
+import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
@@ -21,7 +22,7 @@ public abstract class Map {
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
     public SuperObject items[];
-    public Entity monsters[];
+    public Character monsters[];
 
 
 

@@ -50,6 +50,15 @@ public class PlayState extends State
     {
         map.Update();
         hero.Update();
+
+        // ENEMIES
+        for (int i = 0; i < map.monsters.length; ++i)
+        {
+            if (map.monsters[i] != null)
+            {
+                map.monsters[i].Update();
+            }
+        }
         Map.timer.start();
     }
 
@@ -76,7 +85,7 @@ public class PlayState extends State
         {
             if (map.monsters[i] != null)
             {
-                map.monsters[i].draw(g, this);
+                map.monsters[i].Draw(g, this);
             }
         }
         hero.Draw(g);
