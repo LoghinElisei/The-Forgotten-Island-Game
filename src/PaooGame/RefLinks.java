@@ -5,6 +5,8 @@ import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 
 import PaooGame.Input.KeyManager;
+import PaooGame.States.PlayState;
+import PaooGame.States.State;
 
 import java.awt.*;
 
@@ -17,16 +19,18 @@ public class RefLinks
 {
     private Game game;          /*!< Referinta catre obiectul PaooGame.Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
+    private PlayState state;
 
     /*! \fn public RefLinks(PaooGame.Game game)
-        \brief Constructorul de initializare al clasei.
+            \brief Constructorul de initializare al clasei.
 
-        \param game Referinta catre obiectul game.
-     */
+            \param game Referinta catre obiectul game.
+         */
     public RefLinks(Game game)
     {
         this.game = game;
         this.map = new Map1(this);
+        this.state = (PlayState) game.playState;
     }
 
     /*! \fn public KeyManager GetKeyManager()
@@ -90,4 +94,13 @@ public class RefLinks
     {
         this.map = map;
     }
+
+    public PlayState getState() {
+        return state;
+    }
+
+    public void setState(PlayState state) {
+        this.state = state;
+    }
+
 }

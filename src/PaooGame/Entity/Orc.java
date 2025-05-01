@@ -18,9 +18,12 @@ public class Orc extends Character {
         super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
 
         normalBounds.x = 50;
-        normalBounds.y = 80;
+        normalBounds.y = 45;
         normalBounds.width = 32;
-        normalBounds.height = 32;
+        normalBounds.height = 32 * 2;
+
+        defaultBoundsX = normalBounds.x;
+        defaultBoundsY = normalBounds.y;
         speed = 2;
 
     }
@@ -34,7 +37,7 @@ public class Orc extends Character {
 
         collisionOn = false;
         refLink.GetGame().getCollisionChecker().checkTile(this);
-
+        refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
         if (!collisionOn)
         {
             switch (direction)
@@ -57,7 +60,6 @@ public class Orc extends Character {
     }
 
     public void Draw(Graphics2D g, PlayState playState) {
-        BufferedImage image = null;
         int screenX = x - playState.getHero().GetX() + playState.getHero().screenX;
         int screenY = y - playState.getHero().GetY() + playState.getHero().screenY;
 
@@ -97,8 +99,10 @@ public class Orc extends Character {
             }
 
             g.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
-//            g2.setColor(Color.RED);
-//            g2.fillRect(screenX, screenY, boundsDefaultX, boundsDefaultY);
+
+
+            g.setColor(Color.BLUE);
+            g.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
         }
     }
 

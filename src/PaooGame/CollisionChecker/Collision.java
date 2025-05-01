@@ -1,7 +1,10 @@
 package PaooGame.CollisionChecker;
 
 import PaooGame.Entity.Character;
+import PaooGame.Entity.Entity;
+import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
+import PaooGame.States.PlayState;
 import PaooGame.Tiles.Tile;
 
 
@@ -102,18 +105,19 @@ public class Collision {
 
     public int checkItem(Character entity) {
         int index = 999;
+        Map map = refLink.GetMap();
 
-        for (int i = 0; i < refLink.GetMap().items.length; ++i)
+        for (int i = 0; i < map.items.length; ++i)
         {
-            if (refLink.GetMap().items[i] != null)
+            if (map.items[i] != null)
             {
                 entity.bounds.x = entity.GetX() + entity.bounds.x;
                 entity.bounds.y = entity.GetY() + entity.bounds.y;
 
-                refLink.GetMap().items[i].bounds.x = refLink.GetMap().items[i].worldX
-                                                    + refLink.GetMap().items[i].bounds.x;
-                refLink.GetMap().items[i].bounds.y = refLink.GetMap().items[i].worldY
-                                                    + refLink.GetMap().items[i].bounds.y;
+                map.items[i].bounds.x = map.items[i].worldX
+                                                    + map.items[i].bounds.x;
+                map.items[i].bounds.y = map.items[i].worldY
+                                                    + map.items[i].bounds.y;
 
                 switch (entity.getDirection()){
                     case "up": entity.bounds.y -= entity.GetSpeed(); break;
@@ -121,14 +125,75 @@ public class Collision {
                     case "left": entity.bounds.x -= entity.GetSpeed(); break;
                     case "right": entity.bounds.x += entity.GetSpeed(); break;
                 }
-                if (entity.bounds.intersects(refLink.GetMap().items[i].bounds)) {
+                if (entity.bounds.intersects(map.items[i].bounds)) {
                     index = i;
                 }
                 entity.SetDefaultMode();
-                refLink.GetMap().items[i].setDefaultMode();
+                map.items[i].setDefaultMode();
             }
         }
 
         return index;
+    }
+
+
+    public int checkEntity(Character entity) {
+
+        Character[] target = refLink.GetMap().monsters;
+        int index = 999;
+
+        for (int i = 0; i < target.length; ++i)
+        {
+            if (target[i] != null)
+            {
+                entity.bounds.x = entity.GetX() + entity.bounds.x;
+                entity.bounds.y = entity.GetY() + entity.bounds.y;
+
+                target[i].bounds.x = target[i].GetX()
+                        + target[i].bounds.x;
+                target[i].bounds.y = target[i].GetY()
+                        + target[i].bounds.y;
+
+                switch (entity.getDirection()){
+                    case "up": entity.bounds.y -= entity.GetSpeed(); break;
+                    case "down": entity.bounds.y += entity.GetSpeed(); break;
+                    case "left": entity.bounds.x -= entity.GetSpeed(); break;
+                    case "right": entity.bounds.x += entity.GetSpeed(); break;
+                }
+                if (entity.bounds.intersects(target[i].bounds)) {
+                    entity.setCollisionOn(true);
+                    index = i;
+                }
+                entity.SetDefaultMode();
+                target[i].SetDefaultMode();
+            }
+        }
+
+        return index;
+    }
+
+
+    public void checkFromEnemyToPlayer(Character entity) {
+        Entity hero = refLink.getState().getHero();
+
+        entity.bounds.x = entity.GetX() + entity.bounds.x;
+        entity.bounds.y = entity.GetY() + entity.bounds.y;
+
+        hero.bounds.x = hero.GetX()
+                + hero.bounds.x;
+        hero.bounds.y = hero.GetY()
+                + hero.bounds.y;
+
+        switch (entity.getDirection()){
+            case "up": entity.bounds.y -= entity.GetSpeed(); break;
+            case "down": entity.bounds.y += entity.GetSpeed(); break;
+            case "left": entity.bounds.x -= entity.GetSpeed(); break;
+            case "right": entity.bounds.x += entity.GetSpeed(); break;
+        }
+        if (entity.bounds.intersects(hero.bounds)) {
+            entity.setCollisionOn(true);
+        }
+        entity.SetDefaultMode();
+        hero.SetDefaultMode();
     }
 }

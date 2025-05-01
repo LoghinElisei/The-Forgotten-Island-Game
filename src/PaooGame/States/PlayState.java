@@ -39,8 +39,6 @@ public class PlayState extends State
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
 
-
-
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a jocului.

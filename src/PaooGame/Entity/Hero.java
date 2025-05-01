@@ -98,6 +98,9 @@ public class Hero extends Character
         int objIndex = refLink.GetGame().getCollisionChecker().checkItem(this);
         pickItem(objIndex);
 
+        // ENEMY COLLISION
+        int enemyIndex = refLink.GetGame().getCollisionChecker().checkEntity(this);
+        enemyInteract(enemyIndex);
         // EVENTS
         eventHandler.checkEvent();
 
@@ -173,6 +176,12 @@ public class Hero extends Character
                     refLink.GetMap().items[i] = null;
                     System.out.println("Coins: " + coins);
             }
+        }
+    }
+
+    private void enemyInteract(int i) {
+        if (i != 999) {
+            System.out.println("Enemy collision");
         }
     }
 

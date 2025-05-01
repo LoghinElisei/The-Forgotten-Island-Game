@@ -1,5 +1,8 @@
 package PaooGame.Items;
 
+import PaooGame.Creator.EnemyCreator.EnemyItemCreator;
+import PaooGame.Creator.ItemCreator;
+import PaooGame.Creator.ItemType;
 import PaooGame.Entity.Orc;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
@@ -8,7 +11,7 @@ import PaooGame.Tiles.Tile;
 public class ItemPlacer {
 
     private RefLinks refLink;
-
+    private ItemCreator enemyCreator = new EnemyItemCreator();
     public ItemPlacer(RefLinks refLink)
     {
         this.refLink = refLink;
@@ -143,13 +146,13 @@ public class ItemPlacer {
     public void setEnemies(int mapNumber, Map map){
         switch (mapNumber){
             case 1:
-                map.monsters[0] = new Orc(refLink, 21 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 21 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
                 break;
             case 2:
-                map.monsters[0] = new Orc(refLink, 20 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 20 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
                 break;
             case 3:
-                map.monsters[0] = new Orc(refLink, 19 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 19 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
                 break;
         }
     }
