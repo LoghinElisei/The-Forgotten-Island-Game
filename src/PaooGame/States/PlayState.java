@@ -3,11 +3,13 @@ package PaooGame.States;
 import PaooGame.Creator.HeroCreator.HeroItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
+import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 
@@ -17,9 +19,9 @@ import java.awt.*;
 public class PlayState extends State
 {
 
-    private Entity hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
+    private Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private Map map;    /*!< Referinta catre harta curenta.*/
-
+    private boolean debugState = false;
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -60,6 +62,11 @@ public class PlayState extends State
             }
         }
         Map.timer.start();
+
+        // DEBUG
+        if (refLink.GetKeyManager().IsDebugJustPressed()) {
+            debugState = debugState ? !debugState : true;
+        }
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -89,6 +96,18 @@ public class PlayState extends State
             }
         }
         hero.Draw(g);
+
+        // DEBUG
+        if (debugState) {
+            g.setFont(new Font("Arial", Font.PLAIN, 30));
+            g.setColor(Color.WHITE);
+            int x = 10, y = 400, lineHeight = 20;
+
+            g.drawString("x: " + hero.GetX(), x, y); y += lineHeight;
+            g.drawString("y: " + hero.GetY(), x, y); y += lineHeight;
+            g.drawString("Col: " + (hero.GetX() + hero.bounds.x) / Tile.TILE_WIDTH , x, y); y += lineHeight;
+            g.drawString("Row: " + (hero.GetY() + hero.bounds.y) / Tile.TILE_WIDTH , x, y);
+        }
     }
 
     public Entity getHero() {

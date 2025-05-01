@@ -6,6 +6,8 @@ import PaooGame.Maps.Map1;
 
 import PaooGame.Input.KeyManager;
 
+import java.awt.*;
+
 /*! \class public class RefLinks
     \brief Clasa ce retine o serie de referinte ale unor elemente pentru a fi usor accesibile.
 

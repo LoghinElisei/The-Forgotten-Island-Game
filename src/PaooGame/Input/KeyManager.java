@@ -19,6 +19,7 @@ public class KeyManager implements KeyListener
     public boolean right;   /*!< Flag pentru tasta "dreapta" apasata.*/
     public boolean lastEscState;
     public boolean esc;
+    public boolean debugButtonState, lastDebugButtonState;
 
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
@@ -38,6 +39,8 @@ public class KeyManager implements KeyListener
         right = keys[KeyEvent.VK_D];
         lastEscState = esc;
         esc   = keys[KeyEvent.VK_ESCAPE];
+        lastDebugButtonState = debugButtonState;
+        debugButtonState = keys[KeyEvent.VK_T];
     }
 
     /*! \fn public void keyPressed(KeyEvent e)
@@ -82,4 +85,5 @@ public class KeyManager implements KeyListener
     public boolean IsEscJustPressed() {
         return esc && !lastEscState;
     }
+    public boolean IsDebugJustPressed() {return debugButtonState && !lastDebugButtonState;}
 }

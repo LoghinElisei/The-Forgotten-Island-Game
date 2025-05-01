@@ -3,12 +3,9 @@ package PaooGame.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import PaooGame.Items.SuperObject;
 import PaooGame.Maps.Map;
-import PaooGame.Maps.Map2;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
-import PaooGame.Tiles.Tile;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
