@@ -3,6 +3,7 @@ package PaooGame.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+import PaooGame.Events.EventHandler;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
@@ -22,6 +23,7 @@ public class Hero extends Character
     private int keys = 0;
     private int coins = 0;
     private int lvl = 1;
+    private EventHandler eventHandler;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
 
@@ -42,8 +44,8 @@ public class Hero extends Character
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
-
-        speed = 10;
+        eventHandler = new EventHandler(this, refLink);
+        speed = 20;
     }
 
     /*! \fn public void Update()
@@ -96,6 +98,8 @@ public class Hero extends Character
         int objIndex = refLink.GetGame().getCollisionChecker().checkItem(this);
         pickItem(objIndex);
 
+        // EVENTS
+        eventHandler.checkEvent();
 
         if (collisionOn == false)
         {
@@ -168,11 +172,6 @@ public class Hero extends Character
                     coins++;
                     refLink.GetMap().items[i] = null;
                     System.out.println("Coins: " + coins);
-                    break;
-                case "bridge":
-                    lvl++;
-                    refLink.SetMap(refLink.GetMap().nextMap(lvl));
-                    break;
             }
         }
     }

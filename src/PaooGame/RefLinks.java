@@ -26,6 +26,7 @@ public class RefLinks
     public RefLinks(Game game)
     {
         this.game = game;
+        this.map = new Map1(this);
     }
 
     /*! \fn public KeyManager GetKeyManager()

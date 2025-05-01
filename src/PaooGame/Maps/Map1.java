@@ -28,6 +28,8 @@ public class Map1 extends Map
         height = 33;
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY];
         monsters = new Character[ENEMIES_TO_DISPLAY];
+        Map.itemPlacer.addObject(1, this);
+        Map.itemPlacer.setEnemies(1, this);
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();

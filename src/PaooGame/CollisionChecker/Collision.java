@@ -1,24 +1,19 @@
 package PaooGame.CollisionChecker;
 
-import PaooGame.Entity.Entity;
-import PaooGame.GameWindow.GameWindow;
 import PaooGame.Entity.Character;
-import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
 
 
 public class Collision {
-    private GameWindow wnd;
     private RefLinks refLink;
 
 
     private boolean debug = false;
 
-    public Collision(RefLinks refLink ,GameWindow wnd)
+    public Collision(RefLinks refLink)
     {
-        this.wnd = wnd;
         this.refLink = refLink;
     }
 

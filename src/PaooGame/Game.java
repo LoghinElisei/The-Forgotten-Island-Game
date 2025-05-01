@@ -1,6 +1,7 @@
 package PaooGame;
 
 import PaooGame.CollisionChecker.Collision;
+import PaooGame.Events.EventHandler;
 import PaooGame.Music.Music;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
@@ -133,7 +134,7 @@ public class Game implements Runnable
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         refLink = new RefLinks(this);
-        collisionChecker = new Collision(refLink, wnd);
+        collisionChecker = new Collision(refLink);
         ///Definirea starilor programului
         playState       = null;
         pauseState      = null;
@@ -348,6 +349,6 @@ public class Game implements Runnable
         return mouseManager;
     }
     public Collision getCollisionChecker() { return collisionChecker; }
-
+    public Graphics2D getGraphics() {return g;}
 }
 

@@ -20,8 +20,8 @@ public class PlayState extends State
 {
 
     private Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
-    private Map map;    /*!< Referinta catre harta curenta.*/
     private boolean debugState = false;
+    public static Map map;    /*!< Referinta catre harta curenta.*/
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -35,8 +35,6 @@ public class PlayState extends State
         map = new Map1(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
-        Map.itemPlacer.addObject(1);
-        Map.itemPlacer.setEnemies(1);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
@@ -109,7 +107,9 @@ public class PlayState extends State
             g.drawString("Row: " + (hero.GetY() + hero.bounds.y) / Tile.TILE_WIDTH , x, y);
         }
     }
-
+    public static void setMap(Map map){
+        PlayState.map = map;
+    }
     public Entity getHero() {
         return hero;
     }
