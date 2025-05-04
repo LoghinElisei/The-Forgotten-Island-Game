@@ -32,7 +32,7 @@ public class PauseState extends State
         ///Apel al constructorului clasei de baza.
         super(refLink);
         buttons = new ArrayList<>();
-        blurredBackground = applyBlur(screenshot);
+        blurredBackground = super.applyBlur(screenshot);
 
         int width = 200;
         int height = 50;
@@ -146,25 +146,7 @@ public class PauseState extends State
         return x;
     }
 
-    private BufferedImage applyBlur(BufferedImage src)
-    {
-        float[] kernel = {
-                1f/9f, 1f/9f, 1f/9f,
-                1f/9f, 1f/9f, 1f/9f,
-                1f/9f, 1f/9f, 1f/9f
-        };
 
-        ConvolveOp op = new ConvolveOp(
-                new Kernel(3, 3, kernel),
-                ConvolveOp.EDGE_NO_OP,
-                null
-        );
-        for (int i = 0; i < 7; ++i)
-        {
-            src = op.filter(src, null);
-        }
-        return src;
-    }
 
     private void handleMouseHover() {
         Point mousePos = refLink.GetMouseManager().getMousePosition();

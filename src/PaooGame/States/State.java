@@ -1,6 +1,9 @@
 package PaooGame.States;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.awt.image.ConvolveOp;
+import java.awt.image.Kernel;
 
 import PaooGame.Database.DatabaseManager;
 import PaooGame.RefLinks;
@@ -35,7 +38,25 @@ public abstract class State
         previousState = currentState;
         currentState = state;
     }
+    protected BufferedImage applyBlur(BufferedImage src)
+    {
+        float[] kernel = {
+                1f/9f, 1f/9f, 1f/9f,
+                1f/9f, 1f/9f, 1f/9f,
+                1f/9f, 1f/9f, 1f/9f
+        };
 
+        ConvolveOp op = new ConvolveOp(
+                new Kernel(3, 3, kernel),
+                ConvolveOp.EDGE_NO_OP,
+                null
+        );
+        for (int i = 0; i < 7; ++i)
+        {
+            src = op.filter(src, null);
+        }
+        return src;
+    }
     public static State GetState()
     {
         return currentState;

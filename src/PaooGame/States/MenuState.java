@@ -7,6 +7,8 @@ import PaooGame.Graphics.Button;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.Rectangle;
+import java.awt.geom.AffineTransform;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -16,6 +18,7 @@ public class MenuState extends State
 {
     private ArrayList<Button> buttons;
     private Image backgroundImage;
+    private boolean databaseConnected = true;
 
     /*! \fn public MenuState(RefLinks refLink)
         \brief Constructorul de initializare al clasei.
@@ -46,18 +49,19 @@ public class MenuState extends State
         buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
 
         backgroundImage = new ImageIcon("res/images/island_animated.gif").getImage();
+
+        int c ;
+        c = databaseConnect();
+        if( -1 == c)
+        {
+            databaseConnected = false;
+
+        }
+
     }
 
-    public void DatabaseConnect(Graphics2D g2d){
-        int c;
-        if ( (c = database.connect()) == -1){
-
-            g2d.setColor(Color.WHITE);
-            g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
-            String timeTxt = "No internet Connection";
-            g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
-        };
-
+    public int databaseConnect(){
+        return database.connect();
     }
 
 
@@ -111,6 +115,14 @@ public class MenuState extends State
         for (Button b: buttons)
         {
             b.draw(g2d, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
+        }
+
+        if(databaseConnected == false)
+        {
+            g2d.setColor(Color.decode("#ff0000"));
+            g2d.setFont(new Font("Roboto", Font.BOLD, 55));
+            String txt = "!!! No internet connection !!!";
+            g2d.drawString(txt, x-200, y+100);
         }
     }
 
