@@ -33,6 +33,7 @@ public abstract class Map {
         itemPlacer = new ItemPlacer(refLink);
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
 
+
     }
 
     public abstract void Update();

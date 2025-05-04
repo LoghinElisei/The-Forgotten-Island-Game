@@ -1,5 +1,6 @@
 package PaooGame.Maps;
 
+import PaooGame.Database.DatabaseManager;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Items.SuperObject;
@@ -33,6 +34,8 @@ public class Map1 extends Map
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();
+
+
     }
     /*! \fn public  void Update()
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)

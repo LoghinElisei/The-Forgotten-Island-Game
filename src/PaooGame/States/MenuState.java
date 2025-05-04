@@ -46,6 +46,10 @@ public class MenuState extends State
         buttons.add(new Button("Leave", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
 
         backgroundImage = new ImageIcon("res/images/island_animated.gif").getImage();
+
+        refLink.database.connect();
+        refLink.database.disconnect();
+
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
