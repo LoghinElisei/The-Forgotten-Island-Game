@@ -72,6 +72,7 @@ public class Game implements Runnable
 
     public State menuState;        /*!< Referinta catre setari.*/
     public State pauseState;            /*!< Referinta catre menu.*/
+    public State loadingState;
     private State aboutState;           /*!< Referinta catre about.*/
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private MouseManager mouseManager;  // ME
@@ -140,8 +141,9 @@ public class Game implements Runnable
         pauseState      = null;
         menuState       = new MenuState(refLink);
         aboutState      = new AboutState(refLink);
+        loadingState = new LoadingState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(menuState);
+        State.SetState(loadingState);
 
     }
     /*! \fn public void run()

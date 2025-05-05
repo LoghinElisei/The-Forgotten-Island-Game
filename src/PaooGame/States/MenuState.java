@@ -47,8 +47,8 @@ public class MenuState extends State
 
         backgroundImage = new ImageIcon("res/images/island_animated.gif").getImage();
 
-        refLink.database.connect();
-        refLink.database.disconnect();
+
+
 
     }
     /*! \fn public void Update()
@@ -101,6 +101,8 @@ public class MenuState extends State
         {
             b.draw(g2d, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
         }
+
+
     }
 
     private int getXForCenteredText(String text, Graphics2D g2d)

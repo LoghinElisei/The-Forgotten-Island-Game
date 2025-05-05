@@ -10,11 +10,11 @@ public class DatabaseManager {
     private String user ;
     private String password ;
     private static DatabaseManager instance;
-    private Connection connection = null;
+    protected Connection connection = null;
 
     private DatabaseManager()
     {
-        url = "jdbc:mysql://root:aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn@crossover.proxy.rlwy.net:50650/railway";
+        url = "jdbc:mysq://root:aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn@crossover.proxy.rlwy.net:50650/railway";
         user = "root";
         password = "aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn";
     }
@@ -28,27 +28,20 @@ public class DatabaseManager {
 
     public Connection connect()
     {
+        if(connection != null){
+            return connection;
+        }
         try {
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null) {
                 System.out.println("Conexiune reușită la baza de date !");
-
-//                String query = "CREATE TABLE IF NOT EXISTS conexiuni_test (" +
-//                        "id INT PRIMARY KEY AUTO_INCREMENT," +
-//                        "timestamp DATETIME DEFAULT CURRENT_TIMESTAMP)";
-//                Statement stmt = connection.createStatement();
-//                stmt.executeUpdate(query);
-//                System.out.println("Tabel de test creat.");
-//
-//                String insert = "INSERT INTO conexiuni_test () VALUES ()";
-//                stmt.executeUpdate(insert);
-//                System.out.println("Inserare efectuată.");
 
             }
         } catch (SQLException e) {
             System.out.println("Eroare la conectare: " + e.getMessage());
         }
         finally {
+
             return connection;
         }
     }

@@ -1,5 +1,6 @@
 package PaooGame;
 
+import PaooGame.Database.Database;
 import PaooGame.Database.DatabaseManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
@@ -21,7 +22,7 @@ public class RefLinks
     private Game game;          /*!< Referinta catre obiectul PaooGame.Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
     private PlayState state;
-    public final DatabaseManager database = DatabaseManager.getInstance();
+    public final Database database = new Database();
 
     /*! \fn public RefLinks(PaooGame.Game game)
             \brief Constructorul de initializare al clasei.
