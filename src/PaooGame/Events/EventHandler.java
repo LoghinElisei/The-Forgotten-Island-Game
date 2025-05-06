@@ -32,9 +32,9 @@ public class EventHandler {
     }
 
 
-    public void checkEvent(){
-        if (hit(37, 17, "any") || hit(37, 16, "any")) teleportMap(2, 7, 15);
-        if (hit(47, 15, "any") || hit(47, 16, "any")) teleportMap(3, 7, 15);
+    public void checkEvent(String currentMap){
+        if (hit(37, 17, "any", "Map1", currentMap) || hit(37, 16, "any", "Map1", currentMap)) teleportMap(2, 7, 15);
+        if (hit(47, 15, "any", "Map2", currentMap) || hit(47, 16, "any", "Map2", currentMap)) teleportMap(3, 7, 15);
     }
 
     private void setDefaultEventRect() {
@@ -42,7 +42,7 @@ public class EventHandler {
         eventRect.y = eventDefaultRectY;
     }
 
-    private boolean hit(int eventCol, int eventRow, String reqDirection) {
+    private boolean hit(int eventCol, int eventRow, String reqDirection, String reqMap, String currentMap) {
         boolean hit = false;
 
         entity.bounds.x = entity.bounds.x + entity.GetX();
@@ -52,7 +52,7 @@ public class EventHandler {
         Graphics2D g = refLink.GetGame().getGraphics();
 
         if (entity.bounds.intersects(eventRect)) {
-            if (entity.getDirection().equals(reqDirection) || reqDirection.equals("any")){
+            if ((entity.getDirection().equals(reqDirection) || reqDirection.equals("any")) && currentMap.equals(reqMap)){
                 hit = true;
             }
         }

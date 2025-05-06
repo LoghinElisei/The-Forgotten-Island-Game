@@ -4,8 +4,7 @@ import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
-import PaooGame.States.PlayState;
-import PaooGame.Tiles.Tile;
+    import PaooGame.Tiles.Tile;
 
 
 

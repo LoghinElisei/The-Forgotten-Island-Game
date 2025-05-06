@@ -22,6 +22,7 @@ public class Map2 extends Map
     {
         /// Retine referinta "shortcut".
         super(refLink);
+        name = "Map2";
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.

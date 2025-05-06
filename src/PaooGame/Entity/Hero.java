@@ -37,15 +37,15 @@ public class Hero extends Character
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
             ///Seteaza imaginea de start a eroului
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
-        normalBounds.x = 50;
-        normalBounds.y = 80;
-        normalBounds.width = 32;
-        normalBounds.height = 32;
+        normalBounds.x = 35;
+        normalBounds.y = 60;
+        normalBounds.width = 25;
+        normalBounds.height = 25;
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         eventHandler = new EventHandler(this, refLink);
-        speed = 20;
+        speed = 32;
     }
 
     /*! \fn public void Update()
@@ -102,7 +102,7 @@ public class Hero extends Character
         int enemyIndex = refLink.GetGame().getCollisionChecker().checkEntity(this);
         enemyInteract(enemyIndex);
         // EVENTS
-        eventHandler.checkEvent();
+        eventHandler.checkEvent(refLink.GetMap().getName());
 
         if (collisionOn == false)
         {

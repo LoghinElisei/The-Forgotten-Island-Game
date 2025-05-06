@@ -137,8 +137,16 @@ public class ItemPlacer {
                 break;
             case 3:
                 map.items[0] = new Coin();
-                map.items[0].worldX = 44 * Tile.TILE_WIDTH;
-                map.items[0].worldY = 25 * Tile.TILE_HEIGHT;
+                map.items[0].worldX = 13 * Tile.TILE_WIDTH;
+                map.items[0].worldY = 7 * Tile.TILE_HEIGHT;
+
+                map.items[1] = new Coin();
+                map.items[1].worldX = 33 * Tile.TILE_WIDTH;
+                map.items[1].worldY = 7 * Tile.TILE_HEIGHT;
+
+                map.items[1] = new Coin();
+                map.items[1].worldX = 56 * Tile.TILE_WIDTH;
+                map.items[1].worldY = 7 * Tile.TILE_HEIGHT;
                 break;
         }
     }

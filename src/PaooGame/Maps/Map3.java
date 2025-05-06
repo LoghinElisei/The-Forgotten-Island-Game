@@ -17,11 +17,13 @@ import java.io.IOException;
 
 public class Map3 extends Map
 {
-    private final int ENEMIES_TO_DISPLAY = 10;
+    private final int ENEMIES_TO_DISPLAY = 22;
     public Map3(RefLinks refLink)
     {
         /// Retine referinta "shortcut".
         super(refLink);
+        name = "Map3";
+
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.

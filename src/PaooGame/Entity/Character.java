@@ -20,8 +20,8 @@ public abstract class Character extends Entity
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final int DEFAULT_SPEED         = 10; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 32 * 4;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 32 * 4;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 32 * 3;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 32 * 3;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
     protected int life;     /*!< Retine viata caracterului.*/

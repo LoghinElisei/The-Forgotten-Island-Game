@@ -18,12 +18,12 @@ public abstract class Map {
     protected int height;         /*!< Inaltimea hartii in numar de dale.*/
     protected int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     protected int [][] collision;
+    protected String name;
     public static Camera camera = new Camera(300,300,1408,1056);
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
     public SuperObject items[];
     public Character monsters[];
-
 
 
     public Map(RefLinks refLink)
@@ -116,5 +116,5 @@ public abstract class Map {
     public int getHeight() {
         return height;
     }
-
+    public String getName() { return name; }
 }

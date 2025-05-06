@@ -8,6 +8,7 @@ import PaooGame.Entity.Entity;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
+import PaooGame.Maps.Map3;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -32,7 +33,7 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map1(refLink);
+        map = new Map3(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
