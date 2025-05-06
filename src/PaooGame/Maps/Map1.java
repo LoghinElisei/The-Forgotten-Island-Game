@@ -52,43 +52,55 @@ public class Map1 extends Map
      */
     @Override
     protected void ThematicMap() {
-        String path = "res/maps/thematic/map1.txt";
 
-        int [][] map = new int[height][width];
-        tiles=new int[width][height];
-        String line;
-        int row = 0;
-        try {
-//            System.out.println("Trying to open file with FileReader...");
-            FileReader fr = new FileReader(path);
-//            System.out.println("FileReader opened successfully.");
-            BufferedReader reader = new BufferedReader(fr);
+        int[][] map = new int[height][width];
+        tiles = new int[width][height];
 
-            while((line = reader.readLine()) != null && row <height){
-                line = line.trim(); //elimina spatiile de la inceput si sfarsit
-                if(line.isEmpty()) continue;
+        //daca sunt conectat la baza de date , incarc mapa din baza de date
+        if(refLink.database.isConnected() == true)
+        {
+            map = refLink.database.loadMap1(width, height);
 
-                String [] element = line.split("\\s+");
-                for(int i=0;i<width;i++)
-                {
-                    map[row][i] = Integer.parseInt(element[i]);
-                }
-
-                row++;
-            }
             for (int i = 0; i < height; i++) {
                 for (int j = 0; j < width; j++) {
                     tiles[j][i] = map[i][j];
                 }
             }
-
-            reader.close();
         }
-        catch (IOException e)
-        {
-            System.out.println("Text file ThematicMap couldn't be opened");
-        }
+        else {
+            //altfel , incarc din fisier
 
+            String path = "res/maps/thematic/map1.txt";
+            String line;
+            int row = 0;
+            try {
+//            System.out.println("Trying to open file with FileReader...");
+                FileReader fr = new FileReader(path);
+//            System.out.println("FileReader opened successfully.");
+                BufferedReader reader = new BufferedReader(fr);
+
+                while ((line = reader.readLine()) != null && row < height) {
+                    line = line.trim(); //elimina spatiile de la inceput si sfarsit
+                    if (line.isEmpty()) continue;
+
+                    String[] element = line.split("\\s+");
+                    for (int i = 0; i < width; i++) {
+                        map[row][i] = Integer.parseInt(element[i]);
+                    }
+
+                    row++;
+                }
+                for (int i = 0; i < height; i++) {
+                    for (int j = 0; j < width; j++) {
+                        tiles[j][i] = map[i][j];
+                    }
+                }
+
+                reader.close();
+            } catch (IOException e) {
+                System.out.println("Text file ThematicMap couldn't be opened");
+            }
+        }
     }
     @Override
     protected void CollisionMap()

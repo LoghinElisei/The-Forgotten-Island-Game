@@ -14,7 +14,7 @@ public class DatabaseManager {
 
     private DatabaseManager()
     {
-        url = "jdbc:mysq://root:aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn@crossover.proxy.rlwy.net:50650/railway";
+        url = "jdbc:mysql://root:aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn@crossover.proxy.rlwy.net:50650/railway";
         user = "root";
         password = "aqDFFRKlccXbZwWTnuuAsLrUTVpeSxtn";
     }
@@ -35,6 +35,7 @@ public class DatabaseManager {
             connection = DriverManager.getConnection(url, user, password);
             if (connection != null) {
                 System.out.println("Conexiune reușită la baza de date !");
+
 
             }
         } catch (SQLException e) {

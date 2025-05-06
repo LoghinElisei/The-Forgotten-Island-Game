@@ -46,6 +46,9 @@ public class LoadingState extends State{
                 if(connected == false) {
                     errorLoading = true;
                 }
+                else {
+                    errorLoading = false;
+                }
                 return null;
             }
             @Override
