@@ -7,6 +7,7 @@ import PaooGame.Events.EventHandler;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
+import PaooGame.States.State;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -180,7 +181,8 @@ public class Hero extends Character
 
     private void enemyInteract(int i) {
         if (i != 999) {
-            System.out.println("Enemy collision");
+            refLink.setState(refLink.GetGame().gameOverState);
+            State.SetState(refLink.GetGame().gameOverState);
         }
     }
     @Override

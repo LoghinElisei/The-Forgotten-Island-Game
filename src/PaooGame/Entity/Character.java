@@ -4,7 +4,9 @@ import PaooGame.CollisionChecker.Collision;
 import PaooGame.Graphics.Assets;
 import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
+import PaooGame.States.GameOver;
 import PaooGame.States.PlayState;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -77,7 +79,8 @@ public abstract class Character extends Entity
         boolean contactPlayer = refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
 
         if (contactPlayer) {
-            System.out.println("Enemy just hitted me");
+            refLink.setState(refLink.GetGame().gameOverState);
+            State.SetState(refLink.GetGame().gameOverState);
         }
         if (!collisionOn)
         {

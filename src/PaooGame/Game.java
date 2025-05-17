@@ -70,11 +70,12 @@ public class Game implements Runnable
 
         ///Available states
     public State playState;            /*!< Referinta catre joc.*/
-
     public State menuState;        /*!< Referinta catre setari.*/
     public State pauseState;            /*!< Referinta catre menu.*/
     public State loadingState;
+    public State gameOverState;
     private State aboutState;           /*!< Referinta catre about.*/
+
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private MouseManager mouseManager;  // ME
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
@@ -143,6 +144,7 @@ public class Game implements Runnable
         menuState       = new MenuState(refLink);
         aboutState      = new AboutState(refLink);
         loadingState = new LoadingState(refLink);
+        gameOverState = new GameOver(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(loadingState);
 
