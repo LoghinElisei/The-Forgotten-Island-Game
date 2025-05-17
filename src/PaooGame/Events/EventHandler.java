@@ -65,25 +65,29 @@ public class EventHandler {
         Map map;
 
         switch(mapNumber) {
-            case 1:
-                map = new Map1(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
-                break;
             case 2:
-                map = new Map2(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
+                if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+                    refLink.GetGame().playState.getHero().setKeys(0);
+                    map = new Map2(refLink);
+                    PlayState.setMap(map);
+                    refLink.SetMap(map);
+                    entity.SetX(Tile.TILE_WIDTH * col);
+                    entity.SetY(Tile.TILE_HEIGHT * row);
+                }
                 break;
             case 3:
-                map = new Map3(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
+                if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+                    refLink.GetGame().playState.getHero().setKeys(0);
+                    map = new Map3(refLink);
+                    PlayState.setMap(map);
+                    refLink.SetMap(map);
+                    entity.SetX(Tile.TILE_WIDTH * col);
+                    entity.SetY(Tile.TILE_HEIGHT * row);
+                }
         }
 
 
-        entity.SetX(Tile.TILE_WIDTH * col);
-        entity.SetY(Tile.TILE_HEIGHT * row);
+
 
     }
 }

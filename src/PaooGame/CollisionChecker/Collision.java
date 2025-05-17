@@ -1,10 +1,10 @@
 package PaooGame.CollisionChecker;
 
 import PaooGame.Entity.Character;
-import PaooGame.Entity.Entity;
+import PaooGame.Entity.Hero;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
-    import PaooGame.Tiles.Tile;
+import PaooGame.Tiles.Tile;
 
 
 
@@ -177,7 +177,7 @@ public class Collision {
     public boolean checkFromEnemyToPlayer(Character entity) {
         boolean contactPlayer = false;
 
-        Entity hero = refLink.getState().getHero();
+        Character hero = refLink.GetGame().playState.getHero();
 
         entity.bounds.x = entity.GetX() + entity.bounds.x;
         entity.bounds.y = entity.GetY() + entity.bounds.y;

@@ -183,6 +183,12 @@ public class Hero extends Character
             System.out.println("Enemy collision");
         }
     }
-
-
+    @Override
+    public int getKeys() {
+        return this.keys;
+    }
+    @Override
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
 }

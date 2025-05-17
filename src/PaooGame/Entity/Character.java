@@ -9,6 +9,7 @@ import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import static java.lang.Math.round;
 
@@ -32,8 +33,7 @@ public abstract class Character extends Entity
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
     protected int startCol, startRow, goalCol, goalRow;
     protected boolean onPath = false;
-    protected int enemyType = 0; // 0 -> random movement, 1 -> Goes from one point to another point, 2 -> Follows the player if entered aggr zone
-
+    protected boolean followPlayer = false;
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
 
@@ -57,6 +57,50 @@ public abstract class Character extends Entity
         screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
         screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
     }
+    @Override
+    public void Update() {
+        ///Implicit monstrul nu trebuie sa se deplaseze daca nu este apasata o tasta
+        xMove = 0;
+        yMove = 0;
+        Character hero = refLink.GetGame().playState.getHero();
+        int xDistance = Math.abs(x - hero.x);
+        int yDistance = Math.abs(y - hero.y);
+        int tileDistance = (xDistance + yDistance) / Tile.TILE_HEIGHT;
+        if (tileDistance < 3 && followPlayer == false) {
+            // aggressive enemy only in 50% chance
+            int i = new Random().nextInt(100) + 1;
+            if (i > 50) followPlayer = true;
+        } else if (tileDistance > 10 && followPlayer)  followPlayer = false;
+        setAction();
+        collisionOn = false;
+        refLink.GetGame().getCollisionChecker().checkTile(this);
+        boolean contactPlayer = refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
+
+        if (contactPlayer) {
+            System.out.println("Enemy just hitted me");
+        }
+        if (!collisionOn)
+        {
+            switch (direction)
+            {
+                case "up": yMove = -speed; break;
+                case "down": yMove = speed; break;
+                case "left": xMove = -speed; break;
+                case "right": xMove = speed;
+            }
+        }
+        ///Actualizeaza pozitia
+        Move();
+        ///Actualizeaza imaginea
+        spriteCounter++;
+        if (spriteCounter > 10)
+        {
+            changeSpriteNum();
+            spriteCounter = 0;
+        }
+    }
+
+    protected void setAction(){}
 
     /*! \fn public void Move()
         \brief Modifica pozitia caracterului
@@ -239,8 +283,6 @@ public abstract class Character extends Entity
         this.goalRow = goalRow;
     }
 
-    public void setEnemyType(int enemyType) {
-        this.enemyType = enemyType;
-    }
-
+    public int getKeys() {return 0;}
+    public void setKeys(int keys) {}
 }

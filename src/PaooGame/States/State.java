@@ -3,6 +3,7 @@ package PaooGame.States;
 import java.awt.*;
 
 import PaooGame.Entity.Character;
+import PaooGame.Entity.Hero;
 import PaooGame.RefLinks;
 
 /*! \class State

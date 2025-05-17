@@ -44,6 +44,39 @@ public class Assets
     public static BufferedImage orcRight3;
 
 
+//    public static BufferedImage blazeUp1;
+//    public static BufferedImage blazeUp2;
+//    public static BufferedImage blazeUp3;
+//
+//    public static BufferedImage blazeDown1;
+//    public static BufferedImage blazeDown2;
+//    public static BufferedImage blazeDown3;
+//
+//    public static BufferedImage blazeLeft1;
+//    public static BufferedImage blazeLeft2;
+//    public static BufferedImage blazeLeft3;
+//
+//    public static BufferedImage blazeRight1;
+//    public static BufferedImage blazeRight2;
+//    public static BufferedImage blazeRight3;
+
+    public static BufferedImage chupaUp1;
+    public static BufferedImage chupaUp2;
+    public static BufferedImage chupaUp3;
+
+    public static BufferedImage chupaDown1;
+    public static BufferedImage chupaDown2;
+    public static BufferedImage chupaDown3;
+
+    public static BufferedImage chupaLeft1;
+    public static BufferedImage chupaLeft2;
+    public static BufferedImage chupaLeft3;
+
+    public static BufferedImage chupaRight1;
+    public static BufferedImage chupaRight2;
+    public static BufferedImage chupaRight3;
+
+
     public static BufferedImage soil;
     public static BufferedImage grass;
     public static BufferedImage water;
@@ -82,7 +115,8 @@ public class Assets
 
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
         SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
-
+//        SpriteSheet blazeSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
+        SpriteSheet chupaSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/chupacabrasheet.png"));
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);
 ////        soil = sheet.crop(4, 2);
@@ -146,6 +180,23 @@ public class Assets
         orcRight1 = orcSheet.crop(0, 2);
         orcRight2 = orcSheet.crop(1,2);
         orcRight3 = orcSheet.crop(2,2);
+
+
+        chupaUp1 = chupaSheet.crop(0, 3);
+        chupaUp2 = chupaSheet.crop(1, 3);
+        chupaUp3 = chupaSheet.crop(2, 3);
+
+        chupaDown1 = chupaSheet.crop(0, 0);
+        chupaDown2 = chupaSheet.crop(1,0);
+        chupaDown3 = chupaSheet.crop(2,0);
+
+        chupaLeft1 = chupaSheet.crop(0, 1);
+        chupaLeft2 = chupaSheet.crop(1,1);
+        chupaLeft3 = chupaSheet.crop(2,1);
+
+        chupaRight1 = chupaSheet.crop(0, 2);
+        chupaRight2 = chupaSheet.crop(1,2);
+        chupaRight3 = chupaSheet.crop(2,2);
 
     }
 }

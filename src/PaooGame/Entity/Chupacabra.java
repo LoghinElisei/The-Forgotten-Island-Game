@@ -10,12 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Orc extends Character {
+public class Chupacabra extends Character {
     private BufferedImage image;
-    private int actionLockCounter = 0;
 
-
-    public Orc(RefLinks refLink, int x, int y)
+    public Chupacabra(RefLinks refLink, int x, int y)
     {
         super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
 
@@ -28,6 +26,7 @@ public class Orc extends Character {
         defaultBoundsY = normalBounds.y;
         speed = 2;
     }
+
 
     @Override
     public void Draw(Graphics2D g) {
@@ -43,30 +42,30 @@ public class Orc extends Character {
             switch (direction) {
                 case "up":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcUp1; break;
-                        case 2: image = Assets.orcUp2; break;
-                        case 3: image = Assets.orcUp3;
+                        case 1: image = Assets.chupaUp1; break;
+                        case 2: image = Assets.chupaUp2; break;
+                        case 3: image = Assets.chupaUp3;
                     }
                     break;
                 case "down":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcDown1; break;
-                        case 2: image = Assets.orcDown2; break;
-                        case 3: image = Assets.orcDown3;
+                        case 1: image = Assets.chupaDown1; break;
+                        case 2: image = Assets.chupaDown2; break;
+                        case 3: image = Assets.chupaDown3;
                     }
                     break;
                 case "left":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcLeft1; break;
-                        case 2: image = Assets.orcLeft2; break;
-                        case 3: image = Assets.orcLeft3;
+                        case 1: image = Assets.chupaLeft1; break;
+                        case 2: image = Assets.chupaLeft2; break;
+                        case 3: image = Assets.chupaLeft3;
                     }
                     break;
                 case "right":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcRight1; break;
-                        case 2: image = Assets.orcRight2; break;
-                        case 3: image = Assets.orcRight3;
+                        case 1: image = Assets.chupaRight1; break;
+                        case 2: image = Assets.chupaRight2; break;
+                        case 3: image = Assets.chupaRight3;
                     }
             }
 
@@ -79,21 +78,15 @@ public class Orc extends Character {
     }
 
     @Override
-    protected void setAction() {
-        actionLockCounter++;
-        if (actionLockCounter == 120) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(100) + 1; // pick a number between 1 and 100
-            if (randomNumber <= 25) {
-                direction = "up";
-            } else if (randomNumber > 25 && randomNumber <= 50) {
-                direction = "down";
-            } else if (randomNumber > 50 && randomNumber <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
-            actionLockCounter = 0;
+    protected void setAction(){
+        if (followPlayer == false) {
+            if (onPath) searchPath(goalCol, goalRow);
+            else searchPath(startCol, startRow);
+        } else {
+            Character hero = refLink.GetGame().playState.getHero();
+            int goalCol = (hero.x + hero.bounds.x) / Tile.TILE_HEIGHT;
+            int goalRow = (hero.y + hero.bounds.y) / Tile.TILE_HEIGHT;
+            searchPath(goalCol, goalRow);
         }
     }
 }

@@ -10,12 +10,10 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Orc extends Character {
+public class Blaze extends Character {
     private BufferedImage image;
-    private int actionLockCounter = 0;
 
-
-    public Orc(RefLinks refLink, int x, int y)
+    public Blaze(RefLinks refLink, int x, int y)
     {
         super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
 
@@ -28,6 +26,7 @@ public class Orc extends Character {
         defaultBoundsY = normalBounds.y;
         speed = 2;
     }
+
 
     @Override
     public void Draw(Graphics2D g) {
@@ -79,21 +78,8 @@ public class Orc extends Character {
     }
 
     @Override
-    protected void setAction() {
-        actionLockCounter++;
-        if (actionLockCounter == 120) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(100) + 1; // pick a number between 1 and 100
-            if (randomNumber <= 25) {
-                direction = "up";
-            } else if (randomNumber > 25 && randomNumber <= 50) {
-                direction = "down";
-            } else if (randomNumber > 50 && randomNumber <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
-            actionLockCounter = 0;
-        }
+    protected void setAction(){
+        if (onPath) searchPath(goalCol, goalRow);
+        else searchPath(startCol, startRow);
     }
 }
