@@ -5,6 +5,7 @@ import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 import PaooGame.Timer.Timer;
@@ -19,12 +20,12 @@ public abstract class Map {
     protected int [][] tiles;     /*!< Referinta catre o matrice cu codurile dalelor ce vor construi harta.*/
     protected int [][] collision;
     protected String name;
+    protected PathFinder pFinder;
     public static Camera camera = new Camera(300,300,1408,1056);
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
     public SuperObject items[];
     public Character monsters[];
-
 
     public Map(RefLinks refLink)
     {
@@ -59,7 +60,6 @@ public abstract class Map {
 
             }
         }
-
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
         String timeTxt = String.format("%.2f", timer.getElapsedTime());
@@ -117,4 +117,7 @@ public abstract class Map {
         return height;
     }
     public String getName() { return name; }
+    public PathFinder getpFinder() {
+        return pFinder;
+    }
 }

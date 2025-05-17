@@ -3,6 +3,7 @@ package PaooGame.Entity;
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.util.Random;
 public class Orc extends Character {
     private BufferedImage image;
     private int actionLockCounter = 0;
+    private boolean followPlayer = false;
 
     public Orc(RefLinks refLink, int x, int y)
     {
@@ -25,19 +27,30 @@ public class Orc extends Character {
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         speed = 2;
-
     }
 
     @Override
     public void Update() {
-        setAction();
         ///Implicit monstrul nu trebuie sa se deplaseze daca nu este apasata o tasta
         xMove = 0;
         yMove = 0;
-
+        Character hero = refLink.GetGame().playState.getHero();
+        int xDistance = Math.abs(x - hero.x);
+        int yDistance = Math.abs(y - hero.y);
+        int tileDistance = (xDistance + yDistance) / Tile.TILE_HEIGHT;
+        if (tileDistance < 3 && followPlayer == false) {
+            // aggressive enemy only in 50% chance
+            int i = new Random().nextInt(100) + 1;
+            if (i > 50) followPlayer = true;
+        } else if (tileDistance > 10 && followPlayer)  followPlayer = false;
+        setAction();
         collisionOn = false;
         refLink.GetGame().getCollisionChecker().checkTile(this);
-        refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
+        boolean contactPlayer = refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
+
+        if (contactPlayer) {
+            System.out.println("Enemy just hitted me");
+        }
         if (!collisionOn)
         {
             switch (direction)
@@ -59,14 +72,16 @@ public class Orc extends Character {
         }
     }
 
-    public void Draw(Graphics2D g, PlayState playState) {
-        int screenX = x - playState.getHero().GetX() + playState.getHero().screenX;
-        int screenY = y - playState.getHero().GetY() + playState.getHero().screenY;
+    @Override
+    public void Draw(Graphics2D g) {
+        State playState = refLink.GetGame().playState;
+        int screenX = x - playState.getHero().x + playState.getHero().screenX;
+        int screenY = y - playState.getHero().y + playState.getHero().screenY;
 
-        if (x + Tile.TILE_WIDTH > playState.getHero().GetX() - playState.getHero().screenX &&
-                x - Tile.TILE_WIDTH < playState.getHero().GetX() + playState.getHero().screenX &&
-                y + Tile.TILE_WIDTH > playState.getHero().GetY() - playState.getHero().screenY &&
-                y - Tile.TILE_WIDTH < playState.getHero().GetY() + playState.getHero().screenY) {
+        if (x + Tile.TILE_WIDTH > playState.getHero().x - playState.getHero().screenX &&
+                x - Tile.TILE_WIDTH < playState.getHero().x + playState.getHero().screenX &&
+                y + Tile.TILE_WIDTH > playState.getHero().y - playState.getHero().screenY &&
+                y - Tile.TILE_WIDTH < playState.getHero().y + playState.getHero().screenY) {
 
             switch (direction) {
                 case "up":
@@ -106,24 +121,45 @@ public class Orc extends Character {
         }
     }
 
-    @Override
-    public void Draw(Graphics2D g2d) {}
-
     private void setAction(){
-        actionLockCounter++;
-        if (actionLockCounter == 120) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(100)  + 1; // pick a number between 1 and 100
-            if (randomNumber <= 25) {
-                direction = "up";
-            } else if (randomNumber > 25 && randomNumber <= 50) {
-                direction = "down";
-            } else if (randomNumber > 50 && randomNumber <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
-            actionLockCounter = 0;
+        switch (enemyType) {
+            case 0:
+                actionLockCounter++;
+                if (actionLockCounter == 120) {
+                    Random random = new Random();
+                    int randomNumber = random.nextInt(100)  + 1; // pick a number between 1 and 100
+                    if (randomNumber <= 25) {
+                        direction = "up";
+                    } else if (randomNumber > 25 && randomNumber <= 50) {
+                        direction = "down";
+                    } else if (randomNumber > 50 && randomNumber <= 75) {
+                        direction = "left";
+                    } else {
+                        direction = "right";
+                    }
+                    actionLockCounter = 0;
+                }
+                break;
+            case 1:
+                if (onPath) {
+                    searchPath(goalCol, goalRow);
+                } else {
+                    searchPath(startCol, startRow);
+                }
+                break;
+            case 2:
+                if (followPlayer == false) {
+                    if (onPath) searchPath(goalCol, goalRow);
+                    else searchPath(startCol, startRow);
+                } else {
+                    Character hero = refLink.GetGame().playState.getHero();
+                    int goalCol = (hero.x + hero.bounds.x) / Tile.TILE_HEIGHT;
+                    int goalRow = (hero.y + hero.bounds.y) / Tile.TILE_HEIGHT;
+                    searchPath(goalCol, goalRow);
+                }
+
+
+                break;
         }
 
     }

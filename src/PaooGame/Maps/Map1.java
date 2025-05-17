@@ -4,6 +4,7 @@ import PaooGame.Database.DatabaseManager;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Items.SuperObject;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
 
 import java.io.BufferedReader;
@@ -28,6 +29,7 @@ public class Map1 extends Map
         width = 44;
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
+        pFinder = new PathFinder(refLink, width, height);
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY];
         monsters = new Character[ENEMIES_TO_DISPLAY];
         Map.itemPlacer.addObject(1, this);
@@ -35,7 +37,6 @@ public class Map1 extends Map
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();
-
 
     }
     /*! \fn public  void Update()

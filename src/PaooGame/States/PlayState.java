@@ -20,7 +20,6 @@ import java.awt.*;
 public class PlayState extends State
 {
 
-    private Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     private boolean debugState = false;
     public static Map map;    /*!< Referinta catre harta curenta.*/
 
@@ -89,7 +88,7 @@ public class PlayState extends State
         {
             if (map.monsters[i] != null)
             {
-                map.monsters[i].Draw(g, this);
+                map.monsters[i].Draw(g);
             }
         }
         hero.Draw(g);
@@ -108,8 +107,5 @@ public class PlayState extends State
     }
     public static void setMap(Map map){
         PlayState.map = map;
-    }
-    public Entity getHero() {
-        return hero;
     }
 }

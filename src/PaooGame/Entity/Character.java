@@ -1,6 +1,8 @@
 package PaooGame.Entity;
 
+import PaooGame.CollisionChecker.Collision;
 import PaooGame.Graphics.Assets;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
 import PaooGame.Tiles.Tile;
@@ -28,6 +30,9 @@ public abstract class Character extends Entity
     protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
+    protected int startCol, startRow, goalCol, goalRow;
+    protected boolean onPath = false;
+    protected int enemyType = 0; // 0 -> random movement, 1 -> Goes from one point to another point, 2 -> Follows the player if entered aggr zone
 
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
@@ -116,7 +121,7 @@ public abstract class Character extends Entity
     public void SetSpeed(int speed) {
         this.speed = speed;
     }
-
+    public void setOnPath(boolean onPath) { this.onPath = onPath; }
     /*! \fn public float GetXMove()
         \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
      */
@@ -148,4 +153,94 @@ public abstract class Character extends Entity
     {
         this.yMove = yMove;
     }
+
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (x + bounds.x) / Tile.TILE_HEIGHT;
+        int startRow = (y + bounds.y) / Tile.TILE_HEIGHT;
+
+//        System.out.println("startCol = " + startCol + ", startRow = " + startRow);
+        PathFinder pFinder = refLink.GetMap().getpFinder();
+        Collision collchecker = refLink.GetGame().getCollisionChecker();
+
+        pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+        if (pFinder.search()) {
+
+            // Next x and y coordinates
+            int nextX = pFinder.pathList.get(0).col * Tile.TILE_HEIGHT;
+            int nextY = pFinder.pathList.get(0).row * Tile.TILE_HEIGHT;
+
+            // enemy position
+            int entLeftX = x + bounds.x;
+            int entRightX = x + bounds.x + bounds.width;
+            int entTopY = y + bounds.y;
+            int entBottomY = y + bounds.y + bounds.height;
+
+            if (entTopY > nextY && entLeftX >= nextX && entRightX < nextX + Tile.TILE_HEIGHT) {
+                direction = "up";
+            } else
+            if (entTopY < nextY && entLeftX >= nextX && entRightX < nextX + Tile.TILE_HEIGHT) {
+                direction = "down";
+            } else
+            if (entTopY >= nextY && entBottomY < nextY + Tile.TILE_HEIGHT) {
+                // left or right
+                if (entLeftX > nextX) {
+                    direction = "left";
+                }
+                if (entLeftX < nextX) {
+                    direction = "right";
+                }
+            } else if (entTopY > nextY && entLeftX > nextX) {
+                // up or left
+                direction = "up";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "left";
+                }
+            } else if (entTopY > nextY && entLeftX < nextX) {
+                // up or right
+                direction = "up";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "right";
+                }
+            } else if (entTopY < nextY && entLeftX > nextX) {
+                // down or left
+                direction = "down";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "left";
+                }
+            } else if (entTopY < nextY && entLeftX < nextX) {
+                // down or right
+                direction = "down";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "right";
+                }
+            }
+
+            int nextCol = pFinder.pathList.get(0).col;
+            int nextRow = pFinder.pathList.get(0).row;
+
+            if (nextCol == goalCol && nextRow == goalRow) {
+                onPath = !onPath;
+            }
+        }
+    }
+
+    public void setPath(int startCol, int startRow, int goalCol, int goalRow){
+        this.startCol = startCol;
+        this.startRow = startRow;
+        this.goalCol = goalCol;
+        this.goalRow = goalRow;
+    }
+
+    public void setEnemyType(int enemyType) {
+        this.enemyType = enemyType;
+    }
+
 }

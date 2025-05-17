@@ -22,7 +22,6 @@ public class Hero extends Character
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
     private int keys = 0;
     private int coins = 0;
-    private int lvl = 1;
     private EventHandler eventHandler;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.

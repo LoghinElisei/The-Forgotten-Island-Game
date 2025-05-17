@@ -160,8 +160,10 @@ public class Collision {
                     case "right": entity.bounds.x += entity.GetSpeed(); break;
                 }
                 if (entity.bounds.intersects(target[i].bounds)) {
-                    entity.setCollisionOn(true);
-                    index = i;
+                    if (target[i] != entity) {
+                        index = i;
+                        entity.setCollisionOn(true);
+                    }
                 }
                 entity.SetDefaultMode();
                 target[i].SetDefaultMode();
@@ -172,7 +174,9 @@ public class Collision {
     }
 
 
-    public void checkFromEnemyToPlayer(Character entity) {
+    public boolean checkFromEnemyToPlayer(Character entity) {
+        boolean contactPlayer = false;
+
         Entity hero = refLink.getState().getHero();
 
         entity.bounds.x = entity.GetX() + entity.bounds.x;
@@ -191,8 +195,11 @@ public class Collision {
         }
         if (entity.bounds.intersects(hero.bounds)) {
             entity.setCollisionOn(true);
+            contactPlayer = true;
         }
         entity.SetDefaultMode();
         hero.SetDefaultMode();
+
+        return contactPlayer;
     }
 }

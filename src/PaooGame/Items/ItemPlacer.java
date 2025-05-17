@@ -3,7 +3,6 @@ package PaooGame.Items;
 import PaooGame.Creator.EnemyCreator.EnemyItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
-import PaooGame.Entity.Orc;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
@@ -144,9 +143,89 @@ public class ItemPlacer {
                 map.items[1].worldX = 33 * Tile.TILE_WIDTH;
                 map.items[1].worldY = 7 * Tile.TILE_HEIGHT;
 
-                map.items[1] = new Coin();
-                map.items[1].worldX = 56 * Tile.TILE_WIDTH;
-                map.items[1].worldY = 7 * Tile.TILE_HEIGHT;
+                map.items[2] = new Coin();
+                map.items[2].worldX = 56 * Tile.TILE_WIDTH;
+                map.items[2].worldY = 7 * Tile.TILE_HEIGHT;
+
+                map.items[3] = new Coin();
+                map.items[3].worldX = 25 * Tile.TILE_WIDTH;
+                map.items[3].worldY = 8 * Tile.TILE_HEIGHT;
+
+                map.items[4] = new Coin();
+                map.items[4].worldX = 52 * Tile.TILE_WIDTH;
+                map.items[4].worldY = 10 * Tile.TILE_HEIGHT;
+
+                map.items[5] = new Coin();
+                map.items[5].worldX = 30 * Tile.TILE_WIDTH;
+                map.items[5].worldY = 11 * Tile.TILE_HEIGHT;
+
+
+                map.items[6] = new Coin();
+                map.items[6].worldX = 20 * Tile.TILE_WIDTH;
+                map.items[6].worldY = 13 * Tile.TILE_HEIGHT;
+
+                map.items[7] = new Coin();
+                map.items[7].worldX = 36 * Tile.TILE_WIDTH;
+                map.items[7].worldY = 13 * Tile.TILE_HEIGHT;
+
+                map.items[8] = new Coin();
+                map.items[8].worldX = 46 * Tile.TILE_WIDTH;
+                map.items[8].worldY = 14 * Tile.TILE_HEIGHT;
+
+                map.items[9] = new Coin();
+                map.items[9].worldX = 25 * Tile.TILE_WIDTH;
+                map.items[9].worldY = 16 * Tile.TILE_HEIGHT;
+
+                map.items[10] = new Coin();
+                map.items[10].worldX = 40 * Tile.TILE_WIDTH;
+                map.items[10].worldY = 17 * Tile.TILE_HEIGHT;
+                int i = 10;
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 51 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 18 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 33 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 20 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 15 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 22 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 15 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 22 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 42 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 22 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 51 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 22 * Tile.TILE_HEIGHT;
+
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 26 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 24 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 7 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 25 * Tile.TILE_HEIGHT;
+
+
+                map.items[++i] = new Coin();
+                map.items[i].worldX = 56 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 25 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Key();
+                map.items[i].worldX = 43 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 8 * Tile.TILE_HEIGHT;
+
+                map.items[++i] = new Key();
+                map.items[i].worldX = 43 * Tile.TILE_WIDTH;
+                map.items[i].worldY = 24 * Tile.TILE_HEIGHT;
+
                 break;
         }
     }
@@ -154,13 +233,31 @@ public class ItemPlacer {
     public void setEnemies(int mapNumber, Map map){
         switch (mapNumber){
             case 1:
-                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 21 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 36 * Tile.TILE_WIDTH, 12 * Tile.TILE_HEIGHT);
+                for (int i = 0; i < map.monsters.length; ++i) {
+                    if (map.monsters[i] != null) {
+                        map.monsters[i].setEnemyType(0); // see charachter description for this parameter
+                    }
+                }
                 break;
             case 2:
                 map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 20 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                for (int i = 0; i < map.monsters.length; ++i) {
+                    if (map.monsters[i] != null) {
+                        map.monsters[i].setOnPath(true); // Inamicii se vor misca de la o locatie la alta, indiferent de actiunile jucatorul
+                        map.monsters[i].setEnemyType(1);
+                    }
+                }
+                map.monsters[0].setPath(20, 21, 30, 10);
                 break;
             case 3:
-                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 19 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 25 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
+                for (int i = 0; i < map.monsters.length; ++i)
+                    if (map.monsters[i] != null) {
+                        map.monsters[i].setOnPath(true); // Inamicii se vor misca de la o locatie la alta, indiferent de actiunile jucatorul
+                        map.monsters[i].setEnemyType(2);
+                    }
+                map.monsters[0].setPath(25, 21, 40, 21);
                 break;
         }
     }

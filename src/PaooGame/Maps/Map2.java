@@ -2,6 +2,7 @@ package PaooGame.Maps;
 
 import PaooGame.Entity.Character;
 import PaooGame.Items.SuperObject;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -29,7 +30,7 @@ public class Map2 extends Map
         width = 54;
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
-
+        pFinder = new PathFinder(refLink, width, height);
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY + 3];
         monsters = new Character[ENEMIES_TO_DISPLAY];
         Map.itemPlacer.addObject(2, this);
