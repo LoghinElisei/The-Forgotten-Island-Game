@@ -32,8 +32,9 @@ public class LoadingState extends State{
         backgroundImage = new ImageIcon("res/images/loading_background.png").getImage();
         loadingImage = new ImageIcon("res/images/loading.gif").getImage();
         buttons.add(new Button("Continue", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
-        buttons.add(new Button("Continue without save", new Rectangle(centerX-50, startY + 50 + buttons.size() * (height + gap), width+100, height)));
+        buttons.add(new Button("Continue with local save", new Rectangle(centerX-50, startY + 50 + buttons.size() * (height + gap), width+100, height)));
         buttons.add(new Button("Try reconnect", new Rectangle(centerX-50, startY + 60 + buttons.size() * (height + gap), width+100, height)));
+
 
         connectToDatabase();
 
@@ -43,7 +44,7 @@ public class LoadingState extends State{
             @Override
             protected Void doInBackground(){
                 boolean connected = refLink.database.connect();
-                if(connected == false) {
+                if(refLink.database.isOracleDatabase() == false) {
                     errorLoading = true;
                 }
                 else {
@@ -177,7 +178,7 @@ public class LoadingState extends State{
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;
-            case "Continue without save":
+            case "Continue with local save":
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;

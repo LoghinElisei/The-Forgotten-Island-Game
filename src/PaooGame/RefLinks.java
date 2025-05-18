@@ -29,10 +29,14 @@ public class RefLinks
 
             \param game Referinta catre obiectul game.
          */
+    public void setMap()
+    {
+        this.map = new Map1(this);
+    }
     public RefLinks(Game game)
     {
         this.game = game;
-        this.map = new Map1(this);
+        //this.map = new Map1(this);
         this.state = (PlayState) game.playState;
 
     }
