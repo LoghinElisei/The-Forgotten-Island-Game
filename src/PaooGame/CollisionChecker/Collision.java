@@ -1,7 +1,7 @@
 package PaooGame.CollisionChecker;
 
 import PaooGame.Entity.Character;
-import PaooGame.Entity.Hero;
+import PaooGame.Game;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
@@ -10,9 +10,6 @@ import PaooGame.Tiles.Tile;
 
 public class Collision {
     private RefLinks refLink;
-
-
-    private boolean debug = false;
 
     public Collision(RefLinks refLink)
     {
@@ -25,16 +22,6 @@ public class Collision {
         int characterRightX = item.GetX()  + item.bounds.x + item.bounds.width;
         int characterTopY = item.GetY() + item.bounds.y;
         int characterBottomY = item.GetY()  + item.bounds.y + item.bounds.height;
-
-
-
-//        System.out.println("x = " + item.GetX());
-//        System.out.println("y = " + item.GetY());
-//        System.out.println(characterLeftX);
-//        System.out.println(characterRightX);
-//        System.out.println(characterTopY);
-//        System.out.println(characterBottomY);
-
 
 
         int tileSize = Tile.TILE_WIDTH;
@@ -52,12 +39,7 @@ public class Collision {
                 characterTopRow = (characterTopY - item.GetSpeed()) / tileSize;
                 tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow);
                 tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterTopRow);
-//                System.out.println("(" + characterLeftCol + ", " + characterTopRow + ")");
-//                System.out.println("(" + characterRightCol + ", " + characterTopRow + ")");
-//                System.out.println("tile1: " + tileNum1);
-//                System.out.println("tile2: " + tileNum2);
-                if (!debug && (tileNum1.IsSolid() || tileNum2.IsSolid())) {
-//                    System.out.println(item.getDirection() + " is Solid");
+                if (tileNum1.IsSolid() || tileNum2.IsSolid()) {
                     item.setCollisionOn(true);
                 }
                 break;
@@ -65,12 +47,7 @@ public class Collision {
                 characterBottomRow = (characterBottomY + item.GetSpeed()) / tileSize;
                 tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterBottomRow);
                 tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow);
-//                System.out.println("(" + characterLeftCol + ", " + characterBottomRow + ")");
-//                System.out.println("(" + characterRightCol + ", " + characterBottomRow + ")");
-//                System.out.println("tile1: " + tileNum1);
-//                System.out.println("tile2: " + tileNum2);
-                if (!debug && (tileNum1.IsSolid() || tileNum2.IsSolid())) {
-//                    System.out.println(item.getDirection() + " is Solid");
+                if (tileNum1.IsSolid() || tileNum2.IsSolid()) {
                     item.setCollisionOn(true);
                 }
                 break;
@@ -78,12 +55,7 @@ public class Collision {
                 characterLeftCol = (characterLeftX - item.GetSpeed()) / tileSize;
                 tileNum1 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterTopRow);
                 tileNum2 = refLink.GetMap().GetCollisionTile(characterLeftCol, characterBottomRow);
-//                System.out.println("(" + characterLeftCol + ", " + characterTopRow + ")");
-//                System.out.println("(" + characterLeftCol + ", " + characterBottomRow + ")");
-//                System.out.println("tile1: " + tileNum1);
-//                System.out.println("tile2: " + tileNum2);
-                if (!debug && (tileNum1.IsSolid() || tileNum2.IsSolid())) {
-//                    System.out.println(item.getDirection() + " is Solid");
+                if (tileNum1.IsSolid() || tileNum2.IsSolid()) {
                     item.setCollisionOn(true);
                 }
                 break;
@@ -91,12 +63,7 @@ public class Collision {
                 characterRightCol = (characterRightX + item.GetSpeed()) / tileSize;
                 tileNum1 = refLink.GetMap().GetCollisionTile(characterRightCol, characterTopRow);
                 tileNum2 = refLink.GetMap().GetCollisionTile(characterRightCol, characterBottomRow);
-//                System.out.println("(" + characterRightCol + ", " + characterTopRow + ")");
-//                System.out.println("(" + characterRightCol + ", " + characterBottomRow + ")");
-//                System.out.println("tile1: " + tileNum1);
-//                System.out.println("tile2: " + tileNum2);
-                if (!debug && (tileNum1.IsSolid() || tileNum2.IsSolid())) {
-//                    System.out.println(item.getDirection() + " is Solid");
+                if (tileNum1.IsSolid() || tileNum2.IsSolid()) {
                     item.setCollisionOn(true);
                 }
         }

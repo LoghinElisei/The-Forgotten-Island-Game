@@ -1,5 +1,6 @@
 package PaooGame.Graphics;
 
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 /*! \class public class Assets
@@ -44,21 +45,21 @@ public class Assets
     public static BufferedImage orcRight3;
 
 
-//    public static BufferedImage blazeUp1;
-//    public static BufferedImage blazeUp2;
-//    public static BufferedImage blazeUp3;
-//
-//    public static BufferedImage blazeDown1;
-//    public static BufferedImage blazeDown2;
-//    public static BufferedImage blazeDown3;
-//
-//    public static BufferedImage blazeLeft1;
-//    public static BufferedImage blazeLeft2;
-//    public static BufferedImage blazeLeft3;
-//
-//    public static BufferedImage blazeRight1;
-//    public static BufferedImage blazeRight2;
-//    public static BufferedImage blazeRight3;
+    public static BufferedImage blazeUp1;
+    public static BufferedImage blazeUp2;
+    public static BufferedImage blazeUp3;
+
+    public static BufferedImage blazeDown1;
+    public static BufferedImage blazeDown2;
+    public static BufferedImage blazeDown3;
+
+    public static BufferedImage blazeLeft1;
+    public static BufferedImage blazeLeft2;
+    public static BufferedImage blazeLeft3;
+
+    public static BufferedImage blazeRight1;
+    public static BufferedImage blazeRight2;
+    public static BufferedImage blazeRight3;
 
     public static BufferedImage chupaUp1;
     public static BufferedImage chupaUp2;
@@ -115,8 +116,8 @@ public class Assets
 
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
         SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
-//        SpriteSheet blazeSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
-        SpriteSheet chupaSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/chupacabrasheet.png"));
+        SpriteSheet blazeSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/blazeSheet.png"));
+        SpriteSheet chupaSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/chupacabraSheet.png"));
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);
 ////        soil = sheet.crop(4, 2);
@@ -182,21 +183,37 @@ public class Assets
         orcRight3 = orcSheet.crop(2,2);
 
 
-        chupaUp1 = chupaSheet.crop(0, 3);
-        chupaUp2 = chupaSheet.crop(1, 3);
-        chupaUp3 = chupaSheet.crop(2, 3);
+        blazeUp1 = blazeSheet.crop(0, 3, 16, 17);
+        blazeUp2 = blazeSheet.crop(1, 3, 16, 17);
+        blazeUp3 = blazeSheet.crop(2, 3, 16, 17);
 
-        chupaDown1 = chupaSheet.crop(0, 0);
-        chupaDown2 = chupaSheet.crop(1,0);
-        chupaDown3 = chupaSheet.crop(2,0);
+        blazeDown1 = blazeSheet.crop(0, 0, 16, 17);
+        blazeDown2 = blazeSheet.crop(1,0, 16, 17);
+        blazeDown3 = blazeSheet.crop(2,0, 16, 17);
 
-        chupaLeft1 = chupaSheet.crop(0, 1);
-        chupaLeft2 = chupaSheet.crop(1,1);
-        chupaLeft3 = chupaSheet.crop(2,1);
+        blazeLeft1 = blazeSheet.crop(0, 1, 16, 17);
+        blazeLeft2 = blazeSheet.crop(1,1, 16, 17);
+        blazeLeft3 = blazeSheet.crop(2,1, 16, 17);
 
-        chupaRight1 = chupaSheet.crop(0, 2);
-        chupaRight2 = chupaSheet.crop(1,2);
-        chupaRight3 = chupaSheet.crop(2,2);
+        blazeRight1 = blazeSheet.crop(0, 2, 16, 17);
+        blazeRight2 = blazeSheet.crop(1,2, 16, 17);
+        blazeRight3 = blazeSheet.crop(2,2, 16, 17);
+
+        chupaUp1 = chupaSheet.crop(0, 3, 32, 38);
+        chupaUp2 = chupaSheet.crop(1, 3, 32, 38);
+        chupaUp3 = chupaSheet.crop(2, 3, 32, 38);
+
+        chupaDown1 = chupaSheet.crop(0, 0, 32, 38);
+        chupaDown2 = chupaSheet.crop(1,0, 32, 38);
+        chupaDown3 = chupaSheet.crop(2,0, 32, 38);
+
+        chupaLeft1 = chupaSheet.crop(0, 1, 32, 38);
+        chupaLeft2 = chupaSheet.crop(1,1, 32, 38);
+        chupaLeft3 = chupaSheet.crop(2,1, 32, 38);
+
+        chupaRight1 = chupaSheet.crop(0, 2, 32, 38);
+        chupaRight2 = chupaSheet.crop(1,2, 32, 38);
+        chupaRight3 = chupaSheet.crop(2,2, 32, 38);
 
     }
 }

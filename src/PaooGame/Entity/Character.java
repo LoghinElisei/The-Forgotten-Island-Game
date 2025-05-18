@@ -168,7 +168,6 @@ public abstract class Character extends Entity
     public void SetSpeed(int speed) {
         this.speed = speed;
     }
-    public void setOnPath(boolean onPath) { this.onPath = onPath; }
     /*! \fn public float GetXMove()
         \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
      */

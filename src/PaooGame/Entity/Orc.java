@@ -1,5 +1,6 @@
 package PaooGame.Entity;
 
+import PaooGame.Game;
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
@@ -72,16 +73,17 @@ public class Orc extends Character {
 
             g.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
 
-
-            g.setColor(Color.BLUE);
-            g.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+            if (Game.debugState) {
+                g.setColor(Color.BLUE);
+                g.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+            }
         }
     }
 
     @Override
     protected void setAction() {
         actionLockCounter++;
-        if (actionLockCounter == 120) {
+        if (actionLockCounter == 60 ) {
             Random random = new Random();
             int randomNumber = random.nextInt(100) + 1; // pick a number between 1 and 100
             if (randomNumber <= 25) {

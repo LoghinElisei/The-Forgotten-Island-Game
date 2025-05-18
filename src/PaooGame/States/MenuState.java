@@ -145,8 +145,7 @@ public class MenuState extends State
                 break;
             case "New Game":
                 refLink.GetGame().playState = new PlayState(refLink);
-                refLink.setState((PlayState) refLink.GetGame().playState);
-
+                refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "ScoreBoard":

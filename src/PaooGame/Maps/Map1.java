@@ -17,7 +17,7 @@ import java.io.IOException;
 
 public class Map1 extends Map
 {
-    private final int ENEMIES_TO_DISPLAY = 10;
+    private final int ENEMIES_TO_DISPLAY = 6;
     public Map1(RefLinks refLink)
     {
         /// Retine referinta "shortcut".

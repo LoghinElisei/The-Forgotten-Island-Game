@@ -5,9 +5,4 @@ public class BoatTile extends  Tile{
     {
         super(Assets.boat, id);
     }
-    @Override
-    public boolean IsSolid()
-    {
-        return true;
-    }
 }

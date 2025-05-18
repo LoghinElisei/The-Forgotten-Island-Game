@@ -74,6 +74,7 @@ public class Game implements Runnable
     public State pauseState;            /*!< Referinta catre menu.*/
     public State loadingState;
     public State gameOverState;
+    public State gameCompletedState;
     private State aboutState;           /*!< Referinta catre about.*/
 
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
@@ -89,7 +90,7 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
-
+    public static boolean debugState = false;
     private Game(String title, int width, int height)
     {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
@@ -145,6 +146,7 @@ public class Game implements Runnable
         aboutState      = new AboutState(refLink);
         loadingState = new LoadingState(refLink);
         gameOverState = new GameOver(refLink);
+        gameCompletedState = new GameCompletedState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(loadingState);
 

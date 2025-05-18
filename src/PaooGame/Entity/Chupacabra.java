@@ -1,5 +1,6 @@
 package PaooGame.Entity;
 
+import PaooGame.Game;
 import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
@@ -25,6 +26,7 @@ public class Chupacabra extends Character {
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         speed = 2;
+        onPath = true;
     }
 
 
@@ -38,7 +40,6 @@ public class Chupacabra extends Character {
                 x - Tile.TILE_WIDTH < playState.getHero().x + playState.getHero().screenX &&
                 y + Tile.TILE_WIDTH > playState.getHero().y - playState.getHero().screenY &&
                 y - Tile.TILE_WIDTH < playState.getHero().y + playState.getHero().screenY) {
-
             switch (direction) {
                 case "up":
                     switch (spriteNum) {
@@ -71,9 +72,10 @@ public class Chupacabra extends Character {
 
             g.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
 
-
-            g.setColor(Color.BLUE);
-            g.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+            if (Game.debugState) {
+                g.setColor(Color.BLUE);
+                g.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+            }
         }
     }
 

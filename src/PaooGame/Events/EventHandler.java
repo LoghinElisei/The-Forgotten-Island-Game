@@ -7,6 +7,7 @@ import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -35,6 +36,8 @@ public class EventHandler {
     public void checkEvent(String currentMap){
         if (hit(37, 17, "any", "Map1", currentMap) || hit(37, 16, "any", "Map1", currentMap)) teleportMap(2, 7, 15);
         if (hit(47, 15, "any", "Map2", currentMap) || hit(47, 16, "any", "Map2", currentMap)) teleportMap(3, 7, 15);
+        if (hit(57, 16, "any", "Map3", currentMap)) finishGame();
+
     }
 
     private void setDefaultEventRect() {
@@ -60,10 +63,15 @@ public class EventHandler {
         setDefaultEventRect();
         return hit;
     }
-
+    private void finishGame(){
+        if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+            refLink.GetGame().playState.getHero().setKeys(0);
+            refLink.setState(refLink.GetGame().gameCompletedState);
+            State.SetState(refLink.GetGame().gameCompletedState);
+        }
+    }
     private void teleportMap(int mapNumber, int col, int row){
         Map map;
-
         switch(mapNumber) {
             case 2:
                 if (refLink.GetGame().playState.getHero().getKeys() == 2) {

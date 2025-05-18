@@ -7,6 +7,7 @@ import PaooGame.Entity.Character;
 import PaooGame.Entity.Chupacabra;
 import PaooGame.Entity.Orc;
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 
 public class EnemyItemCreator extends ItemCreator {
     @Override
@@ -14,11 +15,11 @@ public class EnemyItemCreator extends ItemCreator {
         switch (type)
         {
             case ORC:
-                return new Orc(refLink, x, y);
+                return new Orc(refLink, x * Tile.TILE_WIDTH, y * Tile.TILE_WIDTH);
             case BLAZE:
-                return new Blaze(refLink, x, y);
+                return new Blaze(refLink, x * Tile.TILE_WIDTH, y * Tile.TILE_WIDTH);
             case CHUPACABRA:
-                    return new Chupacabra(refLink, x, y);
+                return new Chupacabra(refLink, x * Tile.TILE_WIDTH, y * Tile.TILE_WIDTH);
         }
         return null;
     }

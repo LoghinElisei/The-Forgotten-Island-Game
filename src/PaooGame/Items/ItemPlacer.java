@@ -233,28 +233,36 @@ public class ItemPlacer {
     public void setEnemies(int mapNumber, Map map){
         switch (mapNumber){
             case 1:
-                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 36 * Tile.TILE_WIDTH, 12 * Tile.TILE_HEIGHT);
-                for (int i = 0; i < map.monsters.length; ++i) {
-                    if (map.monsters[i] != null) {
-                    }
-                }
+                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 24, 8);
+                map.monsters[1] = enemyCreator.getItem(ItemType.ORC, refLink, 13, 23);
+                map.monsters[2] = enemyCreator.getItem(ItemType.ORC, refLink, 24, 23);
+                map.monsters[3] = enemyCreator.getItem(ItemType.ORC, refLink, 13, 8);
+                map.monsters[4] = enemyCreator.getItem(ItemType.ORC, refLink, 22, 17);
+                map.monsters[5] = enemyCreator.getItem(ItemType.ORC, refLink, 33, 17);
+
                 break;
             case 2:
-                map.monsters[0] = enemyCreator.getItem(ItemType.BLAZE, refLink, 20 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
-                for (int i = 0; i < map.monsters.length; ++i) {
-                    if (map.monsters[i] != null) {
-                        map.monsters[i].setOnPath(true); // Inamicii se vor misca de la o locatie la alta, indiferent de actiunile jucatorul
-                    }
-                }
+                map.monsters[0] = enemyCreator.getItem(ItemType.BLAZE, refLink, 20, 21);
+                map.monsters[1] = enemyCreator.getItem(ItemType.BLAZE, refLink, 35, 17);
+                map.monsters[2] = enemyCreator.getItem(ItemType.BLAZE, refLink, 30, 10);
+
                 map.monsters[0].setPath(20, 21, 30, 10);
+                map.monsters[1].setPath(35, 17, 31, 20);
+                map.monsters[2].setPath(30, 10, 30, 7);
+
+
                 break;
             case 3:
-                map.monsters[0] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 25 * Tile.TILE_WIDTH, 21 * Tile.TILE_HEIGHT);
-                for (int i = 0; i < map.monsters.length; ++i)
-                    if (map.monsters[i] != null) {
-                        map.monsters[i].setOnPath(true); // Inamicii se vor misca de la o locatie la alta, indiferent de actiunile jucatorul
-                    }
+                map.monsters[0] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 25, 21);
+                map.monsters[1] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 43, 25);
+                map.monsters[2] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 29, 10);
+                map.monsters[3] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 54, 18);
+
                 map.monsters[0].setPath(25, 21, 40, 21);
+                map.monsters[1].setPath(38, 25, 44, 24);
+                map.monsters[2].setPath(29, 10, 28, 18);
+                map.monsters[3].setPath(54, 11, 54, 20);
+
                 break;
         }
     }

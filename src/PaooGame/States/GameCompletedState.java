@@ -15,7 +15,7 @@ import java.util.ArrayList;
 /*! \class public class MenuState extends State
     \brief Implementeaza notiunea de meniu pentru joc.
  */
-public class GameOver extends State
+public class GameCompletedState extends State
 {
     private final ArrayList<Button> buttons;
     private BufferedImage blurredBackground;
@@ -25,7 +25,7 @@ public class GameOver extends State
 
         \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
      */
-    public GameOver(RefLinks refLink)
+    public GameCompletedState(RefLinks refLink)
     {
         ///Apel al constructorului clasei de baza.
         super(refLink);
@@ -44,8 +44,7 @@ public class GameOver extends State
         int startY = (screenHeight - totalMenuHeight) / 2 + 40; // Am lasat un pic de spatiu pentru titlu
 
 
-        buttons.add(new Button("retry", new Rectangle(centerX, startY, width, height)));
-        buttons.add(new Button("main menu", new Rectangle(centerX, startY + height + gap, width, height)));
+        buttons.add(new Button("main menu", new Rectangle(centerX, startY, width, height)));
         Map.timer.stop();
 
     }
@@ -72,7 +71,7 @@ public class GameOver extends State
         g.fillRect(0, 0, 1408, 1056);
         g.setColor(new Color(255,255,255,200));
         g.setFont(new Font("Merriweather", Font.BOLD, 50));
-        String text = "GAME OVER";
+        String text = "WINNER WINNER, CHICKEN DINNER";
         int x = getXForCenteredText(text, g);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
@@ -119,26 +118,17 @@ public class GameOver extends State
             for (Button b: buttons)
             {
                 if (b.getBounds().contains(mousePos)) {
-                    handleClick(b.getLabel());
+                    handleClick();
                 }
             }
         }
 
         refLink.GetMouseManager().clearMouseClick();
     }
-    private void handleClick(String label)
+    private void handleClick()
     {
-        switch (label) {
-            case "retry":
-                Map newMap = refLink.GetMap();
-                refLink.GetGame().playState = new PlayState(refLink);
-                refLink.setState(refLink.GetGame().playState);
-                State.SetState(refLink.GetGame().playState);
-                break;
-            case "main menu":
-                refLink.setState(refLink.GetGame().menuState);
-                State.SetState(refLink.GetGame().menuState);
-        }
+        refLink.setState(refLink.GetGame().menuState);
+        State.SetState(refLink.GetGame().menuState);
         Map.timer.reset();
     }
 }

@@ -5,6 +5,7 @@ import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
+import PaooGame.Game;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
@@ -19,8 +20,6 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
-
-    private boolean debugState = false;
     public static Map map;    /*!< Referinta catre harta curenta.*/
 
     /*! \fn public PlayState(RefLinks refLink)
@@ -32,7 +31,7 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map1(refLink);
+        map = new Map3(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
@@ -57,11 +56,12 @@ public class PlayState extends State
                 map.monsters[i].Update();
             }
         }
+
         Map.timer.start();
 
         // DEBUG
         if (refLink.GetKeyManager().IsDebugJustPressed()) {
-            debugState = debugState ? !debugState : true;
+            Game.debugState = Game.debugState ? !Game.debugState : true;
         }
     }
 
@@ -94,7 +94,7 @@ public class PlayState extends State
         hero.Draw(g);
 
         // DEBUG
-        if (debugState) {
+        if (Game.debugState) {
             g.setFont(new Font("Arial", Font.PLAIN, 30));
             g.setColor(Color.WHITE);
             int x = 10, y = 400, lineHeight = 20;

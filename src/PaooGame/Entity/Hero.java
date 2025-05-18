@@ -4,6 +4,7 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import PaooGame.Events.EventHandler;
+import PaooGame.Game;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
@@ -45,7 +46,7 @@ public class Hero extends Character
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         eventHandler = new EventHandler(this, refLink);
-        speed = 32;
+        speed = 30;
     }
 
     /*! \fn public void Update()
@@ -156,8 +157,10 @@ public class Hero extends Character
         g2d.drawImage(image,screenX,screenY,width,height,null);
 
         // CollisionBox
-        g2d.setColor(Color.BLUE);
-        g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+        if (Game.debugState) {
+            g2d.setColor(Color.BLUE);
+            g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+        }
 
     }
 
