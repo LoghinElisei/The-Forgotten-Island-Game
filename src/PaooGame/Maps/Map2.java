@@ -1,5 +1,6 @@
 package PaooGame.Maps;
 
+import PaooGame.Entity.Character;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
@@ -16,6 +17,7 @@ import java.io.IOException;
 
 public class Map2 extends Map
 {
+    private final int ENEMIES_TO_DISPLAY = 10;
     public Map2(RefLinks refLink)
     {
         /// Retine referinta "shortcut".
@@ -28,6 +30,9 @@ public class Map2 extends Map
         height = 33;
 
         items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY + 3];
+        monsters = new Character[ENEMIES_TO_DISPLAY];
+        Map.itemPlacer.addObject(2, this);
+        Map.itemPlacer.setEnemies(2, this);
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();

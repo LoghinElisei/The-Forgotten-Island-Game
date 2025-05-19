@@ -11,7 +11,6 @@ public class SuperObject {
 
     protected BufferedImage image;
     protected String name;
-    protected boolean collisionOn = false;
     protected int boundsDefaultX = Tile.TILE_WIDTH / 2;
     protected int boundsDefaultY = Tile.TILE_WIDTH / 2;
     public Rectangle bounds;

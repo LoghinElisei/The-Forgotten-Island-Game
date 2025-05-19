@@ -81,7 +81,7 @@ public class Assets
         SpriteSheet grass2Sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/Grass3.png"));
 
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
-        SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcsheet.png"));
+        SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
 
         /// Se obtin subimaginile corespunzatoare elementelor necesare.
 //        grass = sheet.crop(50, 95);

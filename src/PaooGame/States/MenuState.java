@@ -50,6 +50,7 @@ public class MenuState extends State
 
         backgroundImage = new ImageIcon("res/images/island_animated.gif").getImage();
 
+<<<<<<< HEAD
         int c ;
         c = databaseConnect();
         if( -1 == c)
@@ -57,6 +58,10 @@ public class MenuState extends State
             databaseConnected = false;
 
         }
+=======
+
+
+>>>>>>> master
 
     }
 
@@ -117,6 +122,7 @@ public class MenuState extends State
             b.draw(g2d, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
         }
 
+<<<<<<< HEAD
         if(databaseConnected == false)
         {
             g2d.setColor(Color.decode("#ff0000"));
@@ -124,6 +130,9 @@ public class MenuState extends State
             String txt = "!!! No internet connection !!!";
             g2d.drawString(txt, x-200, y+100);
         }
+=======
+
+>>>>>>> master
     }
 
     private int getXForCenteredText(String text, Graphics2D g2d)
@@ -166,6 +175,8 @@ public class MenuState extends State
                 break;
             case "New Game":
                 refLink.GetGame().playState = new PlayState(refLink);
+                refLink.setState((PlayState) refLink.GetGame().playState);
+
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "ScoreBoard":

@@ -1,8 +1,12 @@
 package PaooGame.Entity;
 
+import PaooGame.Graphics.Assets;
 import PaooGame.RefLinks;
+import PaooGame.States.PlayState;
+import PaooGame.Tiles.Tile;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 /*! \class Item
@@ -24,6 +28,7 @@ public abstract class Entity
     public int screenX; // x coordinates relative to the camera
     public int screenY;
     protected boolean collisionOn = false;
+    protected String direction;
 
     protected RefLinks refLink;         /*!< O referinte catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.*/
 
@@ -100,6 +105,11 @@ public abstract class Entity
     public int GetHeight()
     {
         return height;
+    }
+
+
+    public String getDirection() {
+        return direction;
     }
 
     /*! \fn public float SetX()

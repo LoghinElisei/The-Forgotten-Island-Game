@@ -3,12 +3,10 @@ package PaooGame.Entity;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-import PaooGame.Items.SuperObject;
+import PaooGame.Events.EventHandler;
 import PaooGame.Maps.Map;
-import PaooGame.Maps.Map2;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
-import PaooGame.Tiles.Tile;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -25,6 +23,7 @@ public class Hero extends Character
     private int keys = 0;
     private int coins = 0;
     private int lvl = 1;
+    private EventHandler eventHandler;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
 
@@ -45,11 +44,8 @@ public class Hero extends Character
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
-
-        screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
-        screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
-
-        speed = 10;
+        eventHandler = new EventHandler(this, refLink);
+        speed = 20;
     }
 
     /*! \fn public void Update()
@@ -102,6 +98,11 @@ public class Hero extends Character
         int objIndex = refLink.GetGame().getCollisionChecker().checkItem(this);
         pickItem(objIndex);
 
+        // ENEMY COLLISION
+        int enemyIndex = refLink.GetGame().getCollisionChecker().checkEntity(this);
+        enemyInteract(enemyIndex);
+        // EVENTS
+        eventHandler.checkEvent();
 
         if (collisionOn == false)
         {
@@ -174,12 +175,13 @@ public class Hero extends Character
                     coins++;
                     refLink.GetMap().items[i] = null;
                     System.out.println("Coins: " + coins);
-                    break;
-                case "bridge":
-                    lvl++;
-                    refLink.SetMap(refLink.GetMap().nextMap(lvl));
-                    break;
             }
+        }
+    }
+
+    private void enemyInteract(int i) {
+        if (i != 999) {
+            System.out.println("Enemy collision");
         }
     }
 

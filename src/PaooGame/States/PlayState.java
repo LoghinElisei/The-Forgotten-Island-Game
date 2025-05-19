@@ -3,11 +3,13 @@ package PaooGame.States;
 import PaooGame.Creator.HeroCreator.HeroItemCreator;
 import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
+import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 
@@ -16,9 +18,10 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
-    private Entity hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
-    private Map map;    /*!< Referinta catre harta curenta.*/
 
+    private Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
+    private boolean debugState = false;
+    public static Map map;    /*!< Referinta catre harta curenta.*/
 
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
@@ -29,15 +32,12 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map2(refLink);
+        map = new Map1(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
-        Map.itemPlacer.addObject(2);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
-
-
 
     }
     /*! \fn public void Update()
@@ -48,7 +48,21 @@ public class PlayState extends State
     {
         map.Update();
         hero.Update();
+
+        // ENEMIES
+        for (int i = 0; i < map.monsters.length; ++i)
+        {
+            if (map.monsters[i] != null)
+            {
+                map.monsters[i].Update();
+            }
+        }
         Map.timer.start();
+
+        // DEBUG
+        if (refLink.GetKeyManager().IsDebugJustPressed()) {
+            debugState = debugState ? !debugState : true;
+        }
     }
 
     /*! \fn public void Draw(Graphics g)
@@ -60,6 +74,7 @@ public class PlayState extends State
     public void Draw(Graphics2D g)
     {
         map.Draw(g);
+        // OBJECTS
         for (int i = 0; i < map.items.length; ++i)
         {
             if (map.items[i] != null)
@@ -67,6 +82,33 @@ public class PlayState extends State
                 map.items[i].draw(g, hero);
             }
         }
+
+        // ENEMIES
+        for (int i = 0; i < map.monsters.length; ++i)
+        {
+            if (map.monsters[i] != null)
+            {
+                map.monsters[i].Draw(g, this);
+            }
+        }
         hero.Draw(g);
+
+        // DEBUG
+        if (debugState) {
+            g.setFont(new Font("Arial", Font.PLAIN, 30));
+            g.setColor(Color.WHITE);
+            int x = 10, y = 400, lineHeight = 20;
+
+            g.drawString("x: " + hero.GetX(), x, y); y += lineHeight;
+            g.drawString("y: " + hero.GetY(), x, y); y += lineHeight;
+            g.drawString("Col: " + (hero.GetX() + hero.bounds.x) / Tile.TILE_WIDTH , x, y); y += lineHeight;
+            g.drawString("Row: " + (hero.GetY() + hero.bounds.y) / Tile.TILE_WIDTH , x, y);
+        }
+    }
+    public static void setMap(Map map){
+        PlayState.map = map;
+    }
+    public Entity getHero() {
+        return hero;
     }
 }

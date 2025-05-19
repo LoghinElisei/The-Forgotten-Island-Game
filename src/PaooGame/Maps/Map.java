@@ -1,6 +1,8 @@
 package PaooGame.Maps;
 
 import PaooGame.Camera.Camera;
+import PaooGame.Entity.Character;
+import PaooGame.Entity.Entity;
 import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
@@ -20,6 +22,7 @@ public abstract class Map {
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
     public SuperObject items[];
+    public Character monsters[];
 
 
 
@@ -29,6 +32,7 @@ public abstract class Map {
         this.refLink = refLink;
         itemPlacer = new ItemPlacer(refLink);
         ///incarca harta de start. Functia poate primi ca argument id-ul hartii ce poate fi incarcat.
+
 
     }
 
@@ -98,7 +102,7 @@ public abstract class Map {
     protected abstract void  ThematicMap();
 
     public Map nextMap(int lvl){
-        if (lvl == 2)
+        if (lvl == 1)
         {
             return new Map2(refLink);
         }
