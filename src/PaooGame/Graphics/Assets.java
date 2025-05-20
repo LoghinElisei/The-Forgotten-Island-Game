@@ -113,6 +113,7 @@ public class Assets
         SpriteSheet grassSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/grass1.png"));
         SpriteSheet boatSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/boat1.png"));
         SpriteSheet grass2Sheet = new SpriteSheet(ImageLoader.LoadImage("/textures/Grass3.png"));
+        SpriteSheet grass3 = new SpriteSheet(ImageLoader.LoadImage("/textures/grass3.png"));
 
         SpriteSheet mcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/mainCharacter.png"));
         SpriteSheet orcSheet = new SpriteSheet(ImageLoader.LoadImage("/textures/orcSheet.png"));
@@ -147,7 +148,7 @@ public class Assets
 //        swampWater = sheet.crop(33,22);
         swampWater = sheet.crop(53,22);
 //        grass2 = grass2Sheet.crop(4,0);
-        grass2 = sheet.crop(27,9);
+        grass2 = grass3.crop(0,0);
         weed = grass2Sheet.crop(21,11);
 
         heroUp1 = mcSheet.crop(0,3);
