@@ -63,6 +63,7 @@ public abstract class Map {
         g2d.setColor(Color.WHITE);
         g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
         String timeTxt = String.format("%.2f", timer.getElapsedTime());
+        System.out.println(timeTxt);
         g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
 
         //resetare transformari

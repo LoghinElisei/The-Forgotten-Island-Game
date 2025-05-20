@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.sql.Time;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -46,8 +47,6 @@ public class GameOver extends State
 
         buttons.add(new Button("retry", new Rectangle(centerX, startY, width, height)));
         buttons.add(new Button("main menu", new Rectangle(centerX, startY + height + gap, width, height)));
-        Map.timer.stop();
-
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -134,6 +133,7 @@ public class GameOver extends State
                 PlayState.setMap(newMap);
                 refLink.SetMap(newMap);
                 refLink.GetGame().playState = new PlayState(refLink);
+                Map.timer.start();
 
 
                 refLink.setState(refLink.GetGame().playState);
@@ -143,7 +143,6 @@ public class GameOver extends State
                 refLink.setState(refLink.GetGame().menuState);
                 State.SetState(refLink.GetGame().menuState);
         }
-        Map.timer.reset();
     }
 }
 
