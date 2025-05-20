@@ -131,7 +131,11 @@ public class GameOver extends State
         switch (label) {
             case "retry":
                 Map newMap = refLink.GetMap();
+                PlayState.setMap(newMap);
+                refLink.SetMap(newMap);
                 refLink.GetGame().playState = new PlayState(refLink);
+
+
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
                 break;
