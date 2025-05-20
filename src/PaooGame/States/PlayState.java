@@ -37,6 +37,7 @@ public class PlayState extends State
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+        Game.debugState = false;
 
     }
     /*! \fn public void Update()
@@ -61,7 +62,13 @@ public class PlayState extends State
 
         // DEBUG
         if (refLink.GetKeyManager().IsDebugJustPressed()) {
-            Game.debugState = Game.debugState ? !Game.debugState : true;
+            Game.debugState = !Game.debugState;
+            if (Game.debugState) {
+                hero.SetSpeed(30);
+            } else {
+                hero.SetSpeed(Character.DEFAULT_SPEED);
+            }
+
         }
     }
 

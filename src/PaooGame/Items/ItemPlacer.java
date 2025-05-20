@@ -245,10 +245,15 @@ public class ItemPlacer {
                 map.monsters[0] = enemyCreator.getItem(ItemType.BLAZE, refLink, 20, 21);
                 map.monsters[1] = enemyCreator.getItem(ItemType.BLAZE, refLink, 35, 17);
                 map.monsters[2] = enemyCreator.getItem(ItemType.BLAZE, refLink, 30, 10);
+                map.monsters[3] = enemyCreator.getItem(ItemType.BLAZE, refLink, 33, 12);
+                map.monsters[4] = enemyCreator.getItem(ItemType.BLAZE, refLink, 46, 20);
+
 
                 map.monsters[0].setPath(20, 21, 30, 10);
                 map.monsters[1].setPath(35, 17, 31, 20);
                 map.monsters[2].setPath(30, 10, 30, 7);
+                map.monsters[3].setPath(33, 12, 45, 15);
+                map.monsters[4].setPath(46, 20, 39, 24);
 
 
                 break;
@@ -257,11 +262,15 @@ public class ItemPlacer {
                 map.monsters[1] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 43, 25);
                 map.monsters[2] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 29, 10);
                 map.monsters[3] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 54, 18);
+                map.monsters[4] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 52, 7);
+                map.monsters[5] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 55, 18);
 
                 map.monsters[0].setPath(25, 21, 40, 21);
                 map.monsters[1].setPath(38, 25, 44, 24);
                 map.monsters[2].setPath(29, 10, 28, 18);
                 map.monsters[3].setPath(54, 11, 54, 20);
+                map.monsters[4].setPath(52, 7, 34, 7);
+                map.monsters[4].setPath(55, 18, 51, 18);
 
                 break;
         }

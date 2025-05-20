@@ -27,7 +27,7 @@ public class Orc extends Character {
 
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
-        speed = 2;
+        speed = 8;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class Orc extends Character {
     @Override
     protected void setAction() {
         actionLockCounter++;
-        if (actionLockCounter == 60 ) {
+        if (actionLockCounter == 30 ) {
             Random random = new Random();
             int randomNumber = random.nextInt(100) + 1; // pick a number between 1 and 100
             if (randomNumber <= 25) {

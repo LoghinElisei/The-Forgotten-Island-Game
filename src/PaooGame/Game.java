@@ -96,7 +96,7 @@ public class Game implements Runnable
             /// Obiectul GameWindow este creat insa fereastra nu este construita
             /// Acest lucru va fi realizat in metoda init() prin apelul
             /// functiei BuildGameWindow();
-        wnd = new GameWindow(title, width, height);
+        wnd = GameWindow.getInstance(title, width, height);
             /// Resetarea flagului runState ce indica starea firului de executie (started/stoped)
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura

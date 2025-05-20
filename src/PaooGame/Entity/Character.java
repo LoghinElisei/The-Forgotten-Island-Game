@@ -1,6 +1,7 @@
 package PaooGame.Entity;
 
 import PaooGame.CollisionChecker.Collision;
+import PaooGame.Game;
 import PaooGame.Graphics.Assets;
 import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
@@ -68,11 +69,11 @@ public abstract class Character extends Entity
         int xDistance = Math.abs(x - hero.x);
         int yDistance = Math.abs(y - hero.y);
         int tileDistance = (xDistance + yDistance) / Tile.TILE_HEIGHT;
-        if (tileDistance < 3 && followPlayer == false) {
+        if (tileDistance < 5 && followPlayer == false) {
             // aggressive enemy only in 50% chance
             int i = new Random().nextInt(100) + 1;
             if (i > 50) followPlayer = true;
-        } else if (tileDistance > 10 && followPlayer)  followPlayer = false;
+        } else if (tileDistance > 12 && followPlayer)  followPlayer = false;
         setAction();
         collisionOn = false;
         refLink.GetGame().getCollisionChecker().checkTile(this);
@@ -203,8 +204,9 @@ public abstract class Character extends Entity
     public void searchPath(int goalCol, int goalRow) {
         int startCol = (x + bounds.x) / Tile.TILE_HEIGHT;
         int startRow = (y + bounds.y) / Tile.TILE_HEIGHT;
-
-//        System.out.println("startCol = " + startCol + ", startRow = " + startRow);
+        if (Game.debugState && this instanceof Chupacabra) {
+            System.out.println("startCol = " + startCol + ", startRow = " + startRow);
+        }
         PathFinder pFinder = refLink.GetMap().getpFinder();
         Collision collchecker = refLink.GetGame().getCollisionChecker();
 
@@ -215,7 +217,7 @@ public abstract class Character extends Entity
             int nextX = pFinder.pathList.get(0).col * Tile.TILE_HEIGHT;
             int nextY = pFinder.pathList.get(0).row * Tile.TILE_HEIGHT;
 
-            // enemy position
+            // entity position
             int entLeftX = x + bounds.x;
             int entRightX = x + bounds.x + bounds.width;
             int entTopY = y + bounds.y;

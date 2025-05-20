@@ -25,7 +25,7 @@ public class Chupacabra extends Character {
 
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
-        speed = 2;
+        speed = 8;
         onPath = true;
     }
 

@@ -16,7 +16,7 @@ public class GameWindow
     private String  wndTitle;       /*!< titlul ferestrei*/
     private int     wndWidth;       /*!< latimea ferestrei in pixeli*/
     private int     wndHeight;      /*!< inaltimea ferestrei in pixeli*/
-
+    private static GameWindow gameWindow = null;
     private Canvas  canvas;         /*!< "panza/tablou" in care se poate desena*/
 
     /*! \fn GameWindow(String title, int width, int height)
@@ -31,13 +31,18 @@ public class GameWindow
             \param width Latimea ferestrei in pixeli.
             \param height Inaltimea ferestrei in pixeli.
          */
-    public GameWindow(String title, int width, int height){
+    private GameWindow(String title, int width, int height){
         wndTitle    = title;    /*!< Retine titlul ferestrei.*/
         wndWidth    = width;    /*!< Retine latimea ferestrei.*/
         wndHeight   = height;   /*!< Retine inaltimea ferestrei.*/
         wndFrame    = null;     /*!< Fereastra nu este construita.*/
     }
-
+    public static GameWindow getInstance(String title, int width, int height){
+        if (gameWindow == null) {
+            gameWindow = new GameWindow(title, width, height);
+        }
+        return gameWindow;
+    }
     /*! \fn private void BuildGameWindow()
         \brief Construieste/creaza fereastra si seteaza toate proprietatile
         necesare: dimensiuni, pozitionare in centrul ecranului, operatia de

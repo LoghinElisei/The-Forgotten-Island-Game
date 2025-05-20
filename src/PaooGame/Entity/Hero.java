@@ -46,7 +46,7 @@ public class Hero extends Character
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         eventHandler = new EventHandler(this, refLink);
-        speed = 30;
+        speed = DEFAULT_SPEED;
     }
 
     /*! \fn public void Update()
