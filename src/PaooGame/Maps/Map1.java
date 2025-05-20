@@ -20,7 +20,7 @@ public class Map1 extends Map {
     public Map1(RefLinks refLink) {
         /// Retine referinta "shortcut".
         super(refLink);
-        //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
+        //atentie latimeagit si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.
         width = 44;
