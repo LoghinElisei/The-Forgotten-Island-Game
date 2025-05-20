@@ -72,26 +72,24 @@ public class EventHandler {
     }
     private void teleportMap(int mapNumber, int col, int row){
         Map map;
-        switch(mapNumber) {
-            case 2:
-                if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+        if (refLink.GetGame().playState.getHero().getKeys() == 1) {
+            switch (mapNumber) {
+                case 2:
                     refLink.GetGame().playState.getHero().setKeys(0);
                     map = new Map2(refLink);
                     PlayState.setMap(map);
                     refLink.SetMap(map);
                     entity.SetX(Tile.TILE_WIDTH * col);
                     entity.SetY(Tile.TILE_HEIGHT * row);
-                }
-                break;
-            case 3:
-                if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+                    break;
+                case 3:
                     refLink.GetGame().playState.getHero().setKeys(0);
                     map = new Map3(refLink);
                     PlayState.setMap(map);
                     refLink.SetMap(map);
                     entity.SetX(Tile.TILE_WIDTH * col);
                     entity.SetY(Tile.TILE_HEIGHT * row);
-                }
+            }
         }
 
 

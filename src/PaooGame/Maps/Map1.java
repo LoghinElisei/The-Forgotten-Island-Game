@@ -31,7 +31,7 @@ public class Map1 extends Map {
         Map.itemPlacer.addObject(1, this);
         Map.itemPlacer.setEnemies(1, this);
         ///Se construieste matricea de coduri de dale
-
+        name = "Map1";
 
         ThematicMap();
         CollisionMap();
