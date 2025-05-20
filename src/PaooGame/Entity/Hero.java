@@ -184,6 +184,7 @@ public class Hero extends Character
 
     private void enemyInteract(int i) {
         if (i != 999) {
+            Map.timer.stop();
             refLink.setState(refLink.GetGame().gameOverState);
             State.SetState(refLink.GetGame().gameOverState);
         }

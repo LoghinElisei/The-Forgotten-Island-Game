@@ -75,7 +75,7 @@ public class PlayState extends State
     }
 
     /*! \fn public void Draw(Graphics g)
-        \brief Deseneaza (randeaza) pe ecran starea curenta a jocului.
+        \brief Dese neaza (randeaza) pe ecran starea curenta a jocului.
 
         \param g Contextul grafic in care trebuie sa deseneze starea jocului pe ecran.
      */

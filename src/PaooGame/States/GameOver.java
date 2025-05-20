@@ -47,8 +47,6 @@ public class GameOver extends State
 
         buttons.add(new Button("retry", new Rectangle(centerX, startY, width, height)));
         buttons.add(new Button("main menu", new Rectangle(centerX, startY + height + gap, width, height)));
-        Map.timer.stop();
-
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
@@ -135,8 +133,8 @@ public class GameOver extends State
                 PlayState.setMap(newMap);
                 refLink.SetMap(newMap);
                 refLink.GetGame().playState = new PlayState(refLink);
+                Map.timer.start();
 
-//                Map.timer.resume();
 
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
