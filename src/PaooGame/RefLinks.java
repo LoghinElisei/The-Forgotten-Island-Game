@@ -21,7 +21,7 @@ public class RefLinks
 {
     private Game game;          /*!< Referinta catre obiectul PaooGame.Game.*/
     private Map map;            /*!< Referinta catre harta curenta.*/
-    private PlayState state;
+    private State state;
     public final Database database = new Database();
 
     /*! \fn public RefLinks(PaooGame.Game game)
@@ -105,11 +105,11 @@ public class RefLinks
         this.map = map;
     }
 
-    public PlayState getState() {
+    public State getState() {
         return state;
     }
 
-    public void setState(PlayState state) {
+    public void setState(State state) {
         this.state = state;
     }
 

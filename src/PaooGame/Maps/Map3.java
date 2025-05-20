@@ -2,6 +2,7 @@ package PaooGame.Maps;
 
 import PaooGame.Entity.Character;
 import PaooGame.Items.SuperObject;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -17,11 +18,14 @@ import java.io.IOException;
 
 public class Map3 extends Map
 {
-    private final int ENEMIES_TO_DISPLAY = 10;
+    private final int ENEMIES_TO_DISPLAY = 22;
+
     public Map3(RefLinks refLink)
     {
         /// Retine referinta "shortcut".
         super(refLink);
+        name = "Map3";
+
         //atentie latimea si inaltimea trebuiesc corelate cu dimensiunile ferestrei sau
         //se poate implementa notiunea de camera/cadru de vizualizare al hartii
         ///Se stabileste latimea hartii in numar de dale.
@@ -29,7 +33,8 @@ public class Map3 extends Map
         ///Se stabileste inaltimea hartii in numar de dale
         height = 33;
 
-        items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY + 3];
+        pFinder = new PathFinder(refLink, width, height);
+        items = new SuperObject[SuperObject.MAX_ELEMENTS_ON_DISPLAY + 7];
         monsters = new Character[ENEMIES_TO_DISPLAY];
         Map.itemPlacer.addObject(3, this);
         Map.itemPlacer.setEnemies(3, this);

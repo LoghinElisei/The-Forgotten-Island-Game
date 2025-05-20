@@ -11,24 +11,24 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Orc extends Character {
+public class Blaze extends Character {
     private BufferedImage image;
-    private int actionLockCounter = 0;
 
-
-    public Orc(RefLinks refLink, int x, int y)
+    public Blaze(RefLinks refLink, int x, int y)
     {
         super(refLink, x, y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
 
-        normalBounds.x = 50;
-        normalBounds.y = 45;
+        normalBounds.x = 30;
+        normalBounds.y = 30;
         normalBounds.width = 32;
         normalBounds.height = 32 * 2;
 
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         speed = 8;
+        onPath = true;
     }
+
 
     @Override
     public void Draw(Graphics2D g) {
@@ -44,34 +44,34 @@ public class Orc extends Character {
             switch (direction) {
                 case "up":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcUp1; break;
-                        case 2: image = Assets.orcUp2; break;
-                        case 3: image = Assets.orcUp3;
+                        case 1: image = Assets.blazeUp1; break;
+                        case 2: image = Assets.blazeUp2; break;
+                        case 3: image = Assets.blazeUp3;
                     }
                     break;
                 case "down":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcDown1; break;
-                        case 2: image = Assets.orcDown2; break;
-                        case 3: image = Assets.orcDown3;
+                        case 1: image = Assets.blazeDown1; break;
+                        case 2: image = Assets.blazeDown2; break;
+                        case 3: image = Assets.blazeDown3;
                     }
                     break;
                 case "left":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcLeft1; break;
-                        case 2: image = Assets.orcLeft2; break;
-                        case 3: image = Assets.orcLeft3;
+                        case 1: image = Assets.blazeLeft1; break;
+                        case 2: image = Assets.blazeLeft2; break;
+                        case 3: image = Assets.blazeLeft3;
                     }
                     break;
                 case "right":
                     switch (spriteNum) {
-                        case 1: image = Assets.orcRight1; break;
-                        case 2: image = Assets.orcRight2; break;
-                        case 3: image = Assets.orcRight3;
+                        case 1: image = Assets.blazeRight1; break;
+                        case 2: image = Assets.blazeRight2; break;
+                        case 3: image = Assets.blazeRight3;
                     }
             }
 
-            g.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
+            g.drawImage(image, screenX, screenY, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_WIDTH, null);
 
             if (Game.debugState) {
                 g.setColor(Color.BLUE);
@@ -81,21 +81,8 @@ public class Orc extends Character {
     }
 
     @Override
-    protected void setAction() {
-        actionLockCounter++;
-        if (actionLockCounter == 30 ) {
-            Random random = new Random();
-            int randomNumber = random.nextInt(100) + 1; // pick a number between 1 and 100
-            if (randomNumber <= 25) {
-                direction = "up";
-            } else if (randomNumber > 25 && randomNumber <= 50) {
-                direction = "down";
-            } else if (randomNumber > 50 && randomNumber <= 75) {
-                direction = "left";
-            } else {
-                direction = "right";
-            }
-            actionLockCounter = 0;
-        }
+    protected void setAction(){
+        if (onPath) searchPath(goalCol, goalRow);
+        else searchPath(startCol, startRow);
     }
 }

@@ -4,9 +4,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 import PaooGame.Events.EventHandler;
+import PaooGame.Game;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
+import PaooGame.States.State;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -22,7 +24,6 @@ public class Hero extends Character
     private BufferedImage image;    /*!< Referinta catre imaginea curenta a eroului.*/
     private int keys = 0;
     private int coins = 0;
-    private int lvl = 1;
     private EventHandler eventHandler;
     /*! \fn public Hero(RefLinks refLink, float x, float y)
         \brief Constructorul de initializare al clasei Hero.
@@ -37,15 +38,15 @@ public class Hero extends Character
         super(refLink, x,y, Character.DEFAULT_CREATURE_WIDTH, Character.DEFAULT_CREATURE_HEIGHT);
             ///Seteaza imaginea de start a eroului
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea implicita(normala)
-        normalBounds.x = 50;
-        normalBounds.y = 80;
-        normalBounds.width = 32;
-        normalBounds.height = 32;
+        normalBounds.x = 35;
+        normalBounds.y = 60;
+        normalBounds.width = 25;
+        normalBounds.height = 25;
             ///Stabilieste pozitia relativa si dimensiunea dreptunghiului de coliziune, starea de atac
         defaultBoundsX = normalBounds.x;
         defaultBoundsY = normalBounds.y;
         eventHandler = new EventHandler(this, refLink);
-        speed = 20;
+        speed = DEFAULT_SPEED;
     }
 
     /*! \fn public void Update()
@@ -102,7 +103,7 @@ public class Hero extends Character
         int enemyIndex = refLink.GetGame().getCollisionChecker().checkEntity(this);
         enemyInteract(enemyIndex);
         // EVENTS
-        eventHandler.checkEvent();
+        eventHandler.checkEvent(refLink.GetMap().getName());
 
         if (collisionOn == false)
         {
@@ -156,8 +157,10 @@ public class Hero extends Character
         g2d.drawImage(image,screenX,screenY,width,height,null);
 
         // CollisionBox
-        g2d.setColor(Color.BLUE);
-        g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+        if (Game.debugState) {
+            g2d.setColor(Color.BLUE);
+            g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
+        }
 
     }
 
@@ -181,9 +184,16 @@ public class Hero extends Character
 
     private void enemyInteract(int i) {
         if (i != 999) {
-            System.out.println("Enemy collision");
+            refLink.setState(refLink.GetGame().gameOverState);
+            State.SetState(refLink.GetGame().gameOverState);
         }
     }
-
-
+    @Override
+    public int getKeys() {
+        return this.keys;
+    }
+    @Override
+    public void setKeys(int keys) {
+        this.keys = keys;
+    }
 }

@@ -1,6 +1,7 @@
 package PaooGame.Items;
 
 import PaooGame.Entity.Entity;
+import PaooGame.Game;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -20,7 +21,6 @@ public class SuperObject {
 
 
     public SuperObject(){
-
         this.bounds = new Rectangle(0, 0, boundsDefaultX, boundsDefaultY);
     }
 
@@ -34,8 +34,10 @@ public class SuperObject {
             worldY - Tile.TILE_WIDTH < entity.GetY() + entity.screenY) {
 
             g2.drawImage(image, screenX, screenY, Tile.TILE_WIDTH, Tile.TILE_HEIGHT, null);
-//            g2.setColor(Color.RED);
-//            g2.fillRect(screenX, screenY, boundsDefaultX, boundsDefaultY);
+             if (Game.debugState) {
+                 g2.setColor(Color.RED);
+                 g2.fillRect(screenX, screenY, boundsDefaultX, boundsDefaultY);
+             }
         }
     }
 

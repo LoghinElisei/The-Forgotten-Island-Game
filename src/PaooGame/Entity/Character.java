@@ -1,12 +1,18 @@
 package PaooGame.Entity;
 
+import PaooGame.CollisionChecker.Collision;
+import PaooGame.Game;
 import PaooGame.Graphics.Assets;
+import PaooGame.Monster_AI.PathFinder;
 import PaooGame.RefLinks;
+import PaooGame.States.GameOver;
 import PaooGame.States.PlayState;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.Random;
 
 import static java.lang.Math.round;
 
@@ -20,15 +26,17 @@ public abstract class Character extends Entity
 {
     public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final int DEFAULT_SPEED         = 10; /*!< Viteza implicita a unu caracter.*/
-    public static final int DEFAULT_CREATURE_WIDTH  = 32 * 4;   /*!< Latimea implicita a imaginii caracterului.*/
-    public static final int DEFAULT_CREATURE_HEIGHT = 32 * 4;   /*!< Inaltimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_WIDTH  = 32 * 3;   /*!< Latimea implicita a imaginii caracterului.*/
+    public static final int DEFAULT_CREATURE_HEIGHT = 32 * 3;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
     protected int life;     /*!< Retine viata caracterului.*/
     protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
-
+    protected int startCol, startRow, goalCol, goalRow;
+    protected boolean onPath = false;
+    protected boolean followPlayer = false;
     /*! \fn public Character(RefLinks refLink, float x, float y, int width, int height)
         \brief Constructor de initializare al clasei Character
 
@@ -52,6 +60,51 @@ public abstract class Character extends Entity
         screenX = refLink.GetGame().GetWidth()/2 - Tile.TILE_WIDTH/2;
         screenY = refLink.GetGame().GetHeight()/2 - Tile.TILE_HEIGHT/2;
     }
+    @Override
+    public void Update() {
+        ///Implicit monstrul nu trebuie sa se deplaseze daca nu este apasata o tasta
+        xMove = 0;
+        yMove = 0;
+        Character hero = refLink.GetGame().playState.getHero();
+        int xDistance = Math.abs(x - hero.x);
+        int yDistance = Math.abs(y - hero.y);
+        int tileDistance = (xDistance + yDistance) / Tile.TILE_HEIGHT;
+        if (tileDistance < 5 && followPlayer == false) {
+            // aggressive enemy only in 50% chance
+            int i = new Random().nextInt(100) + 1;
+            if (i > 50) followPlayer = true;
+        } else if (tileDistance > 12 && followPlayer)  followPlayer = false;
+        setAction();
+        collisionOn = false;
+        refLink.GetGame().getCollisionChecker().checkTile(this);
+        boolean contactPlayer = refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
+
+        if (contactPlayer) {
+            refLink.setState(refLink.GetGame().gameOverState);
+            State.SetState(refLink.GetGame().gameOverState);
+        }
+        if (!collisionOn)
+        {
+            switch (direction)
+            {
+                case "up": yMove = -speed; break;
+                case "down": yMove = speed; break;
+                case "left": xMove = -speed; break;
+                case "right": xMove = speed;
+            }
+        }
+        ///Actualizeaza pozitia
+        Move();
+        ///Actualizeaza imaginea
+        spriteCounter++;
+        if (spriteCounter > 10)
+        {
+            changeSpriteNum();
+            spriteCounter = 0;
+        }
+    }
+
+    protected void setAction(){}
 
     /*! \fn public void Move()
         \brief Modifica pozitia caracterului
@@ -116,7 +169,6 @@ public abstract class Character extends Entity
     public void SetSpeed(int speed) {
         this.speed = speed;
     }
-
     /*! \fn public float GetXMove()
         \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
      */
@@ -148,4 +200,93 @@ public abstract class Character extends Entity
     {
         this.yMove = yMove;
     }
+
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (x + bounds.x) / Tile.TILE_HEIGHT;
+        int startRow = (y + bounds.y) / Tile.TILE_HEIGHT;
+        if (Game.debugState && this instanceof Chupacabra) {
+            System.out.println("startCol = " + startCol + ", startRow = " + startRow);
+        }
+        PathFinder pFinder = refLink.GetMap().getpFinder();
+        Collision collchecker = refLink.GetGame().getCollisionChecker();
+
+        pFinder.setNodes(startCol, startRow, goalCol, goalRow, this);
+        if (pFinder.search()) {
+
+            // Next x and y coordinates
+            int nextX = pFinder.pathList.get(0).col * Tile.TILE_HEIGHT;
+            int nextY = pFinder.pathList.get(0).row * Tile.TILE_HEIGHT;
+
+            // entity position
+            int entLeftX = x + bounds.x;
+            int entRightX = x + bounds.x + bounds.width;
+            int entTopY = y + bounds.y;
+            int entBottomY = y + bounds.y + bounds.height;
+
+            if (entTopY > nextY && entLeftX >= nextX && entRightX < nextX + Tile.TILE_HEIGHT) {
+                direction = "up";
+            } else
+            if (entTopY < nextY && entLeftX >= nextX && entRightX < nextX + Tile.TILE_HEIGHT) {
+                direction = "down";
+            } else
+            if (entTopY >= nextY && entBottomY < nextY + Tile.TILE_HEIGHT) {
+                // left or right
+                if (entLeftX > nextX) {
+                    direction = "left";
+                }
+                if (entLeftX < nextX) {
+                    direction = "right";
+                }
+            } else if (entTopY > nextY && entLeftX > nextX) {
+                // up or left
+                direction = "up";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "left";
+                }
+            } else if (entTopY > nextY && entLeftX < nextX) {
+                // up or right
+                direction = "up";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "right";
+                }
+            } else if (entTopY < nextY && entLeftX > nextX) {
+                // down or left
+                direction = "down";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "left";
+                }
+            } else if (entTopY < nextY && entLeftX < nextX) {
+                // down or right
+                direction = "down";
+                collchecker.checkTile(this);
+                collchecker.checkFromEnemyToPlayer(this);
+                if (collisionOn) {
+                    direction = "right";
+                }
+            }
+
+            int nextCol = pFinder.pathList.get(0).col;
+            int nextRow = pFinder.pathList.get(0).row;
+
+            if (nextCol == goalCol && nextRow == goalRow) {
+                onPath = !onPath;
+            }
+        }
+    }
+
+    public void setPath(int startCol, int startRow, int goalCol, int goalRow){
+        this.startCol = startCol;
+        this.startRow = startRow;
+        this.goalCol = goalCol;
+        this.goalRow = goalRow;
+    }
+
+    public int getKeys() {return 0;}
+    public void setKeys(int keys) {}
 }

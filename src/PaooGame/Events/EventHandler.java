@@ -7,6 +7,7 @@ import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
 import PaooGame.RefLinks;
 import PaooGame.States.PlayState;
+import PaooGame.States.State;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
@@ -32,9 +33,11 @@ public class EventHandler {
     }
 
 
-    public void checkEvent(){
-        if (hit(37, 17, "any") || hit(37, 16, "any")) teleportMap(2, 7, 15);
-        if (hit(47, 15, "any") || hit(47, 16, "any")) teleportMap(3, 7, 15);
+    public void checkEvent(String currentMap){
+        if (hit(37, 17, "any", "Map1", currentMap) || hit(37, 16, "any", "Map1", currentMap)) teleportMap(2, 7, 15);
+        if (hit(47, 15, "any", "Map2", currentMap) || hit(47, 16, "any", "Map2", currentMap)) teleportMap(3, 7, 15);
+        if (hit(57, 16, "any", "Map3", currentMap)) finishGame();
+
     }
 
     private void setDefaultEventRect() {
@@ -42,7 +45,7 @@ public class EventHandler {
         eventRect.y = eventDefaultRectY;
     }
 
-    private boolean hit(int eventCol, int eventRow, String reqDirection) {
+    private boolean hit(int eventCol, int eventRow, String reqDirection, String reqMap, String currentMap) {
         boolean hit = false;
 
         entity.bounds.x = entity.bounds.x + entity.GetX();
@@ -52,7 +55,7 @@ public class EventHandler {
         Graphics2D g = refLink.GetGame().getGraphics();
 
         if (entity.bounds.intersects(eventRect)) {
-            if (entity.getDirection().equals(reqDirection) || reqDirection.equals("any")){
+            if ((entity.getDirection().equals(reqDirection) || reqDirection.equals("any")) && currentMap.equals(reqMap)){
                 hit = true;
             }
         }
@@ -60,30 +63,37 @@ public class EventHandler {
         setDefaultEventRect();
         return hit;
     }
-
+    private void finishGame(){
+        if (refLink.GetGame().playState.getHero().getKeys() == 2) {
+            refLink.GetGame().playState.getHero().setKeys(0);
+            refLink.setState(refLink.GetGame().gameCompletedState);
+            State.SetState(refLink.GetGame().gameCompletedState);
+        }
+    }
     private void teleportMap(int mapNumber, int col, int row){
         Map map;
-
-        switch(mapNumber) {
-            case 1:
-                map = new Map1(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
-                break;
+        if (refLink.GetGame().playState.getHero().getKeys() == 1) {
+            switch(mapNumber) {
             case 2:
-                map = new Map2(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
+                    refLink.GetGame().playState.getHero().setKeys(0);
+                    map = new Map2(refLink);
+                    PlayState.setMap(map);
+                    refLink.SetMap(map);
+                    entity.SetX(Tile.TILE_WIDTH * col);
+                    entity.SetY(Tile.TILE_HEIGHT * row);
                 break;
             case 3:
-                map = new Map3(refLink);
-                PlayState.setMap(map);
-                refLink.SetMap(map);
+                    refLink.GetGame().playState.getHero().setKeys(0);
+                    map = new Map3(refLink);
+                    PlayState.setMap(map);
+                    refLink.SetMap(map);
+                    entity.SetX(Tile.TILE_WIDTH * col);
+                    entity.SetY(Tile.TILE_HEIGHT * row);
+                }
         }
 
 
-        entity.SetX(Tile.TILE_WIDTH * col);
-        entity.SetY(Tile.TILE_HEIGHT * row);
+
 
     }
 }

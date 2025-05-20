@@ -1,6 +1,9 @@
 package PaooGame.States;
 
 import java.awt.*;
+
+import PaooGame.Entity.Character;
+import PaooGame.Entity.Hero;
 import PaooGame.RefLinks;
 
 /*! \class State
@@ -15,6 +18,7 @@ public abstract class State
         ///Urmatoarele atribute sunt statice pentru a evita dealocarea spatiului de memorie la trecerea dintr-o stare in alta.
     private static State previousState  = null; /*!< Referinta catre starea anterioara a jocului.*/
     private static State currentState   = null; /*!< Referinta catre starea curenta a jocului: game, meniu, settings, about etc.*/
+    protected Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
     protected RefLinks refLink;
     public State(RefLinks refLink)
     {
@@ -41,4 +45,7 @@ public abstract class State
     public abstract void Update();
         ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics2D g);
+    public Character getHero() {
+        return hero;
+    }
 }

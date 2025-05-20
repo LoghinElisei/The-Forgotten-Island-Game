@@ -54,6 +54,7 @@ public class Game implements Runnable
     private Thread          gameThread; /*!< Referinta catre thread-ul de update si draw al ferestrei*/
     private BufferStrategy  bs;         /*!< Referinta catre un mecanism cu care se organizeaza memoria complexa pentru un canvas.*/
     private Collision collisionChecker;
+
     /// Sunt cateva tipuri de "complex buffer strategies", scopul fiind acela de a elimina fenomenul de
     /// flickering (palpaire) a ferestrei.
     /// Modul in care va fi implementata aceasta strategie in cadrul proiectului curent va fi triplu buffer-at
@@ -69,11 +70,13 @@ public class Game implements Runnable
 
         ///Available states
     public State playState;            /*!< Referinta catre joc.*/
-
     public State menuState;        /*!< Referinta catre setari.*/
     public State pauseState;            /*!< Referinta catre menu.*/
     public State loadingState;
+    public State gameOverState;
+    public State gameCompletedState;
     private State aboutState;           /*!< Referinta catre about.*/
+
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private MouseManager mouseManager;  // ME
     private RefLinks refLink;            /*!< Referinta catre un obiect a carui sarcina este doar de a retine diverse referinte pentru a fi usor accesibile.*/
@@ -87,13 +90,13 @@ public class Game implements Runnable
         \param width Latimea ferestrei in pixeli.
         \param height Inaltimea ferestrei in pixeli.
      */
-
+    public static boolean debugState = false;
     private Game(String title, int width, int height)
     {
             /// Obiectul GameWindow este creat insa fereastra nu este construita
             /// Acest lucru va fi realizat in metoda init() prin apelul
             /// functiei BuildGameWindow();
-        wnd = new GameWindow(title, width, height);
+        wnd = GameWindow.getInstance(title, width, height);
             /// Resetarea flagului runState ce indica starea firului de executie (started/stoped)
         runState = false;
             ///Construirea obiectului de gestiune a evenimentelor de tastatura
@@ -142,6 +145,8 @@ public class Game implements Runnable
         menuState       = new MenuState(refLink);
         aboutState      = new AboutState(refLink);
         loadingState = new LoadingState(refLink);
+        gameOverState = new GameOver(refLink);
+        gameCompletedState = new GameCompletedState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
         State.SetState(loadingState);
 

@@ -5,9 +5,11 @@ import PaooGame.Creator.ItemCreator;
 import PaooGame.Creator.ItemType;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
+import PaooGame.Game;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
+import PaooGame.Maps.Map3;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
@@ -18,9 +20,6 @@ import java.awt.*;
  */
 public class PlayState extends State
 {
-
-    private Character hero;  /*!< Referinta catre obiectul animat erou (controlat de utilizator).*/
-    private boolean debugState = false;
     public static Map map;    /*!< Referinta catre harta curenta.*/
 
     /*! \fn public PlayState(RefLinks refLink)
@@ -32,12 +31,13 @@ public class PlayState extends State
             ///Apel al constructorului clasei de baza
         super(refLink);
             ///Construieste harta jocului
-        map = new Map1(refLink);
+        map = new Map3(refLink);
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
         hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+        Game.debugState = false;
 
     }
     /*! \fn public void Update()
@@ -57,11 +57,18 @@ public class PlayState extends State
                 map.monsters[i].Update();
             }
         }
+
         Map.timer.start();
 
         // DEBUG
         if (refLink.GetKeyManager().IsDebugJustPressed()) {
-            debugState = debugState ? !debugState : true;
+            Game.debugState = !Game.debugState;
+            if (Game.debugState) {
+                hero.SetSpeed(30);
+            } else {
+                hero.SetSpeed(Character.DEFAULT_SPEED);
+            }
+
         }
     }
 
@@ -88,13 +95,13 @@ public class PlayState extends State
         {
             if (map.monsters[i] != null)
             {
-                map.monsters[i].Draw(g, this);
+                map.monsters[i].Draw(g);
             }
         }
         hero.Draw(g);
 
         // DEBUG
-        if (debugState) {
+        if (Game.debugState) {
             g.setFont(new Font("Arial", Font.PLAIN, 30));
             g.setColor(Color.WHITE);
             int x = 10, y = 400, lineHeight = 20;
@@ -107,8 +114,5 @@ public class PlayState extends State
     }
     public static void setMap(Map map){
         PlayState.map = map;
-    }
-    public Entity getHero() {
-        return hero;
     }
 }

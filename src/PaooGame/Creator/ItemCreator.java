@@ -3,6 +3,7 @@ package PaooGame.Creator;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 
 
 public abstract class ItemCreator {
