@@ -69,7 +69,7 @@ public class GameCompletedState extends State
     {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, 1408, 1056);
-        g.setColor(new Color(255,255,255,200));
+        g.setColor(new Color(255,255,0,200));
         g.setFont(new Font("Merriweather", Font.BOLD, 50));
         String text = "WINNER WINNER, CHICKEN DINNER";
         int x = getXForCenteredText(text, g);

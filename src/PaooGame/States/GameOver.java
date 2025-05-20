@@ -10,6 +10,7 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
+import java.sql.Time;
 import java.util.ArrayList;
 
 /*! \class public class MenuState extends State
@@ -135,6 +136,7 @@ public class GameOver extends State
                 refLink.SetMap(newMap);
                 refLink.GetGame().playState = new PlayState(refLink);
 
+//                Map.timer.resume();
 
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
@@ -143,7 +145,6 @@ public class GameOver extends State
                 refLink.setState(refLink.GetGame().menuState);
                 State.SetState(refLink.GetGame().menuState);
         }
-        Map.timer.reset();
     }
 }
 

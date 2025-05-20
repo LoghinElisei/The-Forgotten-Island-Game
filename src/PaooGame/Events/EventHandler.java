@@ -72,7 +72,7 @@ public class EventHandler {
     }
     private void teleportMap(int mapNumber, int col, int row){
         Map map;
-        if (refLink.GetGame().playState.getHero().getKeys() == 1) {
+        if (refLink.GetGame().playState.getHero().getKeys() > 0) {
             switch (mapNumber) {
                 case 2:
                     refLink.GetGame().playState.getHero().setKeys(0);
