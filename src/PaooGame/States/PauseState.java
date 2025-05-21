@@ -5,6 +5,8 @@ import PaooGame.Maps.Map;
 import PaooGame.Music.Music;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
+import PaooGame.Timer.Timer;
+
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -207,6 +209,7 @@ public class PauseState extends State
                 System.out.println("Game Saved!");
                 break;
             case "Exit":
+                Timer.reset();
                 State.SetState(refLink.GetGame().menuState);
                 break;
         }

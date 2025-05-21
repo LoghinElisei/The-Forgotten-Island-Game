@@ -3,6 +3,7 @@ package PaooGame.Maps;
 import PaooGame.Camera.Camera;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
+import PaooGame.Items.Coin;
 import PaooGame.Items.ItemPlacer;
 import PaooGame.Items.SuperObject;
 import PaooGame.Monster_AI.PathFinder;
@@ -24,8 +25,8 @@ public abstract class Map {
     public static Camera camera = new Camera(300,300,1408,1056);
     public static Timer timer = Timer.getInstance();
     public static ItemPlacer itemPlacer;
-    public SuperObject items[];
-    public Character monsters[];
+    public SuperObject[] items;
+    public Character[] monsters;
 
     public Map(RefLinks refLink)
     {
@@ -60,17 +61,33 @@ public abstract class Map {
 
             }
         }
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
-        String timeTxt = String.format("%.2f", timer.getElapsedTime());
-        System.out.println(timeTxt);
-        g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
+//        g2d.setColor(Color.WHITE);
+//        g2d.setFont(new Font("Cascadia Mono",Font.BOLD,55));
+//        String timeTxt = String.format("%.2f", timer.getElapsedTime());
+//        //System.out.println(timeTxt);
+//        g2d.drawString(timeTxt, camera.getX()+1300, camera.getY()+50);
 
         //resetare transformari
         g2d.setTransform(new AffineTransform());
+        DrawUI(g2d);
     }
 
+    private void DrawUI(Graphics2D g2d)
+    {
+        g2d.setTransform(new AffineTransform());
 
+        g2d.setColor(new Color(0, 0, 0, 130));
+        g2d.fillRect(0, 0, refLink.GetWidth(), 80);
+
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+
+        g2d.drawString(String.format("Time: %.2f s", timer.getElapsedTime()), 20, 50);
+//        g2d.drawString("Coins: " + coinCount, 250, 50);
+//        g2d.drawString("Keys: " + keyCount, 450, 50);
+
+
+    }
     public Tile GetTile(int x, int y)
     {
         if(x < 0 || y < 0 || x >= width || y >= height)

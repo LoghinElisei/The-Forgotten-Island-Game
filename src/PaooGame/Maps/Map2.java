@@ -53,85 +53,44 @@ public class Map2 extends Map
         \param y coloana pe care se afla codul dalei de interes.
      */
     @Override
+    public void Draw(Graphics2D g2d) {
+        super.Draw(g2d);
+        g2d.setTransform(new AffineTransform());
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+        g2d.drawString("Lvl : 2        VOLCANO", 1000, 50);
+
+    }
+    @Override
     protected void ThematicMap() {
-        String path = "res/maps/thematic/map2.txt";
+        int[][] map;
+        tiles = new int[width][height];
 
-        int [][] map = new int[height][width];
-        tiles=new int[width][height];
-        String line;
-        int row = 0;
-        try {
-//            System.out.println("Trying to open file with FileReader...");
-            FileReader fr = new FileReader(path);
-//            System.out.println("FileReader opened successfully.");
-            BufferedReader reader = new BufferedReader(fr);
+        //daca sunt conectat la baza de date , incarc mapa din baza de date
 
-            while((line = reader.readLine()) != null && row <height){
-                line = line.trim(); //elimina spatiile de la inceput si sfarsit
-                if(line.isEmpty()) continue;
-
-                String [] element = line.split("\\s+");
-                for(int i=0;i<width;i++)
-                {
-                    map[row][i] = Integer.parseInt(element[i]);
-                }
-
-                row++;
+        //map = refLink.database.loadThematicMap2(width, height);  // pentru incarcarea in baza de date
+        map = refLink.database.downloadThematicMap2();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                tiles[j][i] = map[i][j];
             }
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    tiles[j][i] = map[i][j];
-                }
-            }
-
-            reader.close();
         }
-        catch (IOException e)
-        {
-            System.out.println("Text file ThematicMap couldn't be opened");
-        }
-
     }
     @Override
     protected void CollisionMap()
     {
 
-        String path = "res/maps/collision/map2.txt";
+        int[][] map ;
+        collision = new int[width][height];
 
-        int [][] map = new int[height][width];
-        collision=new int[width][height];
-        String line;
-        int row = 0;
-        try {
-//            System.out.println("Trying to open file with FileReader...");
-            FileReader fr = new FileReader(path);
-//            System.out.println("FileReader opened successfully.");
-            BufferedReader reader = new BufferedReader(fr);
+        //daca sunt conectat la baza de date , incarc mapa din baza de date
 
-
-            while((line = reader.readLine()) != null && row < height){
-                line = line.trim(); //elimina spatiile de la inceput si sfarsit
-                if(line.isEmpty()) continue;
-
-                String [] element = line.split("\\s+");
-                for(int i=0;i<width;i++)
-                {
-                    map[row][i] = Integer.parseInt(element[i]);
-                }
-
-                row++;
+        //map = refLink.database.loadCollisionMap2(width, height);  // pentru incarcarea in baza de date
+        map = refLink.database.downloadCollisionMap2();
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                collision[j][i] = map[i][j];
             }
-            //facem transpusa matricii
-            for (int i = 0; i < height; i++) {
-                for (int j = 0; j < width; j++) {
-                    collision[j][i] = map[i][j];
-                }}
-
-            reader.close();
-        }
-        catch (IOException e)
-        {
-            System.out.println("Text file ThematicMap couldn't be opened");
         }
 
     }

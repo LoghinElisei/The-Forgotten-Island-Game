@@ -4,6 +4,8 @@ package PaooGame.Items;
 import PaooGame.Graphics.Assets;
 import PaooGame.Tiles.Tile;
 
+import java.awt.image.BufferedImage;
+
 public class Coin extends SuperObject {
     public Coin()
     {
@@ -13,4 +15,6 @@ public class Coin extends SuperObject {
         name = "coin";
         image = Assets.coin;
     }
+
+
 }

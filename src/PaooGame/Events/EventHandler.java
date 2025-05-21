@@ -76,6 +76,7 @@ public class EventHandler {
             switch (mapNumber) {
                 case 2:
                     refLink.GetGame().playState.getHero().setKeys(0);
+                    refLink.GetGame().playState.getHero().setCoins(0);
                     map = new Map2(refLink);
                     PlayState.setMap(map);
                     refLink.SetMap(map);
@@ -83,6 +84,7 @@ public class EventHandler {
                     entity.SetY(Tile.TILE_HEIGHT * row);
                     break;
                 case 3:
+                    refLink.GetGame().playState.getHero().setCoins(0);
                     refLink.GetGame().playState.getHero().setKeys(0);
                     map = new Map3(refLink);
                     PlayState.setMap(map);

@@ -10,8 +10,8 @@ import java.util.ArrayList;
 
 public class LoadingState extends State{
     private ArrayList<Button> buttons;
-    private Image backgroundImage;
-    private Image loadingImage;
+    private final Image backgroundImage;
+    private final Image loadingImage;
     private boolean isLoading = true;
     private boolean errorLoading = false;
 
@@ -32,7 +32,7 @@ public class LoadingState extends State{
         backgroundImage = new ImageIcon("res/images/loading_background.png").getImage();
         loadingImage = new ImageIcon("res/images/loading.gif").getImage();
         buttons.add(new Button("Continue", new Rectangle(centerX, startY + buttons.size() * (height + gap), width, height)));
-        buttons.add(new Button("Continue with local save", new Rectangle(centerX-50, startY + 50 + buttons.size() * (height + gap), width+100, height)));
+        buttons.add(new Button("Continue Offline", new Rectangle(centerX-50, startY + 50 + buttons.size() * (height + gap), width+100, height)));
         buttons.add(new Button("Try reconnect", new Rectangle(centerX-50, startY + 60 + buttons.size() * (height + gap), width+100, height)));
 
 
@@ -97,26 +97,26 @@ public class LoadingState extends State{
 
         g2d.setColor(Color.decode("#00697d"));
         g2d.setFont(new Font("Roboto", Font.BOLD, 48));
-        String text = "MAIN MENU";
+        String text = "The Forgotten Island";
 
         int x = getXForCenteredText(text, g2d);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
         if (isLoading ) {
-            g2d.drawImage(loadingImage, x + 100, y + 80, refLink.GetWidth() / 17, refLink.GetHeight() / 15, null);
+            g2d.drawImage(loadingImage, x + 200, y + 80, refLink.GetWidth() / 17, refLink.GetHeight() / 15, null);
             g2d.setColor(Color.BLACK);
             g2d.setFont(new Font("Cal Sans", Font.BOLD, 50));
             String ld = "Connecting to the internet";
-            g2d.drawString(ld, x-200, y+200);
+            g2d.drawString(ld, x-80, y+220);
             g2d.setColor(Color.decode("#00697d"));
 
         }
         else if(errorLoading){
-            g2d.drawImage(loadingImage, x + 100, y + 80, refLink.GetWidth() / 17, refLink.GetHeight() / 15, null);
+            g2d.drawImage(loadingImage, x + 200, y + 80, refLink.GetWidth() / 17, refLink.GetHeight() / 15, null);
             g2d.setColor(Color.decode("#000473"));
             g2d.setFont(new Font("Cal Sans", Font.BOLD, 50));
             String ld = "Connecting to the internet";
-            g2d.drawString(ld, x-200, y+200);
+            g2d.drawString(ld, x-80, y+220);
 
             g2d.setColor(Color.decode("#00697d"));
             g2d.drawString(text, x, y);
@@ -127,7 +127,7 @@ public class LoadingState extends State{
             g2d.setColor(Color.BLUE);
             g2d.setFont(new Font("Cal Sans", Font.BOLD, 50));
             String ld = "Connected to the internet";
-            g2d.drawString(ld, x-200, y+100);
+            g2d.drawString(ld, x-80, y+100);
 
 
             g2d.setColor(Color.decode("#00697d"));
@@ -178,7 +178,7 @@ public class LoadingState extends State{
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;
-            case "Continue with local save":
+            case "Continue Offline":
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;

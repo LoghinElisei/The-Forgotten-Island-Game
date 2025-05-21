@@ -32,8 +32,9 @@ public class DatabaseManager {
 
     public Connection connect()
     {
-        System.out.println("*********");
-        if(connection != null){ //connect to oracle database
+
+
+        if(connection != null && isOracleDatabase == true ){ //connect to oracle database
             return connection;
         }
         try {
@@ -41,9 +42,10 @@ public class DatabaseManager {
             if (connection != null) {  //oracle
                 System.out.println("Conexiune reușită la baza de date Oracle!");
             }
+            isOracleDatabase = true;
         }catch (SQLException e) {
 
-            System.out.println("Eroare la conectare baza de date Oracle: " + e.getMessage());
+            //System.out.println("Eroare la conectare baza de date Oracle: " + e.getMessage());
             isOracleDatabase = false;
 
             try{// local database
@@ -56,7 +58,7 @@ public class DatabaseManager {
             }
             catch (SQLException err)
             {
-                System.out.println("Eroare la conectarea la baza de date locala: " + err.getMessage());
+                //System.out.println("Eroare la conectarea la baza de date locala: " + err.getMessage());
             }
         }
         finally {

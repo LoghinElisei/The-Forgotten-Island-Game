@@ -10,6 +10,8 @@ import PaooGame.Input.MouseManager;
 import PaooGame.States.*;
 
 import java.awt.*;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 
@@ -75,6 +77,7 @@ public class Game implements Runnable
     public State loadingState;
     public State gameOverState;
     public State gameCompletedState;
+    public State welcomeState;
     private State aboutState;           /*!< Referinta catre about.*/
 
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
@@ -107,6 +110,7 @@ public class Game implements Runnable
         bgMusic.playMusic("res/sounds/music.wav");
         bgMusic.setVolume(0.2f);
 
+
     }
     public static Game getGame(String title, int width, int height)
     {
@@ -134,7 +138,21 @@ public class Game implements Runnable
         wnd.GetCanvas().addKeyListener(keyManager);
         wnd.GetCanvas().addMouseListener(mouseManager);
         wnd.GetCanvas().addMouseMotionListener(mouseManager);
-            ///Se incarca toate elementele grafice (dale)
+
+//        Canvas canvas = wnd.GetCanvas();
+//        canvas.setFocusable(true);
+//        canvas.requestFocusInWindow();
+//        canvas.addKeyListener(new KeyAdapter() {
+//            @Override
+//            public void keyTyped(KeyEvent e) {
+//                if (State.GetState() instanceof WelcomeState) {
+//                    ((WelcomeState) State.GetState()).keyTyped(e);
+//                }
+//            }
+//        });
+
+
+        ///Se incarca toate elementele grafice (dale)
         Assets.Init();
             ///Se construieste obiectul de tip shortcut ce va retine o serie de referinte catre elementele importante din program.
         refLink = new RefLinks(this);
@@ -148,8 +166,10 @@ public class Game implements Runnable
         gameOverState = new GameOver(refLink);
         gameCompletedState = new GameCompletedState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-        State.SetState(loadingState);
 
+
+
+        State.SetState(loadingState);
     }
     /*! \fn public void run()
         \brief Functia ce va rula in thread-ul creat.

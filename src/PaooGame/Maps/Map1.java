@@ -6,6 +6,8 @@ import PaooGame.Entity.Entity;
 import PaooGame.Items.SuperObject;
 import PaooGame.RefLinks;
 
+import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -51,6 +53,17 @@ public class Map1 extends Map {
         \param x linia pe care se afla codul dalei de interes.
         \param y coloana pe care se afla codul dalei de interes.
      */
+
+    @Override
+    public void Draw(Graphics2D g2d) {
+        super.Draw(g2d);
+        g2d.setTransform(new AffineTransform());
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+        g2d.drawString("Lvl : 1        FOREST", 1000, 50);
+
+    }
+
     @Override
     protected void ThematicMap() {
 

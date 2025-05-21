@@ -289,4 +289,6 @@ public abstract class Character extends Entity
 
     public int getKeys() {return 0;}
     public void setKeys(int keys) {}
+    public void setCoins(int coins){;}
+    public  int getCoins(){return 1;}
 }

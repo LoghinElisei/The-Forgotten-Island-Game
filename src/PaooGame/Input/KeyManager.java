@@ -2,6 +2,8 @@ package PaooGame.Input;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.List;
 
 /*! \class public class KeyManager implements KeyListener
     \brief Gestioneaza intrarea (input-ul) de tastatura.
@@ -21,6 +23,9 @@ public class KeyManager implements KeyListener
     public boolean esc;
     public boolean debugButtonState, lastDebugButtonState;
 
+    private final List<Character> typedCharacters = new ArrayList<Character>();
+    private boolean backspacePressed = false;
+    private boolean lastBackspacePressed = false;
     /*! \fn public KeyManager()
         \brief Constructorul clasei.
      */
@@ -41,6 +46,9 @@ public class KeyManager implements KeyListener
         esc   = keys[KeyEvent.VK_ESCAPE];
         lastDebugButtonState = debugButtonState;
         debugButtonState = keys[KeyEvent.VK_T];
+
+        lastBackspacePressed = backspacePressed;
+        backspacePressed = keys[KeyEvent.VK_BACK_SPACE];
     }
 
     /*! \fn public void keyPressed(KeyEvent e)
@@ -53,6 +61,7 @@ public class KeyManager implements KeyListener
     {
             ///se retine in vectorul de flaguri ca o tasta a fost apasata.
         keys[e.getKeyCode()] = true;
+
     }
 
     /*! \fn public void keyReleased(KeyEvent e)
@@ -65,6 +74,7 @@ public class KeyManager implements KeyListener
     {
             ///se retine in vectorul de flaguri ca o tasta a fost eliberata.
         keys[e.getKeyCode()] = false;
+
     }
 
     /*! \fn public void keyTyped(KeyEvent e)
@@ -74,8 +84,30 @@ public class KeyManager implements KeyListener
     @Override
     public void keyTyped(KeyEvent e)
     {
-
+        char c = e.getKeyChar();
+        if(c>=32 && c<=126){
+            typedCharacters.add(c);
+        }
     }
+    public List<Character> getTypedCharacters()
+    {
+        return new ArrayList<>(typedCharacters);
+    }
+    public void clearTypedCharacters()
+    {
+        typedCharacters.clear();
+    }
+
+    public boolean isBackspacePressed()
+    {
+        return backspacePressed && !lastBackspacePressed ;
+    }
+
+    public void setNoBackspacePressed()
+    {
+        backspacePressed = false;
+    }
+
     public boolean keyHasBeenPressed(){
         if (up || down || left || right){
             return true;

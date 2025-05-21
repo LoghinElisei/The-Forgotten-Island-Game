@@ -2,9 +2,14 @@ package PaooGame.States;
 
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
+import PaooGame.Maps.Map1;
+import PaooGame.Maps.Map2;
+import PaooGame.Maps.Map3;
 import PaooGame.Music.Music;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
+import PaooGame.Timer.Timer;
+
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -129,17 +134,28 @@ public class GameOver extends State
     {
         switch (label) {
             case "retry":
-                Map newMap = refLink.GetMap();
+                refLink.GetGame().playState = new PlayState(refLink);
+
+                Map oldMap = refLink.GetMap();
+                Map newMap;
+
+                if (oldMap instanceof Map1) {
+                    newMap = new Map1(refLink);
+                } else if (oldMap instanceof Map2){
+                    newMap = new Map2(refLink);
+                } else {
+                    newMap = new Map3(refLink);
+                }
                 PlayState.setMap(newMap);
                 refLink.SetMap(newMap);
-                refLink.GetGame().playState = new PlayState(refLink);
-                Map.timer.start();
 
+                Timer.reset();
 
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "main menu":
+                Timer.reset();
                 refLink.setState(refLink.GetGame().menuState);
                 State.SetState(refLink.GetGame().menuState);
         }

@@ -21,7 +21,7 @@ public class Button {
         g2d.drawRoundRect(bounds.x, bounds.y, bounds.width, bounds.height, 20, 20);
 
         g2d.setColor(text);
-        g2d.setFont(new Font("Merriweather", Font.BOLD, 22));
+        g2d.setFont(new Font("Merriweather", Font.BOLD, 35));
         FontMetrics fm = g2d.getFontMetrics();
         int textWidth = fm.stringWidth(label);
         int textHeight = fm.getHeight();

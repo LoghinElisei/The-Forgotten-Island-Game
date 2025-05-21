@@ -1,7 +1,9 @@
 package PaooGame.Entity;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
+import java.io.File;
 
 import PaooGame.Events.EventHandler;
 import PaooGame.Game;
@@ -9,6 +11,8 @@ import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
 import PaooGame.States.State;
+
+import javax.imageio.ImageIO;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).
@@ -162,8 +166,21 @@ public class Hero extends Character
             g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
         }
 
+        DrawUI(g2d);
     }
 
+    private void DrawUI(Graphics2D g2d)
+    {
+        g2d.setTransform(new AffineTransform());
+        g2d.setColor(Color.WHITE);
+
+        int nrOfCoins = refLink.GetMap().items.length - 2 - 3;
+        int nrOfKeys = 2;
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+        g2d.drawString("Coins: " + getCoins()+" / "+nrOfCoins, 400, 50);
+        g2d.drawString("Keys: " + getKeys() + " / " + nrOfKeys, 670, 50);
+
+    }
 
     private void pickItem(int i){
         if (i != 999) {
@@ -197,4 +214,13 @@ public class Hero extends Character
     public void setKeys(int keys) {
         this.keys = keys;
     }
+    @Override
+    public void setCoins(int coins){
+        this.coins = coins;
+    }
+    @Override
+    public int getCoins(){
+        return this.coins;
+    }
+
 }

@@ -6,6 +6,7 @@ import PaooGame.Creator.ItemType;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Entity;
 import PaooGame.Game;
+import PaooGame.Graphics.Button;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
@@ -14,6 +15,7 @@ import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 /*! \class public class PlayState extends State
     \brief Implementeaza/controleaza jocul.
@@ -30,8 +32,12 @@ public class PlayState extends State
     public PlayState(RefLinks refLink) {
             ///Apel al constructorului clasei de baza
         super(refLink);
-            ///Construieste harta jocului
-        map = new Map1(refLink);
+
+
+        if(map == null)
+        {
+            map = new Map1(refLink);
+        }
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
@@ -111,6 +117,7 @@ public class PlayState extends State
             g.drawString("Col: " + (hero.GetX() + hero.bounds.x) / Tile.TILE_WIDTH , x, y); y += lineHeight;
             g.drawString("Row: " + (hero.GetY() + hero.bounds.y) / Tile.TILE_WIDTH , x, y);
         }
+
     }
     public static void setMap(Map map){
         PlayState.map = map;
