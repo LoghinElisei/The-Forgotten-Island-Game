@@ -1,11 +1,14 @@
 package PaooGame.Database;
 
 import com.sun.security.jgss.GSSUtil;
+import oracle.jdbc.proxy.annotation.Pre;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -818,5 +821,254 @@ public class Database {
             e.printStackTrace();
             return null;
         }
+    }
+
+    public void createPlayersTable()
+    {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS players (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                username TEXT UNIQUE NOT NULL,
+                password TEXT NOT NULL,
+                score INTEGER DEFAULT 0
+            );
+            """;
+
+        try(Statement stmt = db.connection.createStatement()){
+            stmt.execute(sql);
+            System.out.println("Players table created successfully.");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    public boolean usernameExists(String username)
+    {
+        String sql = "SELECT 1 FROM players WHERE username = ?";
+
+        try(PreparedStatement pstmt = db.connection.prepareStatement(sql))
+        {
+            pstmt.setString(1, username);
+            try(ResultSet rs = pstmt.executeQuery())
+            {
+                return rs.next(); // daca exista un rezultat , inseamna ca username-ul exista deja
+            }
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean insertPlayer(String username,String password)
+    {
+        if (usernameExists(username)) {
+            System.out.println("Username-ul există deja. Alege altul.");
+            return false;
+        }
+
+        String sql = "INSERT INTO players(username, password) VALUES(?, ?)";
+
+        try(PreparedStatement pstmt = db.connection.prepareStatement(sql))
+        {
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            pstmt.executeUpdate();
+            System.out.println("Player inserted successfully.");
+            return true;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public boolean verifyCredentials(String username,String password)
+    {
+        String query = "SELECT * FROM players WHERE username = ? AND password = ?";
+
+        try{
+            PreparedStatement pstmt = db.connection.prepareStatement(query);
+
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+
+            ResultSet rs = pstmt.executeQuery();
+
+            return rs.next() ;  // true daca s-a gasit o potrivire
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+
+    public void createLevelsTable()
+    {
+        String sql = """
+            CREATE TABLE IF NOT EXISTS levels (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER,
+                level_number INTEGER,
+                completed BOOLEAN DEFAULT 0,
+                timer INTEGER,
+                score INTEGER,
+                FOREIGN KEY(player_id) REFERENCES players(id),
+                UNIQUE(player_id, level_number)
+            );
+            """;
+
+        try(Statement stmt = db.connection.createStatement()){
+            stmt.execute(sql);
+            System.out.println("Levels table created successfully.");
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+    }
+
+    private int getPlayerId(String username , String password)
+    {
+        String sqlPlayer = "SELECT id FROM players WHERE username = ? AND password = ?";
+        try{
+            PreparedStatement pstmt = db.connection.prepareStatement(sqlPlayer);
+            pstmt.setString(1, username);
+            pstmt.setString(2, password);
+            ResultSet rs = pstmt.executeQuery();
+            if(rs.next())
+                return rs.getInt("id");
+            else
+                return -1;
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    public void insertDefaultLevelsForPlayer(int playerId) {
+        String sql = "INSERT INTO levels (player_id, level_number, completed) VALUES (?, ?, 0)";
+        try (PreparedStatement stmt = db.connection.prepareStatement(sql)) {
+            for (int i = 1; i <= 3; i++) {
+                stmt.setInt(1, playerId);
+                stmt.setInt(2, i);
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void insertLevel(String username, String password , int levelNumber , int timer , int score )
+    {
+        if(levelNumber == 1)
+        {
+            insertDefaultLevelsForPlayer(getPlayerId(username,password));
+        }
+        String sql = """
+        INSERT OR REPLACE INTO levels (player_id, level_number, completed, timer, score) VALUES (?, ?, ?, ?, ?)
+        """;
+        int playerId = getPlayerId(username,password);
+
+
+        try {
+            PreparedStatement pstmt = db.connection.prepareStatement(sql);
+
+            pstmt.setInt(1,playerId);
+            pstmt.setInt(2,levelNumber);
+            pstmt.setBoolean(3,true);
+            pstmt.setInt(4,timer);
+            pstmt.setInt(5,score);
+
+            pstmt.executeUpdate();
+
+            System.out.println("S-a inserat cu succes datele de pe nivelul : " +levelNumber);
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public int getNextMapNumber(String username, String password)
+    {
+        int playerId = getPlayerId(username,password);
+
+        String sql = "Select level_number FROM levels WHERE player_id = ? AND completed = 0 ORDER BY level_number ASC LIMIT 1";
+
+        try {
+            PreparedStatement stm = db.connection.prepareStatement(sql);
+            stm.setInt(1,playerId);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next())
+                return rs.getInt("level_number");
+
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+        System.out.println("You completed all level");
+        return 4; // toate nivelurile au fost completate
+    }
+
+    public void updateTotalScore(String username,String password)
+    {
+        int playerId = getPlayerId(username,password);
+        String selectSql = "SELECT SUM(score) AS totalScore FROM levels WHERE player_id = ? AND completed = 1";
+
+        try {
+            PreparedStatement selectStmt = db.connection.prepareStatement(selectSql);
+            selectStmt.setInt(1, playerId);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                int totalScore = rs.getInt("totalScore");
+
+                // Pasul 2: Update scor total în tabela players
+                String updateSql = "UPDATE players SET score = ? WHERE id = ?";
+                PreparedStatement updateStmt = db.connection.prepareStatement(updateSql);
+                updateStmt.setInt(1, totalScore);
+                updateStmt.setInt(2, playerId);
+
+                updateStmt.executeUpdate();
+
+                System.out.println("Scorul total a fost actualizat la: " + totalScore);
+            } else {
+                System.out.println("Nu există scoruri de actualizat.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<String> getScoreboard()
+    {
+        ArrayList <String> scoreboard = new ArrayList<>();
+        int nr = 1;
+        String sql = "SELECT username,score FROM players ORDER BY score DESC LIMIT 10";
+        try {
+            PreparedStatement stmt = db.connection.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                String username = rs.getString("username");
+                int score = rs.getInt("score");
+                scoreboard.add(nr + ". " + username + "     -    Score: " + score);
+                nr++;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return scoreboard;
+
     }
 }

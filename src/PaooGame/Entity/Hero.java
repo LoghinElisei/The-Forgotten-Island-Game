@@ -11,6 +11,8 @@ import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
 import PaooGame.States.State;
+import PaooGame.Timer.Timer;
+import oracle.jdbc.driver.json.tree.JsonpPrimitive;
 
 import javax.imageio.ImageIO;
 
@@ -200,8 +202,9 @@ public class Hero extends Character
     }
 
     private void enemyInteract(int i) {
-        if (i != 999) {
-            Map.timer.stop();
+
+        if (i != 999 && Game.debugState == false) {
+            Timer.stop();
             refLink.setState(refLink.GetGame().gameOverState);
             State.SetState(refLink.GetGame().gameOverState);
         }

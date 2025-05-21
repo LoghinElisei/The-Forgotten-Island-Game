@@ -78,7 +78,9 @@ public class Game implements Runnable
     public State gameOverState;
     public State gameCompletedState;
     public State welcomeState;
-    private State aboutState;           /*!< Referinta catre about.*/
+    public State aboutState;
+    public State infoState;
+    public State scoreboardState;
 
     private KeyManager keyManager;      /*!< Referinta catre obiectul care gestioneaza intrarile din partea utilizatorului.*/
     private MouseManager mouseManager;  // ME
@@ -107,8 +109,8 @@ public class Game implements Runnable
         mouseManager = new MouseManager();
 
         Music bgMusic = Music.getInstance();
-        bgMusic.playMusic("res/sounds/music.wav");
-        bgMusic.setVolume(0.2f);
+        bgMusic.playMusic("res/sounds/music3.wav");
+        bgMusic.setVolume(0.3f);
 
 
     }
@@ -161,12 +163,12 @@ public class Game implements Runnable
         playState       = null;
         pauseState      = null;
         menuState       = new MenuState(refLink);
-        aboutState      = new AboutState(refLink);
+        aboutState      = new AboutState(refLink,1);
         loadingState = new LoadingState(refLink);
         gameOverState = new GameOver(refLink);
         gameCompletedState = new GameCompletedState(refLink);
             ///Seteaza starea implicita cu care va fi lansat programul in executie
-
+        //infoState = new InfoState(refLink);
 
 
         State.SetState(loadingState);
@@ -274,7 +276,7 @@ public class Game implements Runnable
         ///Determina starea tastelor
         keyManager.Update();
         ///Schimbam alternativ starea de playstate cu starea de pauza
-        if (keyManager.IsEscJustPressed())
+        if (keyManager.IsEscJustPressed() )
         {
             if (State.GetState() == playState) {
 

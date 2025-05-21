@@ -79,7 +79,7 @@ public abstract class Character extends Entity
         refLink.GetGame().getCollisionChecker().checkTile(this);
         boolean contactPlayer = refLink.GetGame().getCollisionChecker().checkFromEnemyToPlayer(this);
 
-        if (contactPlayer) {
+        if (contactPlayer && Game.debugState == false) {
             refLink.setState(refLink.GetGame().gameOverState);
             State.SetState(refLink.GetGame().gameOverState);
         }
@@ -204,9 +204,9 @@ public abstract class Character extends Entity
     public void searchPath(int goalCol, int goalRow) {
         int startCol = (x + bounds.x) / Tile.TILE_HEIGHT;
         int startRow = (y + bounds.y) / Tile.TILE_HEIGHT;
-        if (Game.debugState && this instanceof Chupacabra) {
-            System.out.println("startCol = " + startCol + ", startRow = " + startRow);
-        }
+//        if (Game.debugState && this instanceof Chupacabra) {
+//            System.out.println("startCol = " + startCol + ", startRow = " + startRow);
+//        }
         PathFinder pFinder = refLink.GetMap().getpFinder();
         Collision collchecker = refLink.GetGame().getCollisionChecker();
 

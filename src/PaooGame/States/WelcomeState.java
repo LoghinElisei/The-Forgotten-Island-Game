@@ -19,19 +19,16 @@ import java.util.List;
 
 public class WelcomeState extends State{
     private final ArrayList<Button> buttons;
-    private BufferedImage blurredBackground;
     private final Image backgroundImage;
     private String usernameInput = "";
     private String passwordInput = "";
     private boolean usernameSelected = false;
     private boolean passwordSelected = false;
-
-    /*! \fn public MenuState(RefLinks refLink)
-        \brief Constructorul de initializare al clasei.
-
-        \param refLink O referinta catre un obiect "shortcut", obiect ce contine o serie de referinte utile in program.
-     */
-    public WelcomeState(RefLinks refLink)
+    private FontMetrics fontMetrics;
+    private boolean usernameExist = false;
+    private int option = 1;
+    private boolean errorLogin;
+    public WelcomeState(RefLinks refLink,int option)
     {
         ///Apel al constructorului clasei de baza.
         super(refLink);
@@ -49,26 +46,56 @@ public class WelcomeState extends State{
         int centerX = (screenWidth - width) / 2;
         int startY = (screenHeight - totalMenuHeight) / 2 + 40; // Am lasat un pic de spatiu pentru titlu
 
-        buttons.add(new Button("Continue", new Rectangle(centerX, startY+250, width, height)));
+        if(option == 1)
+        {
+            buttons.add(new Button("Log in", new Rectangle(centerX, startY+350, width, height)));
+        }
+        else {
+            buttons.add(new Button("Sing up", new Rectangle(centerX, startY+350, width, height)));
+        }
+        buttons.add(new Button("Back", new Rectangle(centerX, startY+250, width, height)));
 
         backgroundImage = new ImageIcon("res/images/welcome1.png").getImage();
+
+        this.option = option;
 
     }
     /*! \fn public void Update()
         \brief Actualizeaza starea curenta a meniului.
      */
+    private boolean canAddChar(String currentText, char c, Font font, int maxWidth) {
+        BufferedImage tempImg = new BufferedImage(1, 1, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2d = tempImg.createGraphics();
+        g2d.setFont(font);
+        FontMetrics fm = g2d.getFontMetrics();
+        int currentWidth = fm.stringWidth(currentText);
+        int charWidth = fm.charWidth(c);
+        g2d.dispose();
+
+        return currentWidth + charWidth < maxWidth - 20; // -20 pentru padding intern
+    }
     @Override
     public void Update()
     {
+        Font font = new Font("Cascadia Mono", Font.PLAIN, 35);
+
+
         List<java.lang.Character> chars = refLink.GetKeyManager().getTypedCharacters();
         for (char c : chars) {
             if (usernameSelected) {
-                usernameInput += c;
+                if(canAddChar(usernameInput, c, font, 470))
+                {
+                    usernameInput += c;
+                }
             } else if (passwordSelected) {
-                passwordInput += c;
+                if(canAddChar(passwordInput, c, font, 436)){
+                    passwordInput += c;
+                }
             }
         }
         refLink.GetKeyManager().clearTypedCharacters();
+
+        //Backspace logic
         if (refLink.GetKeyManager().isBackspacePressed()) {
             if (usernameSelected && usernameInput.length() > 0) {
                 usernameInput = usernameInput.substring(0, usernameInput.length() - 1);
@@ -77,8 +104,8 @@ public class WelcomeState extends State{
                 passwordInput = passwordInput.substring(0, passwordInput.length() - 1);
             }
         }
-        System.out.println(usernameInput );
-        System.out.println(passwordInput);
+       // System.out.println(usernameInput );
+        //System.out.println(passwordInput);
         handleMouseHover();
         handleMouseInput();
     }
@@ -108,8 +135,8 @@ public class WelcomeState extends State{
             b.draw(g2d, Color.decode("#FFFFFF"), Color.BLACK, Color.decode("#324700"));
         }
 
-        Rectangle usernameField = new Rectangle(400, 420, 400, 50);
-        Rectangle passwordField = new Rectangle(400, 590, 400, 50);
+        Rectangle usernameField = new Rectangle(500, 420, 470, 50);
+        Rectangle passwordField = new Rectangle(500, 590, 470, 50);
         g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 40));
         g2d.setColor(Color.BLACK);
         g2d.drawString("Username:", 400, 400);
@@ -123,6 +150,23 @@ public class WelcomeState extends State{
         g2d.setFont(new Font("Cascadia Mono", Font.PLAIN, 35));
         g2d.drawString(usernameInput, usernameField.x + 10, usernameField.y + 35);
         g2d.drawString(maskPassword(passwordInput), passwordField.x + 10, passwordField.y + 35);
+
+        Font font = new Font("Cascadia Mono", Font.PLAIN, 35);
+        fontMetrics = g2d.getFontMetrics(font);
+
+        if(usernameExist)
+        {
+            g2d.setColor(Color.RED);
+            g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 35));
+            g2d.drawString("Username already exist", 650, 400);
+        }
+        if(errorLogin)
+        {
+            g2d.setColor(Color.RED);
+            g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 35));
+            g2d.drawString("Incorrect username/password", 650, 400);
+        }
+
     }
 
     private String maskPassword(String password)
@@ -153,8 +197,8 @@ public class WelcomeState extends State{
     private void handleMouseInput() {
         MouseManager m = refLink.GetMouseManager();
 
-        Rectangle usernameField = new Rectangle(400, 420, 400, 50);
-        Rectangle passwordField = new Rectangle(400, 590, 400, 50);
+        Rectangle usernameField = new Rectangle(500, 420, 470, 50);
+        Rectangle passwordField = new Rectangle(500, 590, 470, 50);
 
 
         if (m.isMouseClicked())
@@ -177,14 +221,59 @@ public class WelcomeState extends State{
         return usernameInput.equals("admin") && passwordInput.equals("1234");
     }
 
+
     private void handleClick(String label)
     {
-        if (label.equals("Continue") && loginInfoIsCorrect()) {
-            State.SetState(refLink.GetGame().playState);
+        if (label.equals("Sing up")  || label.equals("Log in")) {
+            // 1 - log in
+            // 2 - sing up
+            switch (option) {
+                case 1: {
+                    if(refLink.database.verifyCredentials(usernameInput, passwordInput)) {
+                        refLink.setUsername(usernameInput);
+                        refLink.setPassword(passwordInput);
+                        int mapNumber = refLink.database.getNextMapNumber(refLink.getUsername(), refLink.getPassword());
 
-//            refLink.GetGame().playState = new PlayState(refLink);
-//            refLink.setState(refLink.GetGame().playState);
-//            State.SetState(refLink.GetGame().playState);
+                        if (mapNumber != 4) {
+                            refLink.GetGame().playState = new PlayState(refLink);
+                            refLink.GetGame().infoState = new InfoState(refLink, mapNumber);
+                            State.SetState(refLink.GetGame().infoState);
+                        }
+                        else {
+                            refLink.setState(refLink.GetGame().gameCompletedState);
+                            State.SetState(refLink.GetGame().gameCompletedState);
+                        }
+                    }
+                    else {
+                        errorLogin = true;
+                    }
+                    break;
+                }
+                case 2:
+                {
+                    if(!refLink.database.insertPlayer(usernameInput, passwordInput))
+                    {
+
+                        //desenez
+                        usernameExist = true;
+
+                    }
+                    else {
+                        refLink.setUsername(usernameInput);
+                        refLink.setPassword(passwordInput);
+                        int mapNumber = 1; // un nou player , incepe de la 1
+                        refLink.GetGame().playState = new PlayState(refLink);
+                        refLink.GetGame().infoState = new InfoState(refLink, mapNumber);
+                        State.SetState(refLink.GetGame().infoState);
+                    }
+                    break;
+                }
+            }
+
+        }
+        else if(label.equals("Back"))
+        {
+            State.SetState(refLink.GetGame().menuState);
         }
     }
 

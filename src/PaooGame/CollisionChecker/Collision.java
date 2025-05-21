@@ -161,6 +161,7 @@ public class Collision {
             case "right": entity.bounds.x += entity.GetSpeed(); break;
         }
         if (entity.bounds.intersects(hero.bounds)) {
+
             entity.setCollisionOn(true);
             contactPlayer = true;
         }

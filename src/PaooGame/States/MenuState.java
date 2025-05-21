@@ -139,17 +139,24 @@ public class MenuState extends State
     }
     private void handleClick(String label)
     {
+
         switch (label) {
             case "Load Game":
-                System.out.println("Load Game");
+                //refLink.database.createLevelsTable();
+                refLink.GetGame().aboutState = new AboutState(refLink,1);
+                refLink.setState(refLink.GetGame().aboutState);
+                State.SetState(refLink.GetGame().aboutState);
                 break;
             case "New Game":
-                refLink.GetGame().welcomeState = new WelcomeState(refLink);
-                refLink.setState(refLink.GetGame().welcomeState);
-                State.SetState(refLink.GetGame().welcomeState);
+                System.out.println("New Game");
+                refLink.GetGame().aboutState = new AboutState(refLink,2);
+                refLink.setState(refLink.GetGame().aboutState);
+                State.SetState(refLink.GetGame().aboutState);
                 break;
             case "ScoreBoard":
-                System.out.println("Loading ScoreBoard...");
+                refLink.GetGame().scoreboardState = new ScoreboardState(refLink);
+                refLink.setState(refLink.GetGame().scoreboardState);
+                State.SetState(refLink.GetGame().scoreboardState);
                 break;
             case "Leave":
                 System.exit(0);
