@@ -152,8 +152,14 @@ public class GameOver extends State
                 refLink.SetMap(newMap);
 
                 Timer.reset();
+                refLink.database.updatePlayerPosition(refLink.getUsername(),refLink.getPassword(),1050,2050);
 
                 refLink.setState(refLink.GetGame().playState);
+
+                Point p = refLink.database.getPlayerPosition(refLink.getUsername(),refLink.getPassword());
+                refLink.GetGame().playState.hero.SetX(p.x);
+                refLink.GetGame().playState.hero.SetY(p.y);
+
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "main menu":

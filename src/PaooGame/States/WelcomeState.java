@@ -4,6 +4,8 @@ import PaooGame.Entity.Character;
 import PaooGame.Graphics.Button;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
+import PaooGame.Maps.Map2;
+import PaooGame.Maps.Map3;
 import PaooGame.Music.Music;
 import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
@@ -238,6 +240,7 @@ public class WelcomeState extends State{
                 case 1: {
 
                     if(refLink.database.verifyCredentials(usernameInput, cryptedPassword)) {
+
                         refLink.setUsername(usernameInput);
                         refLink.setPassword(cryptedPassword);
                         int mapNumber = refLink.database.getNextMapNumber(refLink.getUsername(), refLink.getPassword());
@@ -245,6 +248,7 @@ public class WelcomeState extends State{
                         if (mapNumber != 4) {
                             refLink.GetGame().playState = new PlayState(refLink);
                             refLink.GetGame().infoState = new InfoState(refLink, mapNumber);
+                            // refLink.database.insertEmptyCoinsForPlayerAndLevel(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
                             State.SetState(refLink.GetGame().infoState);
                         }
                         else {
@@ -257,11 +261,11 @@ public class WelcomeState extends State{
                     }
                     break;
                 }
-                case 2:
+                case 2: //sign up
                 {
 
 //                    refLink.database.createPlayersTable();
-//                    refLink.database.createLevelsTable();
+                   //refLink.database.createLevelsTable();
                     //refLink.database.insertPlayer(usernameInput, passwordInput);
 
 
@@ -277,8 +281,25 @@ public class WelcomeState extends State{
                         refLink.setUsername(usernameInput);
                         refLink.setPassword(cryptedPassword);
                         int mapNumber = 1; // un nou player , incepe de la 1
+
+                        //refLink.database.createCoinsTable();
+
                         refLink.GetGame().playState = new PlayState(refLink);
                         refLink.GetGame().infoState = new InfoState(refLink, mapNumber);
+
+                        // doar aici creem o noua tabela cu coin-uri , la log il actualizam
+                        //refLink.database.insertEmptyCoinsForPlayerAndLevel(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
+                        refLink.database.insertCoinsPlayerTables(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),mapNumber);
+//                        Map map = new Map2(refLink);
+//                        refLink.database.downloadDefaultCoinsFromDatabase(refLink.getUsername(), refLink.getPassword(), map ,2);
+//                        refLink.database.insertCoinsPlayerTables(refLink.getUsername(), refLink.getPassword(),map,mapNumber);
+//                        map = new Map3(refLink);
+//                        refLink.database.downloadDefaultCoinsFromDatabase(refLink.getUsername(), refLink.getPassword(), map ,2);
+//                        refLink.database.insertCoinsPlayerTables(refLink.getUsername(), refLink.getPassword(),map,mapNumber);
+//
+                        refLink.database.updateCoinsForPlayerAndLevel(refLink.getUsername(), refLink.getPassword(), refLink.GetMap(), refLink.getMapNumber());
+
+
                         State.SetState(refLink.GetGame().infoState);
                     }
                     break;

@@ -6,6 +6,8 @@ import PaooGame.Music.Music;
 import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
+import PaooGame.Timer.Timer;
+
 import java.awt.*;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -130,7 +132,7 @@ public class GameCompletedState extends State
     {
         refLink.setState(refLink.GetGame().menuState);
         State.SetState(refLink.GetGame().menuState);
-        Map.timer.reset();
+        Timer.reset();
     }
 }
 

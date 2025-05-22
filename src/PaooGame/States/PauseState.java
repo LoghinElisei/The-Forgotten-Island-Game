@@ -209,8 +209,22 @@ public class PauseState extends State
                 break;
             case "Save":
                 SoundPlayer.playSound();
+                int heroX = refLink.GetGame().playState.hero.GetX();
+                int heroY = refLink.GetGame().playState.hero.GetY();
+                //System.out.println(heroX + " " + heroY);
+
+
+                refLink.database.updatePlayerPosition(refLink.getUsername(),refLink.getPassword(), heroX, heroY);
+                refLink.database.updateTimer(refLink.getUsername(), refLink.getPassword(),refLink.getMapNumber(),(int)Timer.getElapsedTime());
+               // refLink.database.insertEmptyCoinsForPlayerAndLevel(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
+                //refLink.database.insertCoinsPlayerTables(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
+
+                refLink.database.updateCoinsForPlayerAndLevel(refLink.getUsername(), refLink.getPassword(), refLink.GetMap(), refLink.getMapNumber());
+
+                System.out.println("COINS :"  + refLink.GetGame().playState.getHero().getCoins() + " KEYS : " + refLink.GetGame().playState.getHero().getKeys());
                 System.out.println("Game Saved!");
                 break;
+
             case "Exit":
                 SoundPlayer.playSound();
                 Timer.reset();

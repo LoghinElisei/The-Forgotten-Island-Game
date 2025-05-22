@@ -41,6 +41,8 @@ public class Map3 extends Map
         ///Se construieste matricea de coduri de dale
         ThematicMap();
         CollisionMap();
+
+
     }
     /*! \fn public  void Update()
         \brief Actualizarea hartii in functie de evenimente (un copac a fost taiat)

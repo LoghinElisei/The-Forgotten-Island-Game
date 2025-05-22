@@ -1,8 +1,15 @@
 package PaooGame.Database;
 
+import PaooGame.Items.Coin;
+import PaooGame.Items.Key;
+import PaooGame.Items.SuperObject;
+import PaooGame.Maps.Map;
+import PaooGame.RefLinks;
+import PaooGame.Tiles.Tile;
 import com.sun.security.jgss.GSSUtil;
 import oracle.jdbc.proxy.annotation.Pre;
 
+import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -941,13 +948,36 @@ public class Database {
     public void createLevelsTable()
     {
         if(isOracleDatabase()) {
+            //delete
             String sql = """
+            BEGIN
+                EXECUTE IMMEDIATE 'DROP TABLE levels CASCADE CONSTRAINTS';
+            EXCEPTION
+                WHEN OTHERS THEN
+                    IF SQLCODE != -942 THEN -- ORA-00942: table or view does not exist
+                        RAISE;
+                    END IF;
+            END;
+            """;
+            try(PreparedStatement stm = db.connection.prepareStatement(sql))
+            {
+                stm.execute();
+                System.out.println("Levels table dropped successfully (Oracle).");
+            }
+            catch (SQLException e)
+            {
+                e.printStackTrace();
+            }
+
+            sql = """
             BEGIN
                 EXECUTE IMMEDIATE '
                     CREATE TABLE levels (
                         id NUMBER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
                         player_id NUMBER,
                         level_number NUMBER,
+                        player_x NUMBER,
+                        player_y NUMBER,
                         completed NUMBER(1) DEFAULT 0,
                         timer NUMBER,
                         score NUMBER,
@@ -971,18 +1001,31 @@ public class Database {
             }
         }
         else {
-            String sql = """
-                    CREATE TABLE IF NOT EXISTS levels (
-                        id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        player_id INTEGER,
-                        level_number INTEGER,
-                        completed BOOLEAN DEFAULT 0,
-                        timer INTEGER,
-                        score INTEGER,
-                        FOREIGN KEY(player_id) REFERENCES players(id),
-                        UNIQUE(player_id, level_number)
-                    );
-                    """;
+            // DELETE
+            String sql = "DROP TABLE IF EXISTS levels";
+            try{
+                Statement stm = db.connection.createStatement();
+                stm.executeUpdate(sql);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+
+            sql = """
+            CREATE TABLE IF NOT EXISTS levels (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER,
+                level_number INTEGER,
+                player_x INTEGER,
+                player_y INTEGER,
+                completed BOOLEAN DEFAULT 0,
+                timer INTEGER,
+                score INTEGER,
+                FOREIGN KEY(player_id) REFERENCES players(id),
+                UNIQUE(player_id, level_number)
+            );
+            """;
 
             try (Statement stmt = db.connection.createStatement()) {
                 stmt.execute(sql);
@@ -1015,11 +1058,13 @@ public class Database {
 
     public void insertDefaultLevelsForPlayer(String username , String password) {
         int playerId = getPlayerId(username,password);
-        String sql = "INSERT INTO levels (player_id, level_number, completed) VALUES (?, ?, 0)";
+        String sql = "INSERT INTO levels (player_id, level_number,player_x , player_y, completed) VALUES (?, ?, ? , ?, 0)";
         try (PreparedStatement stmt = db.connection.prepareStatement(sql)) {
             for (int i = 1; i <= 3; i++) {
                 stmt.setInt(1, playerId);
                 stmt.setInt(2, i);
+                stmt.setInt(3, 1050);
+                stmt.setInt(4, 2050);
                 stmt.addBatch();
             }
             stmt.executeBatch();
@@ -1027,6 +1072,63 @@ public class Database {
             e.printStackTrace();
         }
     }
+
+    public Point getPlayerPosition(String username , String password)
+    {
+        int playerId = getPlayerId(username,password);
+        int map = getNextMapNumber(username,password);
+
+        String sql ="SELECT player_x, player_y FROM levels WHERE player_id = ? AND level_number = ?";
+
+        try(PreparedStatement stm = db.connection.prepareStatement(sql))
+        {
+            stm.setInt(1, playerId);
+            stm.setInt(2,map);
+            ResultSet rs = stm.executeQuery();
+            if(rs.next())
+            {
+                int x = rs.getInt("player_x");
+                int y = rs.getInt("player_y");
+                return new Point(x,y);
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return new Point(1050,2050);
+    }
+
+    public void updatePlayerPosition(String username,String password,int x,int y)
+    {
+        String sql = "UPDATE levels SET player_x = ?, player_y = ? WHERE player_id = ? AND level_number = ?";
+        int playerId = getPlayerId(username,password);
+        int levelNumber = getNextMapNumber(username,password);
+
+        try(PreparedStatement stmt = db.connection.prepareStatement(sql))
+        {
+            stmt.setInt(1,x);
+            stmt.setInt(2, y);               // player_y
+            stmt.setInt(3, playerId);        // player_id
+            stmt.setInt(4, levelNumber);     // level_number
+
+            int rows = stmt.executeUpdate();
+            if(rows > 0)
+                System.out.println("Player position updated.");
+            else{
+                System.out.println("Player position not updated.");
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+
+
+
     public void insertLevel(String username, String password , int levelNumber , int timer , int score )
     {
 //        if(levelNumber == 1)
@@ -1088,6 +1190,7 @@ public class Database {
             }
         }
     }
+
 
     public int getNextMapNumber(String username, String password)
     {
@@ -1188,4 +1291,477 @@ public class Database {
         return scoreboard;
 
     }
+
+    public void createDefaultCoinsTable()
+    {
+        String deletesql = "DROP TABLE default_coins";
+
+        String sql = "";
+        if(isOracleDatabase()) {
+            sql = """
+                BEGIN
+                    EXECUTE IMMEDIATE '
+                        CREATE TABLE default_coins (
+                            id NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY PRIMARY KEY,
+                            player_id NUMBER,
+                            level_number NUMBER,
+                            x NUMBER,
+                            y NUMBER
+                          
+                        )
+                    ';
+                EXCEPTION
+                    WHEN OTHERS THEN
+                        IF SQLCODE != -955 THEN
+                            RAISE;
+                        END IF;
+                END;
+                """;
+        }
+        else{ // sqlite
+            sql = """
+            CREATE TABLE IF NOT EXISTS default_coins (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                player_id INTEGER,
+                level_number INTEGER,
+              
+                x INTEGER,
+                y INTEGER
+            )
+            """;
+        }
+
+        try (Statement stm = db.connection.createStatement()){
+            stm.execute(deletesql);
+            System.out.println("Coins table dropped successfully.");
+            stm.execute(sql);
+            System.out.println("Coins table created successfully.");
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+    public void insertCoinsDefault(String username , String password ,Map map,int mapNumber)
+    {
+        int playerId = getPlayerId(username,password);
+        //String deleteSql = "DELETE FROM coins WHERE player_id = ? AND level_number = ?";
+        String sql = "INSERT INTO default_coins (player_id, level_number, x, y) VALUES (?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = db.connection.prepareStatement(sql)){
+//            PreparedStatement stm = db.connection.prepareStatement(deleteSql);
+//            stm.setInt(1,playerId);
+//            stm.setInt(2,mapNumber);
+//            stm.executeUpdate();
+
+            for(SuperObject coin : map.items)
+            {
+                if(coin != null) {
+                    pstmt.setInt(1, 0);
+                    pstmt.setInt(2, mapNumber);
+                    pstmt.setInt(3, coin.worldX);
+                    pstmt.setInt(4, coin.worldY);
+                    pstmt.addBatch();
+                }
+                else{
+                    pstmt.setInt(1, 0);
+                    pstmt.setInt(2, mapNumber);
+                    pstmt.setInt(3, 0);
+                    pstmt.setInt(4, 0);
+                    pstmt.addBatch();
+                }
+            }
+
+            pstmt.executeBatch();
+        }
+        catch (SQLException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    public void downloadDefaultCoinsFromDatabase(String username, String password, Map map, int levelNumber) {
+        int playerId = getPlayerId(username, password);
+        playerId = 0 ; // pentru default coins
+        String sql = "SELECT x, y FROM default_coins WHERE player_id = ? AND level_number = ?";
+
+        try (PreparedStatement stmt = db.connection.prepareStatement(sql)) {
+            stmt.setInt(1, playerId);
+            stmt.setInt(2, levelNumber);
+
+            ResultSet rs = stmt.executeQuery();
+
+            int index = 0;
+            while (rs.next() && index < map.items.length) {
+                int x = rs.getInt("x");
+                int y = rs.getInt("y");
+
+                if (x == 0 && y == 0) {
+                    map.items[index] = null;
+                } else {
+                    int ok = 1;
+                    switch (levelNumber) {
+                        case 1:
+                            if(index == 0 || index == 11)
+                            {
+                                Key key = new Key();
+                                key.worldX = x;
+                                key.worldY = y;
+                                map.items[index] = key;
+
+                                ok = 0;
+                            }
+                            break;
+                        case 2:
+                            if(index == 0 || index == 15)
+                            {
+                                Key key = new Key();
+                                key.worldX = x;
+                                key.worldY = y;
+                                map.items[index] = key;
+
+                                ok=0;
+                            }
+                            break;
+                        case 3:
+                            if(index == 20 || index == 21)
+                            {
+                                Key key = new Key();
+                                key.worldX = x;
+                                key.worldY = y;
+                                map.items[index] = key;
+
+                                ok=0;
+                            }
+                            break;
+                    }
+                    if( ok == 1) // nu e cheie
+                    {
+                        Coin coin = new Coin();
+                        coin.worldX = x;
+                        coin.worldY = y;
+                        map.items[index] = coin;
+                    }
+                }
+                index++;
+            }
+
+            // Dacă sunt mai puține coinuri decât dimensiunea vectorului, restul rămân null
+            while (index < map.items.length) {
+                map.items[index] = null;
+                index++;
+            }
+
+//            for(SuperObject item: map.items)
+//            {
+//                if(item != null)
+//                System.out.println(item.worldX + " "+item.worldY);
+//            }
+            System.out.println("Coin-urile au fost descarcate pentru nivelul " + levelNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void createCoinsTable()
+    {
+        String deletesql = "DROP TABLE coins";
+
+        String sql = "";
+        if(isOracleDatabase()) {
+            sql = """
+            BEGIN
+                EXECUTE IMMEDIATE '
+                    CREATE TABLE coins (
+                        id NUMBER GENERATED BY DEFAULT ON NULL AS IDENTITY PRIMARY KEY,
+                        player_id NUMBER,
+                        level_number NUMBER,
+                        index_in_map NUMBER,
+                        x NUMBER,
+                        y NUMBER,
+                        CONSTRAINT coins_unique UNIQUE (player_id, level_number, index_in_map)
+                    )
+                ';
+            EXCEPTION
+                WHEN OTHERS THEN
+                    IF SQLCODE != -955 THEN
+                        RAISE;
+                    END IF;
+            END;
+            """;
+        } else {
+            sql = """
+        CREATE TABLE IF NOT EXISTS coins (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            player_id INTEGER,
+            level_number INTEGER,
+            index_in_map INTEGER,
+            x INTEGER,
+            y INTEGER,
+            UNIQUE(player_id, level_number, index_in_map)
+        )
+        """;
+        }
+
+        try (Statement stm = db.connection.createStatement()) {
+            // stm.execute(deletesql);
+            stm.execute(sql);
+            System.out.println("Coins table created successfully.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateCoinsForPlayerAndLevel(String username, String password, Map map, int levelNumber) {
+        int playerId = getPlayerId(username, password);
+
+        String sql = """
+        UPDATE coins
+        SET x = ?, y = ?
+        WHERE player_id = ? AND level_number = ? AND index_in_map = ?
+        """;
+
+        //System.out.println("*********** Level " + levelNumber + " ***********");
+        try (PreparedStatement pstmt = db.connection.prepareStatement(sql)) {
+            for (int i = 0; i < map.items.length; i++) {
+                SuperObject item = map.items[i];
+                int x = 0, y = 0;
+                if (item != null) {
+                    x = item.worldX;
+                    y = item.worldY;
+                }
+
+                pstmt.setInt(1, x);
+                pstmt.setInt(2, y);
+                pstmt.setInt(3, playerId);
+                pstmt.setInt(4, levelNumber);
+                pstmt.setInt(5, i); // index_in_map
+                pstmt.addBatch();
+            }
+
+            pstmt.executeBatch();
+            System.out.println("Coins actualizate cu succes pentru player_id=" + playerId + ", level=" + levelNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void insertCoinsPlayerTables(String username , String password , Map map, int mapNumber) {
+        int playerId = getPlayerId(username, password);
+        String sql = "INSERT INTO coins (player_id, level_number, index_in_map, x, y) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = db.connection.prepareStatement(sql)) {
+            for (int i = 0; i < map.items.length; i++) {
+                SuperObject coin = map.items[i];
+                int x = 0, y = 0;
+                if (coin != null) {
+                    x = coin.worldX;
+                    y = coin.worldY;
+                }
+                pstmt.setInt(1, playerId);
+                pstmt.setInt(2, mapNumber);
+                pstmt.setInt(3, i); // index_in_map
+                pstmt.setInt(4, x);
+                pstmt.setInt(5, y);
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateTimer(String username, String password, int levelNumber, int newTimer) {
+        int playerId = getPlayerId(username, password);
+        String sql = "UPDATE levels SET timer = ? WHERE player_id = ? AND level_number = ?";
+
+        try (PreparedStatement pstmt = db.connection.prepareStatement(sql)) {
+            pstmt.setInt(1, newTimer);
+            pstmt.setInt(2, playerId);
+            pstmt.setInt(3, levelNumber);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                //System.out.println(username + "Timer actualizat cu succes pentru nivelul " + levelNumber);
+            } else {
+                System.out.println("Nivelul nu a fost găsit pentru actualizare.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public int getTimer(String username, String password, int levelNumber) {
+        int playerId = getPlayerId(username, password);
+        String sql = "SELECT timer FROM levels WHERE player_id = ? AND level_number = ?";
+
+        try (PreparedStatement pstmt = db.connection.prepareStatement(sql)) {
+            pstmt.setInt(1, playerId);
+            pstmt.setInt(2, levelNumber);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("timer");
+                } else {
+                    System.out.println("Nu s-a găsit nivelul specificat.");
+                    return 0; // Valoare convențională pentru "nu s-a găsit"
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
+    public void downloadCoinsFromDatabase(String username, String password, Map map, int levelNumber) {
+        int playerId = getPlayerId(username, password);
+        String sql = "SELECT x, y FROM coins WHERE player_id = ? AND level_number = ?";
+
+        try (PreparedStatement stmt = db.connection.prepareStatement(sql)) {
+            stmt.setInt(1, playerId);
+            stmt.setInt(2, levelNumber);
+
+            ResultSet rs = stmt.executeQuery();
+
+            int index = 0;
+            while (rs.next() && index < map.items.length) {
+                int x = rs.getInt("x");
+                int y = rs.getInt("y");
+
+                if (x == 0 && y == 0) {
+                    map.items[index] = null;
+                } else {
+                    boolean isKey = false;
+                    switch (levelNumber) {
+                        case 1:
+                            if (index == 0 || index == 11) isKey = true;
+                            break;
+                        case 2:
+                            if (index == 0 || index == 15) isKey = true;
+                            break;
+                        case 3:
+                            if (index == 20 || index == 21) isKey = true;
+                            break;
+                    }
+
+                    if (isKey) {
+                        Key key = new Key();
+                        key.worldX = x;
+                        key.worldY = y;
+                        map.items[index] = key;
+                    } else {
+                        Coin coin = new Coin();
+                        coin.worldX = x;
+                        coin.worldY = y;
+                        map.items[index] = coin;
+                    }
+                }
+                index++;
+            }
+
+
+            while (index < map.items.length) {
+                map.items[index] = null;
+                index++;
+            }
+
+            System.out.println("Coin-urile au fost descarcate pentru nivelul " + levelNumber);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Point getNrOfCoinsPicked(RefLinks refLink, int mapNumber)
+    {
+        int nrOfCoinsPicked = 0;
+        int nrOfKeysPicked = 0;
+
+        SuperObject []item = refLink.GetMap().items;
+        int index = 0;
+        for( index =0 ;index<item.length;index++)
+        {
+            if(item[index] == null || (item[index].worldX == 0 && item[index].worldY == 0) ) {
+                switch (mapNumber) {
+                    case 1: {
+                        if (index == 0 || index == 11) {
+                            nrOfKeysPicked++;
+                        } else {
+                            nrOfCoinsPicked++;
+                        }
+                        break;
+                    }
+                    case 2: {
+                        if (index == 0 || index == 15) {
+                            nrOfKeysPicked++;
+                        } else {
+                            nrOfCoinsPicked++;
+                        }
+                        break;
+                    }
+                    case 3: {
+                        if (index == 20 || index == 21) {
+                            nrOfKeysPicked++;
+                        } else {
+                            nrOfCoinsPicked++;
+                        }
+                        break;
+                    }
+                }
+            }
+        }
+        nrOfCoinsPicked -=3;
+        if(mapNumber == 2)
+        {
+            nrOfCoinsPicked ++;
+        }
+        else if(mapNumber == 3)
+        {
+            nrOfCoinsPicked +=3;
+        }
+        return new Point(nrOfCoinsPicked,nrOfKeysPicked);
+    }
+
+    public void insertEmptyCoinsForPlayerAndLevel(String username, String password, Map map, int levelNumber) {
+        int playerId = getPlayerId(username, password);
+
+        // Verificăm dacă deja există coins pentru acest player și nivel
+        String checkSql = "SELECT COUNT(*) FROM coins WHERE player_id = ? AND level_number = ?";
+        String insertSql = "INSERT INTO coins (player_id, level_number, index_in_map, x, y) VALUES (?, ?, ?, ?, ?)";
+
+        try (PreparedStatement checkStmt = db.connection.prepareStatement(checkSql)) {
+            checkStmt.setInt(1, playerId);
+            checkStmt.setInt(2, levelNumber);
+
+            ResultSet rs = checkStmt.executeQuery();
+            rs.next();
+            int count = rs.getInt(1);
+
+            if (count > 0) {
+                System.out.println("Coins already exist for player " + playerId + ", level " + levelNumber);
+                return; // Nu mai inserăm dacă deja există
+            }
+
+            // Inserăm rânduri goale (x=0, y=0) pentru fiecare item din hartă
+            try (PreparedStatement insertStmt = db.connection.prepareStatement(insertSql)) {
+                for (int i = 0; i < map.items.length; i++) {
+                    insertStmt.setInt(1, playerId);
+                    insertStmt.setInt(2, levelNumber);
+                    insertStmt.setInt(3, i); // index_in_map
+                    insertStmt.setInt(4, 0); // x
+                    insertStmt.setInt(5, 0); // y
+                    insertStmt.addBatch();
+                }
+                insertStmt.executeBatch();
+                System.out.println("Coins inițializați cu succes pentru player_id=" + playerId + ", level=" + levelNumber);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
+
+

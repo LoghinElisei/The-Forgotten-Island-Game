@@ -178,10 +178,21 @@ public class Hero extends Character
 
         int nrOfCoins = refLink.GetMap().items.length - 2 - 3;
         int nrOfKeys = 2;
-        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
-        g2d.drawString("Coins: " + getCoins()+" / "+nrOfCoins, 400, 50);
-        g2d.drawString("Keys: " + getKeys() + " / " + nrOfKeys, 670, 50);
+        int mapNumber = refLink.getMapNumber();
+        Point p = refLink.database.getNrOfCoinsPicked(refLink,mapNumber);
+        int pickedCoins = p.x;
+        int pickedKeys = p.y;
+        if(mapNumber == 2)
+            nrOfCoins ++;
 
+       coins = pickedCoins;
+        keys = pickedKeys;
+
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+//        g2d.drawString("Coins: " + getCoins()+" / "+nrOfCoins, 400, 50);
+//        g2d.drawString("Keys: " + getKeys() + " / " + nrOfKeys, 670, 50);
+        g2d.drawString("Coins: " + coins+" / "+nrOfCoins, 400, 50);
+        g2d.drawString("Keys: " +keys + " / " + nrOfKeys, 670, 50);
     }
 
     private void pickItem(int i){
@@ -191,12 +202,12 @@ public class Hero extends Character
                 case "key":
                     keys++;
                     refLink.GetMap().items[i] = null;
-                    System.out.println("Keys: " + keys);
+                    //System.out.println("Keys: " + keys);
                     break;
                 case "coin":
                     coins++;
                     refLink.GetMap().items[i] = null;
-                    System.out.println("Coins: " + coins);
+                    //System.out.println("Coins: " + coins);
             }
         }
     }

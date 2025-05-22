@@ -47,7 +47,15 @@ public class Timer {
             return elapsedTime / 1_000_000_000.0;
         }
     }
+    public static void setElapsedTime(int time){
+        elapsedTime = time * 1_000_000_000L;
 
+        if(running)
+        {
+            startTime = System.nanoTime();
+        }
+
+    }
     public static void reset(){
         elapsedTime = 0;
         if(running)

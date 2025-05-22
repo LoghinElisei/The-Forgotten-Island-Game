@@ -2,6 +2,7 @@ package PaooGame.States;
 
 import PaooGame.Graphics.Button;
 import PaooGame.Input.MouseManager;
+import PaooGame.Items.SuperObject;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
@@ -129,20 +130,32 @@ public class InfoState extends State{
                 //refLink.GetGame().playState = new PlayState(refLink);
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
+                int timeOnThisLevel = refLink.database.getTimer(refLink.getUsername(), refLink.getPassword(),mapNumber);
+                Timer.stop();
+                Timer.setElapsedTime(timeOnThisLevel);
+                Timer.start();
+//            System.out.println(" ********* MAP " + mapNumber + " ********* ");
+//                if(mapNumber == 1)
+//                    refLink.database.downloadCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(),refLink.GetMap(),mapNumber);
 
                 switch (mapNumber) {
                     case 2: {
                         map = new Map2(refLink);
-                        Timer.reset();
+                         //Timer.reset();
                         PlayState.setMap(map);
+                        refLink.database.downloadCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(), refLink.GetMap(), mapNumber);
                         refLink.SetMap(map);
+
                         break;
                     }
                     case 3:{
                         map = new Map3(refLink);
-                        Timer.reset();
+                        //Timer.reset();
                         PlayState.setMap(map);
+                        //refLink.database.insertCoinsPlayerTables(refLink.getUsername(), refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
+                        refLink.database.downloadCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(),refLink.GetMap(),mapNumber);
                         refLink.SetMap(map);
+
                         break;
                     }
 
@@ -151,4 +164,7 @@ public class InfoState extends State{
 
         }
     }
+
+
+
 }

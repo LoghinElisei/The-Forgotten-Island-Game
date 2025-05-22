@@ -7,6 +7,7 @@ import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 
 import PaooGame.Input.KeyManager;
+import PaooGame.Maps.Map2;
 import PaooGame.States.PlayState;
 import PaooGame.States.State;
 
@@ -116,6 +117,20 @@ public class RefLinks
         return map;
     }
 
+    public int getMapNumber()
+    {
+        if(map instanceof Map1)
+        {
+            return 1;
+        }
+        else if(map instanceof Map2)
+        {
+            return 2;
+        }
+        else {
+            return 3;
+        }
+    }
     /*! \fn public void SetMap(Map map)
         \brief Seteaza referinta catre harta curenta.
 

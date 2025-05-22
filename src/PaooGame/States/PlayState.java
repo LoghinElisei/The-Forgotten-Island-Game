@@ -13,8 +13,10 @@ import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
+import PaooGame.Timer.Timer;
 
 import java.awt.*;
+import java.awt.geom.AffineTransform;
 import java.util.ArrayList;
 
 /*! \class public class PlayState extends State
@@ -23,7 +25,8 @@ import java.util.ArrayList;
 public class PlayState extends State
 {
     public static Map map;    /*!< Referinta catre harta curenta.*/
-
+    int coins = 0;
+    int keys =0;
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
 
@@ -42,8 +45,33 @@ public class PlayState extends State
         refLink.SetMap(map);
             ///Construieste eroul
         ItemCreator heroCreator = new HeroItemCreator();
-        hero = heroCreator.getItem(ItemType.HERO, refLink,1050, 2050);
+
+        Point playerPos = refLink.database.getPlayerPosition(refLink.getUsername(),refLink.getPassword());
+
+        hero = heroCreator.getItem(ItemType.HERO, refLink, playerPos.x, playerPos.y);
         Game.debugState = false;
+
+        int mapNumber = 1;
+        if(map instanceof Map2)
+        {
+            mapNumber = 2;
+        }
+        else if(map instanceof Map3)
+        {
+            mapNumber = 3;
+        }
+
+        int timeOnThisLevel = refLink.database.getTimer(refLink.getUsername(), refLink.getPassword(),mapNumber);
+        Timer.setElapsedTime(timeOnThisLevel);
+        Timer.start();
+
+        Point p = refLink.database.getNrOfCoinsPicked(refLink,mapNumber);
+        hero.setCoins(p.x);
+        hero.setKeys(p.y);
+
+//        if(refLink.getMapNumber() != 1 && refLink.getMapNumber() !=3)
+//            refLink.database.downloadCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(),refLink.GetMap(),refLink.getMapNumber());
+
 
     }
     /*! \fn public void Update()
@@ -64,7 +92,7 @@ public class PlayState extends State
             }
         }
 
-        Map.timer.start();
+
 
         // DEBUG
         if (refLink.GetKeyManager().IsDebugJustPressed()) {
@@ -118,6 +146,31 @@ public class PlayState extends State
             g.drawString("Row: " + (hero.GetY() + hero.bounds.y) / Tile.TILE_WIDTH , x, y);
         }
 
+        DrawUI(g);
+
+    }
+    private void DrawUI(Graphics2D g2d)
+    {
+        g2d.setTransform(new AffineTransform());
+        g2d.setColor(Color.WHITE);
+
+        int nrOfCoins = refLink.GetMap().items.length - 2 - 3;
+        int nrOfKeys = 2;
+        int mapNumber = refLink.getMapNumber();
+        Point p = refLink.database.getNrOfCoinsPicked(refLink,mapNumber);
+        int pickedCoins = p.x;
+        int pickedKeys = p.y;
+        if(mapNumber == 2)
+            nrOfCoins ++;
+
+        coins = pickedCoins;
+        keys = pickedKeys;
+
+        g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 32));
+//        g2d.drawString("Coins: " + getCoins()+" / "+nrOfCoins, 400, 50);
+//        g2d.drawString("Keys: " + getKeys() + " / " + nrOfKeys, 670, 50);
+        g2d.drawString("Coins: " + coins+" / "+nrOfCoins, 400, 50);
+        g2d.drawString("Keys: " +keys + " / " + nrOfKeys, 670, 50);
     }
     public static void setMap(Map map){
         PlayState.map = map;

@@ -112,7 +112,9 @@ public class EventHandler {
                     entity.SetY(Tile.TILE_HEIGHT * row);
 
                     State.SetState(refLink.GetGame().infoState);
-                    Timer.reset();
+                    //Timer.reset();
+
+
                     break;
                 case 3:
                     refLink.database.insertLevel(refLink.getUsername(), refLink.getPassword(), 2,(int)Timer.getElapsedTime(),calculateScore());
