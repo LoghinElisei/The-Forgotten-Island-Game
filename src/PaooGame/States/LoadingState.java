@@ -2,6 +2,7 @@ package PaooGame.States;
 
 import PaooGame.Graphics.Button;
 import PaooGame.Input.MouseManager;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 
 import javax.swing.*;
@@ -175,14 +176,17 @@ public class LoadingState extends State{
     {
         switch (label) {
             case "Continue":
+                SoundPlayer.playSound();
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;
             case "Continue Offline":
+                SoundPlayer.playSound();
                 refLink.GetGame().menuState = new MenuState(refLink);
                 State.SetState(refLink.GetGame().menuState);
                 break;
             case "Try reconnect":
+                SoundPlayer.playSound();
                 connectToDatabase();
                 System.out.println("Try reconnecting to the internet ...");
         }

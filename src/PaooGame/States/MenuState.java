@@ -1,6 +1,7 @@
 package PaooGame.States;
 
 import PaooGame.Input.MouseManager;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 
@@ -28,8 +29,8 @@ public class MenuState extends State
         super(refLink);
         buttons = new ArrayList<>();
 
-        int width = 200;
-        int height = 50;
+        int width = 230;
+        int height = 60;
         int gap = 20;
 
         int screenWidth = refLink.GetWidth();
@@ -96,7 +97,7 @@ public class MenuState extends State
         int x = getXForCenteredText(text, g2d);
         int y = refLink.GetHeight() / 4;  // Higher than buttons
 
-        g2d.drawString(text, x, y);
+        g2d.drawString(text, x, y+40);
         for (Button b: buttons)
         {
             b.draw(g2d, Color.decode("#0E161B"), Color.decode("#0E161B"), Color.decode("#C0C49C"));
@@ -142,18 +143,21 @@ public class MenuState extends State
 
         switch (label) {
             case "Load Game":
+                SoundPlayer.playSound();
                 //refLink.database.createLevelsTable();
                 refLink.GetGame().aboutState = new AboutState(refLink,1);
                 refLink.setState(refLink.GetGame().aboutState);
                 State.SetState(refLink.GetGame().aboutState);
                 break;
             case "New Game":
+                SoundPlayer.playSound();
                 System.out.println("New Game");
                 refLink.GetGame().aboutState = new AboutState(refLink,2);
                 refLink.setState(refLink.GetGame().aboutState);
                 State.SetState(refLink.GetGame().aboutState);
                 break;
             case "ScoreBoard":
+                SoundPlayer.playSound();
                 refLink.GetGame().scoreboardState = new ScoreboardState(refLink);
                 refLink.setState(refLink.GetGame().scoreboardState);
                 State.SetState(refLink.GetGame().scoreboardState);

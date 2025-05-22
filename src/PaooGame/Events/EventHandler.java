@@ -103,14 +103,16 @@ public class EventHandler {
 //                    System.out.println(Timer.getElapsedTime());
 
                     refLink.GetGame().infoState = new InfoState(refLink,2);
-                    State.SetState(refLink.GetGame().infoState);
+
 
                     refLink.GetGame().playState.getHero().setKeys(0);
                     refLink.GetGame().playState.getHero().setCoins(0);
 
-
                     entity.SetX(Tile.TILE_WIDTH * col);
                     entity.SetY(Tile.TILE_HEIGHT * row);
+
+                    State.SetState(refLink.GetGame().infoState);
+                    Timer.reset();
                     break;
                 case 3:
                     refLink.database.insertLevel(refLink.getUsername(), refLink.getPassword(), 2,(int)Timer.getElapsedTime(),calculateScore());

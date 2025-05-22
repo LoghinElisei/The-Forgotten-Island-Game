@@ -3,6 +3,7 @@ package PaooGame.States;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 import PaooGame.Music.Music;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 import java.awt.*;

@@ -2,6 +2,7 @@ package PaooGame.States;
 
 import PaooGame.Graphics.Button;
 import PaooGame.Input.MouseManager;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 
 import javax.swing.*;
@@ -65,7 +66,7 @@ public class ScoreboardState extends State{
         g2d.setColor(Color.BLACK);
         for ( String line: score)
         {
-            g2d.drawString(line, 350, 300+gap);
+            g2d.drawString(line, 350, 230+gap);
             gap += 60;
         }
 
@@ -102,6 +103,7 @@ public class ScoreboardState extends State{
     private void handleClick(String label)
     {
         if (label.equals("Menu") ) {
+            SoundPlayer.playSound();
             //refLink.GetGame().menuState = new MenuState(refLink);
             State.SetState(refLink.GetGame().menuState);
 

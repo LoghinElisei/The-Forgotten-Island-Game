@@ -5,6 +5,7 @@ import PaooGame.Graphics.Button;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 import PaooGame.Music.Music;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Timer.Timer;
 
@@ -28,6 +29,7 @@ public class WelcomeState extends State{
     private boolean usernameExist = false;
     private int option = 1;
     private boolean errorLogin;
+    private String cryptedPassword;
     public WelcomeState(RefLinks refLink,int option)
     {
         ///Apel al constructorului clasei de baza.
@@ -216,22 +218,28 @@ public class WelcomeState extends State{
         refLink.GetMouseManager().clearMouseClick();
     }
 
-    private boolean loginInfoIsCorrect()
+    private String cryptPassword(String password)
     {
-        return usernameInput.equals("admin") && passwordInput.equals("1234");
+        String cryptedPassword = "";
+        for (int i = 0; i < password.length(); i++) {
+            cryptedPassword += ((char)(password.charAt(i) + 1) * 2);
+        }
+        return cryptedPassword;
     }
-
 
     private void handleClick(String label)
     {
         if (label.equals("Sing up")  || label.equals("Log in")) {
+            SoundPlayer.playSound();
             // 1 - log in
             // 2 - sing up
+            cryptedPassword = cryptPassword(passwordInput);
             switch (option) {
                 case 1: {
-                    if(refLink.database.verifyCredentials(usernameInput, passwordInput)) {
+
+                    if(refLink.database.verifyCredentials(usernameInput, cryptedPassword)) {
                         refLink.setUsername(usernameInput);
-                        refLink.setPassword(passwordInput);
+                        refLink.setPassword(cryptedPassword);
                         int mapNumber = refLink.database.getNextMapNumber(refLink.getUsername(), refLink.getPassword());
 
                         if (mapNumber != 4) {
@@ -251,7 +259,13 @@ public class WelcomeState extends State{
                 }
                 case 2:
                 {
-                    if(!refLink.database.insertPlayer(usernameInput, passwordInput))
+
+//                    refLink.database.createPlayersTable();
+//                    refLink.database.createLevelsTable();
+                    //refLink.database.insertPlayer(usernameInput, passwordInput);
+
+
+                    if(!refLink.database.insertPlayer(usernameInput, cryptedPassword))
                     {
 
                         //desenez
@@ -259,8 +273,9 @@ public class WelcomeState extends State{
 
                     }
                     else {
+                        refLink.database.insertDefaultLevelsForPlayer(usernameInput,cryptedPassword);
                         refLink.setUsername(usernameInput);
-                        refLink.setPassword(passwordInput);
+                        refLink.setPassword(cryptedPassword);
                         int mapNumber = 1; // un nou player , incepe de la 1
                         refLink.GetGame().playState = new PlayState(refLink);
                         refLink.GetGame().infoState = new InfoState(refLink, mapNumber);
@@ -272,7 +287,7 @@ public class WelcomeState extends State{
 
         }
         else if(label.equals("Back"))
-        {
+        {   SoundPlayer.playSound();
             State.SetState(refLink.GetGame().menuState);
         }
     }

@@ -7,6 +7,7 @@ import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
 import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.States.*;
 
 import java.awt.*;
@@ -109,8 +110,10 @@ public class Game implements Runnable
         mouseManager = new MouseManager();
 
         Music bgMusic = Music.getInstance();
+        SoundPlayer sound = SoundPlayer.getInstance();
+        sound.setVolume(0.6f);
         bgMusic.playMusic("res/sounds/music3.wav");
-        bgMusic.setVolume(0.3f);
+        bgMusic.setVolume(0.5f);
 
 
     }

@@ -6,6 +6,7 @@ import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
 import PaooGame.Music.Music;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 import PaooGame.Timer.Timer;
@@ -134,6 +135,7 @@ public class GameOver extends State
     {
         switch (label) {
             case "retry":
+                SoundPlayer.playSound();
                 refLink.GetGame().playState = new PlayState(refLink);
 
                 Map oldMap = refLink.GetMap();
@@ -155,6 +157,7 @@ public class GameOver extends State
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "main menu":
+                SoundPlayer.playSound();
                 Timer.reset();
                 refLink.setState(refLink.GetGame().menuState);
                 State.SetState(refLink.GetGame().menuState);

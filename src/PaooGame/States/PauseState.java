@@ -3,6 +3,7 @@ package PaooGame.States;
 import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 import PaooGame.Music.Music;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Graphics.Button;
 import PaooGame.Timer.Timer;
@@ -203,12 +204,15 @@ public class PauseState extends State
     {
         switch (label) {
             case "Continue":
+                SoundPlayer.playSound();
                 State.SetState(refLink.GetGame().playState);
                 break;
             case "Save":
+                SoundPlayer.playSound();
                 System.out.println("Game Saved!");
                 break;
             case "Exit":
+                SoundPlayer.playSound();
                 Timer.reset();
                 State.SetState(refLink.GetGame().menuState);
                 break;

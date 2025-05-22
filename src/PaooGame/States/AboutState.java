@@ -5,6 +5,7 @@ import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 
 import javax.swing.*;
@@ -109,7 +110,7 @@ public class AboutState extends State
     {
 
         if (label.equals("Continue") ) {
-
+            SoundPlayer.playSound();
             refLink.GetGame().welcomeState = new WelcomeState(refLink,option);
             refLink.setState(refLink.GetGame().welcomeState);
             State.SetState(refLink.GetGame().welcomeState);

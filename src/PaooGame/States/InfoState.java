@@ -5,8 +5,10 @@ import PaooGame.Input.MouseManager;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map2;
 import PaooGame.Maps.Map3;
+import PaooGame.Music.SoundPlayer;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
+import PaooGame.Timer.Timer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -123,7 +125,7 @@ public class InfoState extends State{
     {
         Map map;
         if (label.equals("Continue") ) {
-
+                 SoundPlayer.playSound();
                 //refLink.GetGame().playState = new PlayState(refLink);
                 refLink.setState(refLink.GetGame().playState);
                 State.SetState(refLink.GetGame().playState);
@@ -131,12 +133,14 @@ public class InfoState extends State{
                 switch (mapNumber) {
                     case 2: {
                         map = new Map2(refLink);
+                        Timer.reset();
                         PlayState.setMap(map);
                         refLink.SetMap(map);
                         break;
                     }
                     case 3:{
                         map = new Map3(refLink);
+                        Timer.reset();
                         PlayState.setMap(map);
                         refLink.SetMap(map);
                         break;
