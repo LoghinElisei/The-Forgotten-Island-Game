@@ -68,8 +68,8 @@ public class ItemPlacer {
 //                map.items[10] = new Coin();
 //                map.items[10].worldX = 9 * Tile.TILE_WIDTH;
 //                map.items[10].worldY = 25 * Tile.TILE_HEIGHT;
-//                refLink.database.createCoinsTable();
-//                refLink.database.insertCoinsDefault(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
+                //refLink.database.createCoinsTable();
+                //refLink.database.insertCoinsDefault(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
                  refLink.database.downloadDefaultCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
 
                 break;
@@ -138,7 +138,7 @@ public class ItemPlacer {
 //                map.items[14].worldX = 44 * Tile.TILE_WIDTH;
 //                map.items[14].worldY = 25 * Tile.TILE_HEIGHT;
 
-//                refLink.database.insertCoinsDefault(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
+                //refLink.database.insertCoinsDefault(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
                 refLink.database.downloadDefaultCoinsFromDatabase(refLink.getUsername(),refLink.getPassword(),map,mapNumber);
 
                 break;
