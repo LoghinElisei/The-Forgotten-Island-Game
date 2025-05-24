@@ -238,7 +238,7 @@ public class WelcomeState extends State{
             cryptedPassword = cryptPassword(passwordInput);
             switch (option) {
                 case 1: {
-
+                   // refLink.database.createLevelsTable();
                     if(refLink.database.verifyCredentials(usernameInput, cryptedPassword)) {
 
                         refLink.setUsername(usernameInput);
@@ -263,6 +263,8 @@ public class WelcomeState extends State{
                 }
                 case 2: //sign up
                 {
+
+                    //refLink.database.createDefaultCoinsTable();
 
 //                    refLink.database.createPlayersTable();
                    //refLink.database.createLevelsTable();

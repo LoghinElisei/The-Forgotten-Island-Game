@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 /*! \class public class KeyManager implements KeyListener
     \brief Gestioneaza intrarea (input-ul) de tastatura.

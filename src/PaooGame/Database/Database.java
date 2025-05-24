@@ -1326,8 +1326,8 @@ public class Database {
         }
 
         try (Statement stm = db.connection.createStatement()){
-            stm.execute(deletesql);
-            System.out.println("Coins table dropped successfully.");
+//            stm.execute(deletesql);
+//            System.out.println("Coins table dropped successfully.");
             stm.execute(sql);
             System.out.println("Coins table created successfully.");
         }
@@ -1755,7 +1755,6 @@ public class Database {
             e.printStackTrace();
         }
     }
-
 }
 
 

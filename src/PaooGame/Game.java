@@ -8,6 +8,7 @@ import PaooGame.Input.KeyManager;
 import PaooGame.Input.MouseManager;
 import PaooGame.Music.SoundPlayer;
 import PaooGame.States.*;
+import PaooGame.Timer.Timer;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
@@ -289,6 +290,7 @@ public class Game implements Runnable
                 State.SetState(refLink.GetGame().pauseState);
 
             } else if (State.GetState() == pauseState) {
+                Timer.start();
                 State.SetState(playState);
             }
             return;
