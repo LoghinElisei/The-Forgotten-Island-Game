@@ -32,6 +32,8 @@ public class WelcomeState extends State{
     private int option = 1;
     private boolean errorLogin;
     private String cryptedPassword;
+    private boolean hoverUsername = false;
+    private boolean hoverPassword = false;
     public WelcomeState(RefLinks refLink,int option)
     {
         ///Apel al constructorului clasei de baza.
@@ -55,7 +57,7 @@ public class WelcomeState extends State{
             buttons.add(new Button("Log in", new Rectangle(centerX, startY+350, width, height)));
         }
         else {
-            buttons.add(new Button("Sing up", new Rectangle(centerX, startY+350, width, height)));
+            buttons.add(new Button("Sign up", new Rectangle(centerX, startY+350, width, height)));
         }
         buttons.add(new Button("Back", new Rectangle(centerX, startY+250, width, height)));
 
@@ -87,6 +89,7 @@ public class WelcomeState extends State{
         List<java.lang.Character> chars = refLink.GetKeyManager().getTypedCharacters();
         for (char c : chars) {
             if (usernameSelected) {
+
                 if(canAddChar(usernameInput, c, font, 470))
                 {
                     usernameInput += c;
@@ -99,7 +102,7 @@ public class WelcomeState extends State{
         }
         refLink.GetKeyManager().clearTypedCharacters();
 
-        //Backspace logic
+        //Backspace
         if (refLink.GetKeyManager().isBackspacePressed()) {
             if (usernameSelected && usernameInput.length() > 0) {
                 usernameInput = usernameInput.substring(0, usernameInput.length() - 1);
@@ -141,6 +144,16 @@ public class WelcomeState extends State{
 
         Rectangle usernameField = new Rectangle(500, 420, 470, 50);
         Rectangle passwordField = new Rectangle(500, 590, 470, 50);
+        if(hoverUsername)
+        {
+            g2d.setColor(Color.decode("#f0f77c"));
+            g2d.fillRect(usernameField.x, usernameField.y, usernameField.width, usernameField.height);
+        }
+        else if(hoverPassword)
+        {
+            g2d.setColor(Color.decode("#f0f77c"));
+            g2d.fillRect(passwordField.x, passwordField.y, passwordField.width, passwordField.height);
+        }
         g2d.setFont(new Font("Cascadia Mono", Font.BOLD, 40));
         g2d.setColor(Color.BLACK);
         g2d.drawString("Username:", 400, 400);
@@ -171,6 +184,20 @@ public class WelcomeState extends State{
             g2d.drawString("Incorrect username/password", 650, 400);
         }
 
+        if(usernameSelected)
+        {
+            int cursorX = usernameField.x + 10 + fontMetrics.stringWidth(usernameInput);
+            int cursorY = usernameField.y + 10;
+            g2d.drawLine(cursorX, cursorY, cursorX, cursorY + 30);
+        }
+        else if(passwordSelected)
+        {
+            int cursorX = passwordField.x + 10 + fontMetrics.stringWidth(maskPassword(passwordInput));
+            int cursorY = passwordField.y + 10;
+            g2d.drawLine(cursorX, cursorY, cursorX, cursorY + 30);
+        }
+
+
     }
 
     private String maskPassword(String password)
@@ -196,6 +223,12 @@ public class WelcomeState extends State{
         for (Button b: buttons) {
             b.setHovered(b.getBounds().contains(mousePos));
         }
+
+        Rectangle usernameField = new Rectangle(500, 420, 470, 50);
+        Rectangle passwordField = new Rectangle(500, 590, 470, 50);
+        hoverUsername = usernameField.contains(mousePos);
+        hoverPassword = passwordField.contains(mousePos);
+
     }
 
     private void handleMouseInput() {
@@ -231,7 +264,7 @@ public class WelcomeState extends State{
 
     private void handleClick(String label)
     {
-        if (label.equals("Sing up")  || label.equals("Log in")) {
+        if (label.equals("Sign up")  || label.equals("Log in")) {
             SoundPlayer.playSound();
             // 1 - log in
             // 2 - sing up
