@@ -5,9 +5,6 @@ import PaooGame.Items.Key;
 import PaooGame.Items.SuperObject;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
-import PaooGame.Tiles.Tile;
-import com.sun.security.jgss.GSSUtil;
-import oracle.jdbc.proxy.annotation.Pre;
 
 import java.awt.*;
 import java.io.BufferedReader;
@@ -15,9 +12,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 public class Database {
     public DatabaseManager db;

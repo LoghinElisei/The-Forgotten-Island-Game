@@ -67,10 +67,6 @@ public abstract class Entity
     ///Metoda abstracta destinata desenarii starii curente
     public abstract void Draw(Graphics2D g2d);
 
-    public boolean getCollisionOn() {
-        return collisionOn;
-    }
-
     public void setCollisionOn(boolean collisionOn) {
         this.collisionOn = collisionOn;
     }
@@ -126,22 +122,6 @@ public abstract class Entity
     public void SetY(int y)
     {
         this.y = y;
-    }
-
-    /*! \fn public float SetWidth()
-        \brief Seteaza latimea imaginii entitatii.
-     */
-    public void SetWidth(int width)
-    {
-        this.width = width;
-    }
-
-    /*! \fn public float SetHeight()
-        \brief Seteaza inaltimea imaginii entitatii.
-     */
-    public void SetHeight(int height)
-    {
-        this.height = height;
     }
 
     /*! \fn public void SetNormalMode()

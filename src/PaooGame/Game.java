@@ -1,7 +1,6 @@
 package PaooGame;
 
 import PaooGame.CollisionChecker.Collision;
-import PaooGame.Events.EventHandler;
 import PaooGame.Music.Music;
 import PaooGame.GameWindow.GameWindow;
 import PaooGame.Graphics.Assets;
@@ -11,8 +10,6 @@ import PaooGame.Music.SoundPlayer;
 import PaooGame.States.*;
 
 import java.awt.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 

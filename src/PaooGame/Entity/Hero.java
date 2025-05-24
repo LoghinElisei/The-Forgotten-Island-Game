@@ -3,8 +3,6 @@ package PaooGame.Entity;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
-import java.io.File;
-
 import PaooGame.Events.EventHandler;
 import PaooGame.Game;
 import PaooGame.Maps.Map;
@@ -12,9 +10,6 @@ import PaooGame.RefLinks;
 import PaooGame.Graphics.Assets;
 import PaooGame.States.State;
 import PaooGame.Timer.Timer;
-import oracle.jdbc.driver.json.tree.JsonpPrimitive;
-
-import javax.imageio.ImageIO;
 
 /*! \class public class Hero extends Character
     \brief Implementeaza notiunea de erou/player (caracterul controlat de jucator).

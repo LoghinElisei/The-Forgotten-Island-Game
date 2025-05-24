@@ -1,16 +1,15 @@
 package PaooGame.Items;
 
-import PaooGame.Creator.EnemyCreator.EnemyItemCreator;
-import PaooGame.Creator.ItemCreator;
-import PaooGame.Creator.ItemType;
+import PaooGame.Creator.EnemyCreator.EnemyCreator;
+import PaooGame.Creator.EntityCreator;
+import PaooGame.Creator.EntityType;
 import PaooGame.Maps.Map;
 import PaooGame.RefLinks;
-import PaooGame.Tiles.Tile;
 
 public class ItemPlacer {
 
     private RefLinks refLink;
-    private ItemCreator enemyCreator = new EnemyItemCreator();
+    private EntityCreator enemyCreator = new EnemyCreator();
     public ItemPlacer(RefLinks refLink)
     {
         this.refLink = refLink;
@@ -244,36 +243,39 @@ public class ItemPlacer {
     public void setEnemies(int mapNumber, Map map){
         switch (mapNumber){
             case 1:
-                map.monsters[0] = enemyCreator.getItem(ItemType.ORC, refLink, 24, 8);
-                map.monsters[1] = enemyCreator.getItem(ItemType.ORC, refLink, 13, 23);
-                map.monsters[2] = enemyCreator.getItem(ItemType.ORC, refLink, 24, 23);
-                map.monsters[3] = enemyCreator.getItem(ItemType.ORC, refLink, 13, 8);
-                map.monsters[4] = enemyCreator.getItem(ItemType.ORC, refLink, 22, 17);
-                map.monsters[5] = enemyCreator.getItem(ItemType.ORC, refLink, 33, 17);
+                map.monsters[0] = enemyCreator.getItem(EntityType.ORC, refLink, 24, 8);
+                map.monsters[1] = enemyCreator.getItem(EntityType.ORC, refLink, 13, 23);
+                map.monsters[2] = enemyCreator.getItem(EntityType.ORC, refLink, 24, 23);
+                map.monsters[3] = enemyCreator.getItem(EntityType.ORC, refLink, 13, 8);
+                map.monsters[4] = enemyCreator.getItem(EntityType.ORC, refLink, 22, 17);
+                map.monsters[5] = enemyCreator.getItem(EntityType.ORC, refLink, 33, 17);
 
                 break;
             case 2:
-                map.monsters[0] = enemyCreator.getItem(ItemType.BLAZE, refLink, 20, 21);
-                map.monsters[1] = enemyCreator.getItem(ItemType.BLAZE, refLink, 39, 18);
-                map.monsters[2] = enemyCreator.getItem(ItemType.BLAZE, refLink, 30, 10);
-                map.monsters[3] = enemyCreator.getItem(ItemType.BLAZE, refLink, 33, 12);
-                map.monsters[4] = enemyCreator.getItem(ItemType.BLAZE, refLink, 46, 20);
-                map.monsters[5] = enemyCreator.getItem(ItemType.ORC, refLink, 31, 21);
-                map.monsters[6] = enemyCreator.getItem(ItemType.ORC, refLink, 31, 7);
+                map.monsters[0] = enemyCreator.getItem(EntityType.BLAZE, refLink, 20, 21);
+                map.monsters[1] = enemyCreator.getItem(EntityType.BLAZE, refLink, 39, 18);
+                map.monsters[2] = enemyCreator.getItem(EntityType.BLAZE, refLink, 30, 10);
+                map.monsters[3] = enemyCreator.getItem(EntityType.BLAZE, refLink, 33, 12);
+                map.monsters[4] = enemyCreator.getItem(EntityType.BLAZE, refLink, 46, 20);
+                map.monsters[5] = enemyCreator.getItem(EntityType.ORC, refLink, 31, 21);
+                map.monsters[6] = enemyCreator.getItem(EntityType.ORC, refLink, 31, 7);
+                map.monsters[7] = enemyCreator.getItem(EntityType.BLAZE, refLink, 43, 20);
 
                 map.monsters[0].setPath(20, 21, 30, 10);
                 map.monsters[1].setPath(39, 18, 25, 18);
                 map.monsters[2].setPath(37, 9, 26, 9);
                 map.monsters[3].setPath(33, 12, 45, 15);
                 map.monsters[4].setPath(46, 20, 39, 24);
+                map.monsters[7].setPath(43, 20, 43, 9);
+
                 break;
             case 3:
-                map.monsters[0] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 25, 21);
-                map.monsters[1] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 43, 25);
-                map.monsters[2] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 29, 10);
-                map.monsters[3] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 54, 18);
-                map.monsters[4] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 52, 7);
-                map.monsters[5] = enemyCreator.getItem(ItemType.CHUPACABRA, refLink, 55, 18);
+                map.monsters[0] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 25, 21);
+                map.monsters[1] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 43, 25);
+                map.monsters[2] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 29, 10);
+                map.monsters[3] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 54, 18);
+                map.monsters[4] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 52, 7);
+                map.monsters[5] = enemyCreator.getItem(EntityType.CHUPACABRA, refLink, 55, 18);
 
                 map.monsters[0].setPath(25, 21, 40, 21);
                 map.monsters[1].setPath(38, 25, 44, 24);

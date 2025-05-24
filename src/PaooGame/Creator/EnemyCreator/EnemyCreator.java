@@ -1,7 +1,7 @@
 package PaooGame.Creator.EnemyCreator;
 
-import PaooGame.Creator.ItemCreator;
-import PaooGame.Creator.ItemType;
+import PaooGame.Creator.EntityCreator;
+import PaooGame.Creator.EntityType;
 import PaooGame.Entity.Blaze;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Chupacabra;
@@ -9,9 +9,9 @@ import PaooGame.Entity.Orc;
 import PaooGame.RefLinks;
 import PaooGame.Tiles.Tile;
 
-public class EnemyItemCreator extends ItemCreator {
+public class EnemyCreator extends EntityCreator {
     @Override
-    protected Character createItem(ItemType type, RefLinks refLink, int x, int y)  {
+    protected Character createItem(EntityType type, RefLinks refLink, int x, int y)  {
         switch (type)
         {
             case ORC:

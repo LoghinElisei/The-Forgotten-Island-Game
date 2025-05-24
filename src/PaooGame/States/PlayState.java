@@ -1,12 +1,10 @@
 package PaooGame.States;
 
-import PaooGame.Creator.HeroCreator.HeroItemCreator;
-import PaooGame.Creator.ItemCreator;
-import PaooGame.Creator.ItemType;
+import PaooGame.Creator.HeroCreator.HeroCreator;
+import PaooGame.Creator.EntityCreator;
+import PaooGame.Creator.EntityType;
 import PaooGame.Entity.Character;
-import PaooGame.Entity.Entity;
 import PaooGame.Game;
-import PaooGame.Graphics.Button;
 import PaooGame.Maps.Map;
 import PaooGame.Maps.Map1;
 import PaooGame.Maps.Map2;
@@ -17,7 +15,6 @@ import PaooGame.Timer.Timer;
 
 import java.awt.*;
 import java.awt.geom.AffineTransform;
-import java.util.ArrayList;
 
 /*! \class public class PlayState extends State
     \brief Implementeaza/controleaza jocul.
@@ -26,7 +23,7 @@ public class PlayState extends State
 {
     public static Map map;    /*!< Referinta catre harta curenta.*/
     int coins = 0;
-    int keys =0;
+    int keys = 0;
     /*! \fn public PlayState(RefLinks refLink)
         \brief Constructorul de initializare al clasei
 
@@ -44,11 +41,11 @@ public class PlayState extends State
             ///Referinta catre harta construita este setata si in obiectul shortcut pentru a fi accesibila si in alte clase ale programului.
         refLink.SetMap(map);
             ///Construieste eroul
-        ItemCreator heroCreator = new HeroItemCreator();
+        EntityCreator heroCreator = new HeroCreator();
 
         Point playerPos = refLink.database.getPlayerPosition(refLink.getUsername(),refLink.getPassword());
 
-        hero = heroCreator.getItem(ItemType.HERO, refLink, playerPos.x, playerPos.y);
+        hero = heroCreator.getItem(EntityType.HERO, refLink, playerPos.x, playerPos.y);
         Game.debugState = false;
 
         int mapNumber = 1;

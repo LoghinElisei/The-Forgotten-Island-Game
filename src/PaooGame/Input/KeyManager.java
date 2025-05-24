@@ -23,7 +23,7 @@ public class KeyManager implements KeyListener
     public boolean esc;
     public boolean debugButtonState, lastDebugButtonState;
 
-    private final List<Character> typedCharacters = new ArrayList<Character>();
+    private final List<Character> typedCharacters = new ArrayList<>();
     private boolean backspacePressed = false;
     private boolean lastBackspacePressed = false;
     /*! \fn public KeyManager()

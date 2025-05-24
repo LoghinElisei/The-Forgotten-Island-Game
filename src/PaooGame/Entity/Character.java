@@ -24,13 +24,11 @@ import static java.lang.Math.round;
  */
 public abstract class Character extends Entity
 {
-    public static final int DEFAULT_LIFE            = 10;   /*!< Valoarea implicita a vietii unui caracter.*/
     public static final int DEFAULT_SPEED         = 10; /*!< Viteza implicita a unu caracter.*/
     public static final int DEFAULT_CREATURE_WIDTH  = 32 * 3;   /*!< Latimea implicita a imaginii caracterului.*/
     public static final int DEFAULT_CREATURE_HEIGHT = 32 * 3;   /*!< Inaltimea implicita a imaginii caracterului.*/
     public static final String DEFAULT_DIRECTION = "right";
 
-    protected int life;     /*!< Retine viata caracterului.*/
     protected int speed;  /*!< Retine viteza de deplasare caracterului.*/
     protected int xMove;  /*!< Retine noua pozitie a caracterului pe axa X.*/
     protected int yMove;  /*!< Retine noua pozitie a caracterului pe axa Y.*/
@@ -51,7 +49,6 @@ public abstract class Character extends Entity
             ///Apel constructor la clasei de baza
         super(refLink, x,y, width, height);
             //Seteaza pe valorile implicite pentru viata, viteza si distantele de deplasare
-        life    = DEFAULT_LIFE;
         speed   = DEFAULT_SPEED;
         direction = DEFAULT_DIRECTION;
         xMove   = 0;
@@ -137,15 +134,6 @@ public abstract class Character extends Entity
 
     public void Draw(Graphics2D g, PlayState playState){};
 
-
-    /*! \fn public int GetLife()
-        \brief Returneaza viata caracterului.
-     */
-    public int GetLife()
-    {
-        return life;
-    }
-
     /*! \fn public int GetSpeed()
         \brief Returneaza viteza caracterului.
      */
@@ -155,50 +143,11 @@ public abstract class Character extends Entity
         return speed;
     }
 
-    /*! \fn public void SetLife(int life)
-        \brief Seteaza viata caracterului.
-     */
-    public void SetLife(int life)
-    {
-        this.life = life;
-    }
-
     /*! \fn public void SetSpeed(float speed)
         \brief
      */
     public void SetSpeed(int speed) {
         this.speed = speed;
-    }
-    /*! \fn public float GetXMove()
-        \brief Returneaza distanta in pixeli pe axa X cu care este actualizata pozitia caracterului.
-     */
-    public int GetXMove()
-    {
-        return xMove;
-    }
-
-    /*! \fn public float GetYMove()
-        \brief Returneaza distanta in pixeli pe axa Y cu care este actualizata pozitia caracterului.
-     */
-    public int GetYMove()
-    {
-        return yMove;
-    }
-
-    /*! \fn public void SetXMove(float xMove)
-        \brief Seteaza distanta in pixeli pe axa X cu care va fi actualizata pozitia caracterului.
-     */
-    public void SetXMove(int xMove)
-    {
-        this.xMove = xMove;
-    }
-
-    /*! \fn public void SetYMove(float yMove)
-        \brief Seteaza distanta in pixeli pe axa Y cu care va fi actualizata pozitia caracterului.
-     */
-    public void SetYMove(int yMove)
-    {
-        this.yMove = yMove;
     }
 
     public void searchPath(int goalCol, int goalRow) {

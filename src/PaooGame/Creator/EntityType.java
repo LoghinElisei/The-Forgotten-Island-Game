@@ -1,5 +1,5 @@
 package PaooGame.Creator;
 
-public enum ItemType {
+public enum EntityType {
     HERO, ORC, BLAZE, CHUPACABRA
 }
