@@ -45,7 +45,7 @@ public class LoadingState extends State{
             @Override
             protected Void doInBackground(){
                 boolean connected = refLink.database.connect();
-                if(refLink.database.isOracleDatabase() == false) {
+                if(!refLink.database.isOracleDatabase()) {
                     errorLoading = true;
                 }
                 else {

@@ -159,6 +159,8 @@ public class PlayState extends State
         int pickedKeys = p.y;
         if(mapNumber == 2)
             nrOfCoins ++;
+        if(mapNumber == 3)
+            nrOfCoins+=3;
 
         coins = pickedCoins;
         keys = pickedKeys;

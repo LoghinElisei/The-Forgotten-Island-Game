@@ -163,7 +163,7 @@ public class Hero extends Character
             g2d.fillRect(screenX + bounds.x, screenY + bounds.y, bounds.width, bounds.height);
         }
 
-        DrawUI(g2d);
+        //DrawUI(g2d);
     }
 
     private void DrawUI(Graphics2D g2d)
