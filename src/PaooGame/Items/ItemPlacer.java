@@ -1,6 +1,6 @@
 package PaooGame.Items;
 
-import PaooGame.Creator.EnemyCreator.EnemyCreator;
+import PaooGame.Creator.EnemyCreator;
 import PaooGame.Creator.EntityCreator;
 import PaooGame.Creator.EntityType;
 import PaooGame.Maps.Map;

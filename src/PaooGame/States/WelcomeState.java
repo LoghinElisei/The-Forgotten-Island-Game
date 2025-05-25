@@ -55,7 +55,7 @@ public class WelcomeState extends State{
             buttons.add(new Button("Log in", new Rectangle(centerX, startY+350, width, height)));
         }
         else {
-            buttons.add(new Button("Sing up", new Rectangle(centerX, startY+350, width, height)));
+            buttons.add(new Button("Sign up", new Rectangle(centerX, startY+350, width, height)));
         }
         buttons.add(new Button("Back", new Rectangle(centerX, startY+250, width, height)));
 
@@ -231,10 +231,10 @@ public class WelcomeState extends State{
 
     private void handleClick(String label)
     {
-        if (label.equals("Sing up")  || label.equals("Log in")) {
+        if (label.equals("Sign up")  || label.equals("Log in")) {
             SoundPlayer.playSound();
             // 1 - log in
-            // 2 - sing up
+            // 2 - sign up
             cryptedPassword = cryptPassword(passwordInput);
             switch (option) {
                 case 1: {

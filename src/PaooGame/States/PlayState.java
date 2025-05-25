@@ -1,6 +1,6 @@
 package PaooGame.States;
 
-import PaooGame.Creator.HeroCreator.HeroCreator;
+import PaooGame.Creator.HeroCreator;
 import PaooGame.Creator.EntityCreator;
 import PaooGame.Creator.EntityType;
 import PaooGame.Entity.Character;

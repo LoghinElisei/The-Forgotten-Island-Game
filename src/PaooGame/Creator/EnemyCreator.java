@@ -1,7 +1,5 @@
-package PaooGame.Creator.EnemyCreator;
+package PaooGame.Creator;
 
-import PaooGame.Creator.EntityCreator;
-import PaooGame.Creator.EntityType;
 import PaooGame.Entity.Blaze;
 import PaooGame.Entity.Character;
 import PaooGame.Entity.Chupacabra;
