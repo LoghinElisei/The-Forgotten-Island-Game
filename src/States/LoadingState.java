@@ -8,6 +8,7 @@ import PaooGame.RefLinks;
 import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.concurrent.*;
 
 public class LoadingState extends State{
     private ArrayList<Button> buttons;
@@ -44,12 +45,27 @@ public class LoadingState extends State{
         new SwingWorker<Void, Void>() {
             @Override
             protected Void doInBackground(){
-                boolean connected = refLink.database.connect();
-                if(!refLink.database.isOracleDatabase()) {
+                ExecutorService executor = Executors.newSingleThreadExecutor();
+                Future<Boolean> future = executor.submit(() -> refLink.database.connect());
+
+                try {
+                    // așteptăm max. 5 secunde pentru conectare
+                    boolean connected = future.get(5, TimeUnit.SECONDS);
+
+                    if (!connected || !refLink.database.isOracleDatabase()) {
+                        errorLoading = true;
+                    } else {
+                        errorLoading = false;
+                    }
+                } catch (TimeoutException e) {
+                    future.cancel(true); // oprește task-ul
                     errorLoading = true;
-                }
-                else {
-                    errorLoading = false;
+                    System.err.println("Conectarea la DB a expirat după 5 secunde!");
+                } catch (Exception e) {
+                    errorLoading = true;
+                    e.printStackTrace();
+                } finally {
+                    executor.shutdownNow();
                 }
                 return null;
             }

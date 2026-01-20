@@ -14,6 +14,8 @@ public class Camera {
         this.bounds = new Rectangle(x, y, width, height);
         this.x = x;
         this.y = y;
+
+        
     }
     // metoda prin care se setează poziția camerei
     public void setPosition(int x, int y) {
