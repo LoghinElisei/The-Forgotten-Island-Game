@@ -1,172 +1,73 @@
-# 🏝️ Escape The Forgotten Island  
+# 🏝️ The Forgotten Island
 
-> **Genre:** Survival • Adventure  
-> **Authors:** Huțanu Laurențiu & Loghin Elisei  
-> **Group:** 1210B  
-
----
-
-## 🌅 Story
-
-After a devastating shipwreck caused by a violent storm, the protagonist wakes up stranded on a mysterious island.  
-What appears to be a deserted paradise soon turns into a nightmare — filled with hostile creatures, ancient ruins, and perilous landscapes.  
-Your mission: **collect keys, evade enemies, and escape the island alive.**
+**Genre:** Survival & Adventure  
+**Technology:** Java , JDBC
 
 ---
 
-## 🎮 Gameplay Overview
+## 📖 Description
 
-🧭 **Objective:**  
-- Find the **boat** to escape the island.  
-- **Avoid enemies** and environmental hazards.  
-- **Collect coins** for score and **keys** to unlock new levels.  
+After a shipwreck, the protagonist finds himself stranded on a mysterious island. Soon he realizes the island is not deserted and must navigate dangers to escape.  
 
-⌨️ **Controls:**  
-| Action | Key |
-|:--|:--|
-| Move Up | ⬆️ |
-| Move Down | ⬇️ |
-| Move Left | ⬅️ |
-| Move Right | ➡️ |
-| Pause Menu | ⎋ Esc |
-
-🧮 **Score Formula:**  
-```
-Score = Coins × 100 + Keys × 400 − Time_in_seconds
-```
+The player must progress through **3 levels** (forest, volcano, swamp), avoid enemies, collect resources, and finally reach the boat to escape.  
 
 ---
 
-## 👤 Player
+## 🎮 Gameplay
 
-| Attribute | Value |
-|:--|:--|
-| Speed | 10 |
+- **Main Objective:** collect the key to advance to the next level and ultimately escape the island.  
+- **Scoring system:**  
 
----
+- **Controls:**  
+- ⬆️ Up – W  
+- ⬇️ Down – S 
+- ⬅️ Left – A  
+- ➡️ Right – D
 
-## 👾 Enemies
+- Debug mode - T
 
-### 🪓 Orc  
-- Moves randomly  
-- Speed: 8  
-- Appears in **Forest** & **Volcano**  
-- 🗡️ Members of the *Goblin Clan*, hunting down all intruders.
+### Enemies
+- **Orc** – moves randomly, speed = 8.  
+- **Blaze** – follows a predetermined path, speed = 8.  
+- **Chupacabra** – follows a path but may chase the player with a 50% probability when within 5 tiles; stops chasing at ≥13 tiles distance.  
 
----
-
-### 🔥 Blaze  
-- Moves on a predefined path  
-- Speed: 8  
-- Appears in **Volcano**  
-- ⚡ Fiery spirits guarding ancient magma chambers — touch them, and you’re toast.
-
----
-
-### 💀 Chupacabra  
-- Predefined movement path  
-- Detects the player within **5 tiles** (50% chance to chase)  
-- Stops at **13 tiles**  
-- Speed: 8  
-- Appears in **Swamp**  
-- Worshipped by **Swamp Orcs** as a bloodthirsty deity.
+### Levels
+1. **Forest 🌲** – obstacles: trees & rocks, enemies: orcs.  
+2. **Volcano 🌋** – obstacles: lava rivers, enemies: Blaze + orcs.  
+3. **Swamp 🐉** – obstacles: swamp waters, enemies: Chupacabra + swamp orcs.  
 
 ---
 
-## 🌍 Levels
+## 🛠️ Architecture & Design Patterns
 
-| Level | Environment | Obstacles | Enemies |
-|:--|:--|:--|:--|
-| **1. Forest** 🌲 | Trees & Rocks | Orcs | Home of the *Goblin Clan* |
-| **2. Volcano** 🌋 | Lava Rivers | Orcs, Blaze | Realm of fiery spirits |
-| **3. Swamp** 🐊 | Water Pools | Chupacabra, Swamp Orcs | Domain of a dark cult |
-
-🎯 **Level Rules:**  
-- 2 keys per level (only 1 needed to progress)  
-- Collect coins for points  
-- Bridge guard only opens passage if you have the key  
-- Death resets the player to the **start of the current level**
+- **Singleton:** Game, GameWindow, DatabaseManager, Music, Timer, SoundPlayer  
+- **Factory Method:** creation of enemies and hero  
+- **Strategy & State:** dynamic entity behavior  
+- **Threading:** database connection runs on a separate thread (via `SwingWorker`) to avoid UI blocking  
 
 ---
 
-## 🧩 Architecture & Design Patterns
+## 💾 Database
 
-**Implemented Patterns:**
-| Pattern | Usage |
-|:--|:--|
-| 🧍‍♂️ Singleton | `Game`, `GameWindow`, `DatabaseManager`, `Music`, `Timer`, `SoundPlayer` |
-| 🎭 Strategy | Enemy and player movement behaviors |
-| 🔄 State | Game states (menu, play, pause, etc.) |
-| 🏭 Factory Method | Creation of player and enemies |
+The project uses **two databases**:
+- **Oracle Autonomous Database (cloud)** – for online save/load  
+- **SQLite (local)** – as fallback when internet is unavailable  
 
----
-
-## 💾 Database Integration
-
-Two database systems ensure data persistence:  
-
-| Database | Type | Purpose |
-|:--|:--|:--|
-| ☁️ Oracle Autonomous DB | Cloud | Online save/load system |
-| 💽 SQLite | Local | Offline backup |
-
-If no internet connection is detected, the game switches to **local mode** automatically.
-
-**Main Tables:**
-- `Players`: ID, Username, Password, Score  
-- `Levels`: Position, Timer, Score, Completion State  
-- `Coins`, `Map1–3`, `CollisionMap1–3`  
+### Main Tables
+- **Players:** ID, Username, Password, Score  
+- **Levels:** player position, level, progress, timer, score  
+- **Coins & Maps:** store map layouts, coin positions, collision maps  
 
 ---
 
-## 🔐 Login System
+## 🔑 Additional Features
+- **Authentication:** Sign-up / Log-in with exception handling  
+- **Save & Load progress:** user can choose between cloud or local database  
+- **Pause menu:** accessible via `Esc` key  
 
-🧑‍💻 Features:
-- **Sign Up:** Create a new account  
-- **Log In:** Continue previous progress  
-- **Error Handling:**  
-  - Duplicate usernames  
-  - Invalid credentials  
+## Collaborators
+- Loghin Elisei 
+- Hutanu Laurentiu
 
----
-
-## ⚙️ Multithreading
-
-When connecting to the database, the game uses a **SwingWorker thread** to perform background operations — preventing the UI from freezing during network delays.
-
----
-
-## 🎵 Audio & Menus
-
-- **Background music** and **sound effects** handled by Singleton classes (`Music`, `SoundPlayer`)  
-- **Pause Menu:** Accessible via `ESC`, with options to *Resume*, *Settings*, or *Exit*
-
----
-
-## 🧠 UML Diagrams
-
-All UML diagrams are located in the `UMLs/` folder.  
-They illustrate the relationships between major classes, states, and design patterns used throughout the project.
-
----
-
-## 📚 Resources
-- 🎨 [OpenGameArt.org](https://opengameart.org/) – Assets and sprites  
-- 🧭 Concept inspired by *Escape! – Island Strategy RPG*
-
----
-
-## 🧾 License
-This project was developed for educational purposes as part of the **PAOO (Programare Avansată Orientată pe Obiecte)** course.
-
----
-
-## 👥 Contributors
-| Name | Role |
-|:--|:--|
-| **Huțanu Laurențiu** | Developer, Game Design |
-| **Loghin Elisei** | Developer, Game Design |
-
----
-
-💡 *"Every island hides a secret. Every survivor tells a story."*
+## ⚠️ Warning 
+- For better user experience use Linux to play this game
