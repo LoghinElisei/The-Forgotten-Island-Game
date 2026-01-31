@@ -20,7 +20,7 @@ public class DatabaseManager {
         url = "jdbc:oracle:thin:@adbj_high?TNS_ADMIN=res/database/Wallet";
         user = "admin";
         password="Abcdefg123**";
-        sqliteUrl = "jdbc:sqlite:res/database/localDatabase.db";
+        sqliteUrl = "jdbc:sqlite:../res/database/localDatabase.db";
     }
 
     public static DatabaseManager getInstance() {
@@ -45,10 +45,11 @@ public class DatabaseManager {
             isOracleDatabase = true;
         }catch (SQLException e) {
 
-            //System.out.println("Eroare la conectare baza de date Oracle: " + e.getMessage());
+            System.out.println("Eroare la conectare baza de date Oracle: " + e.getMessage());
             isOracleDatabase = false;
 
             try{// local database
+
                 Class.forName("org.sqlite.JDBC");
                 connection = DriverManager.getConnection(sqliteUrl);
                 if(connection!=null)

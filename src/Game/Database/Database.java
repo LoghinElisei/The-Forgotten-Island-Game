@@ -1185,7 +1185,6 @@ public class Database {
         }
     }
 
-
     public int getNextMapNumber(String username, String password)
     {
         int playerId = getPlayerId(username,password);

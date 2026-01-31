@@ -60,9 +60,10 @@ public class LoadingState extends State{
                 } catch (TimeoutException e) {
                     future.cancel(true); // oprește task-ul
                     errorLoading = true;
-                    System.err.println("Conectarea la DB a expirat după 5 secunde!");
+                    System.err.println("Conectarea la DB ORACLE a expirat după 5 secunde!");
                 } catch (Exception e) {
                     errorLoading = true;
+                    System.out.println("E!!!!!!!!!!!!!!!!!!!!!!!!!!!!: " + e.getMessage());
                     e.printStackTrace();
                 } finally {
                     executor.shutdownNow();
